@@ -1,0 +1,19 @@
+{
+  "name": "@horario-estudantil/shared",
+  "version": "5.0.0-beta",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "pnpm run clear && tsc -p .",
+    "prepare": "pnpm run build",
+    "clear": "rimraf dist"
+  },
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
+  }
+}
