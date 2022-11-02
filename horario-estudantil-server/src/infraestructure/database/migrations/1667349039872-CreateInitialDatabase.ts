@@ -15,6 +15,14 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_usu',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
+          },
+
+          {
+            name: 'keycloak_id_usu',
+            type: 'varchar(36)',
+            isNullable: true,
           },
 
           {
@@ -34,6 +42,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_ue',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -62,6 +72,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_ue_usu',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -97,11 +109,14 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_prof',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
             name: 'nome_prof',
             type: 'varchar(255)',
+            isNullable: true,
           },
         ],
       }),
@@ -115,6 +130,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_mat',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -134,6 +151,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_tur',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -153,6 +172,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_per',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -178,6 +199,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_eta',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -203,6 +226,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_sem',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -240,6 +265,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_aul',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -267,6 +294,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_aul_tur',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -302,6 +331,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_aul_prof',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -337,6 +368,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_eve',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -391,6 +424,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_ape',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -443,6 +478,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_gru',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -486,6 +523,8 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             name: 'id_gru_tur',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
           },
 
           {
@@ -518,6 +557,7 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
     await queryRunner.dropTable('Grupo_Turma', true);
     await queryRunner.dropTable('Grupo', true);
     await queryRunner.dropTable('Apelido', true);
+    await queryRunner.dropTable('Evento', true);
     await queryRunner.dropTable('Aula_Professor', true);
     await queryRunner.dropTable('Aula_Turma', true);
     await queryRunner.dropTable('Aula', true);

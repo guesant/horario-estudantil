@@ -5,8 +5,10 @@ export const getDataSource = () => {
 
   const dataSource = new DataSource({
     synchronize: false,
+
     type: 'postgres',
     url: DATABASE_CONNECTION,
+
     logging: ['warn', 'error', 'migration', 'schema'],
     entities: [__dirname + '/../../domain/entities/*{.ts,.js}'],
     migrations: [__dirname + '/migrations/*{.ts,.js}'],

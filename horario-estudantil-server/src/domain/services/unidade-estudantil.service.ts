@@ -11,7 +11,7 @@ export class UnidadeEstudantilService {
     private unidadeEstudantilRepository: Repository<UnidadeEstudantilEntity>,
   ) {}
 
-  find() {
+  findAll() {
     return this.unidadeEstudantilRepository.find();
   }
 
