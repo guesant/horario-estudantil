@@ -10,11 +10,11 @@ import AppContainer from "../AppContainer";
 
 export const ITEM_HEIGHT = 48;
 
-type Props = {
+export type AppHeaderProps = {
   menu?: React.ReactNode;
 };
 
-const AppHeader = (props: Props) => {
+const AppHeader = (props: AppHeaderProps) => {
   const { menu } = props;
 
   return (
@@ -33,19 +33,21 @@ const AppHeader = (props: Props) => {
               href="/"
               component={Link}
               sx={{
-                flex: 1,
+                // flex: 1,
 
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                // justifyContent: "center",
 
-                gridRow: "1/-1",
-                gridColumn: "1/-1",
+                // gridRow: "1/-1",
+                // gridColumn: "1/-1",
 
-                justifySelf: {
-                  xs: "center",
-                  sm: "start",
-                },
+                justifySelf: "start",
+
+                // justifySelf: {
+                //   xs: "center",
+                //   sm: "start",
+                // },
 
                 textDecoration: "none",
                 color: "inherit",
