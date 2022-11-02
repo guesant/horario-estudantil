@@ -66,4 +66,4 @@ const LayoutUnidadeEstudantil = (props: Props) => {
   );
 };
 
-export default React.memo(LayoutUnidadeEstudantil);
+export default LayoutUnidadeEstudantil;

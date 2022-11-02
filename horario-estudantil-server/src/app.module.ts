@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UnidadeEstudantilModule } from './UnidadeEstudantil/UnidadeEstudantilModule';
+import { DatabaseModule } from './infraestructure/module/database.module';
+import { UnidadeEstudantilModule } from './infraestructure/module/unidade-estudantil.module';
 
 @Module({
-  imports: [UnidadeEstudantilModule],
+  imports: [ConfigModule.forRoot(), UnidadeEstudantilModule, DatabaseModule],
   controllers: [AppController],
   providers: [AppService],
 })
