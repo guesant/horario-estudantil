@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UnidadeEstudantilUsuarioEntity } from './unidade-estudantil-usuario.entity';
 
 @Entity('Usuario')
 export class UsuarioEntity {
@@ -10,4 +11,10 @@ export class UsuarioEntity {
 
   @Column({ name: 'nome_usu' })
   nome!: string;
+
+  @OneToMany(
+    () => UnidadeEstudantilUsuarioEntity,
+    (membership) => membership.usuario,
+  )
+  unidadeEstudantilMemberships: UnidadeEstudantilUsuarioEntity[];
 }

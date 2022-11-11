@@ -23,10 +23,10 @@ export class EventoEntity {
   @Column({ name: 'fim_eve' })
   fim: Date;
 
-  @ManyToOne(() => SemanaEntity)
+  @ManyToOne(() => SemanaEntity, (semana) => semana.eventos)
   semana: SemanaEntity;
 
-  @OneToOne(() => AulaEntity)
+  @OneToOne(() => AulaEntity, (aula) => aula.evento)
   @JoinTable()
   aula: AulaEntity | null;
 }

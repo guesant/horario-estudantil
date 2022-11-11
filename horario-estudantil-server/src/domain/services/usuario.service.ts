@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USUARIO_REPOSITORY } from 'src/infraestructure/constants';
+import { REPOSITORY_USUARIO } from 'src/infraestructure/constants';
 import { IUsuarioRepository } from '../repositories/usuario.repository';
 
 @Injectable()
 export class UsuarioService {
   constructor(
-    @Inject(USUARIO_REPOSITORY)
+    @Inject(REPOSITORY_USUARIO)
     private usuarioRepository: IUsuarioRepository,
   ) {}
 

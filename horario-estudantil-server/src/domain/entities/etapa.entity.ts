@@ -1,11 +1,15 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { PeriodoLetivoEntity } from './periodo-letivo.entity';
+import { SemanaEntity } from './semana.entity';
 
 @Entity('Etapa')
 export class EtapaEntity {
   @PrimaryGeneratedColumn({ name: 'id_eta' })
   id!: number;
 
-  @ManyToOne(() => PeriodoLetivoEntity)
+  @OneToMany(() => SemanaEntity, (semana) => semana.etapa)
+  semanas: SemanaEntity[];
+
+  @ManyToOne(() => PeriodoLetivoEntity, (periodoLetivo) => periodoLetivo.etapas)
   periodoLetivo: PeriodoLetivoEntity;
 }

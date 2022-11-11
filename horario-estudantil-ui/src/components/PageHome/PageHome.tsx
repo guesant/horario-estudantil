@@ -34,7 +34,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="sm">
-          <Box sx={{ py: { xs: 4, sm: 6 } }}>
+          <Box sx={{ py: { xs: 2, sm: 4, md: 6 } }}>
             <Box>
               <TextField
                 fullWidth

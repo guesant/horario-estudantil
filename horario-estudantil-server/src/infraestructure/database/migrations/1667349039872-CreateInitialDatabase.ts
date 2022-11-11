@@ -103,6 +103,51 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
+        name: 'Grupo',
+        columns: [
+          {
+            name: 'id_gru',
+            type: 'int',
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
+          },
+
+          {
+            name: 'titulo_gru',
+            type: 'varchar(255)',
+          },
+
+          {
+            name: 'id_ue_fk',
+            type: 'int',
+            isNullable: true,
+          },
+
+          {
+            name: 'id_gru_pai_fk',
+            type: 'int',
+            isNullable: true,
+          },
+        ],
+
+        foreignKeys: [
+          new TableForeignKey({
+            columnNames: ['id_ue_fk'],
+            referencedColumnNames: ['id_ue'],
+            referencedTableName: 'UnidadeEstudantil',
+          }),
+          new TableForeignKey({
+            columnNames: ['id_gru_pai_fk'],
+            referencedColumnNames: ['id_gru'],
+            referencedTableName: 'Grupo',
+          }),
+        ],
+      }),
+    );
+
+    await queryRunner.createTable(
+      new Table({
         name: 'Professor',
         columns: [
           {
@@ -160,6 +205,19 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             type: 'varchar(255)',
             isNullable: true,
           },
+
+          {
+            name: 'id_gru_fk',
+            type: 'int',
+            isNullable: true,
+          },
+        ],
+        foreignKeys: [
+          new TableForeignKey({
+            columnNames: ['id_gru_fk'],
+            referencedTableName: 'Grupo',
+            referencedColumnNames: ['id_gru'],
+          }),
         ],
       }),
     );
@@ -469,93 +527,9 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
         ],
       }),
     );
-
-    await queryRunner.createTable(
-      new Table({
-        name: 'Grupo',
-        columns: [
-          {
-            name: 'id_gru',
-            type: 'int',
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'identity',
-          },
-
-          {
-            name: 'titulo_gru',
-            type: 'varchar(255)',
-          },
-
-          {
-            name: 'id_ue_fk',
-            type: 'int',
-            isNullable: true,
-          },
-
-          {
-            name: 'id_gru_pai_fk',
-            type: 'int',
-            isNullable: true,
-          },
-        ],
-
-        foreignKeys: [
-          new TableForeignKey({
-            columnNames: ['id_ue_fk'],
-            referencedColumnNames: ['id_ue'],
-            referencedTableName: 'UnidadeEstudantil',
-          }),
-          new TableForeignKey({
-            columnNames: ['id_gru_pai_fk'],
-            referencedColumnNames: ['id_gru'],
-            referencedTableName: 'Grupo',
-          }),
-        ],
-      }),
-    );
-
-    await queryRunner.createTable(
-      new Table({
-        name: 'Grupo_Turma',
-        columns: [
-          {
-            name: 'id_gru_tur',
-            type: 'int',
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'identity',
-          },
-
-          {
-            name: 'id_tur_fk',
-            type: 'int',
-          },
-          {
-            name: 'id_gru_fk',
-            type: 'int',
-          },
-        ],
-
-        foreignKeys: [
-          new TableForeignKey({
-            columnNames: ['id_tur_fk'],
-            referencedColumnNames: ['id_tur'],
-            referencedTableName: 'Turma',
-          }),
-          new TableForeignKey({
-            columnNames: ['id_gru_fk'],
-            referencedColumnNames: ['id_gru'],
-            referencedTableName: 'Grupo',
-          }),
-        ],
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('Grupo_Turma', true);
-    await queryRunner.dropTable('Grupo', true);
     await queryRunner.dropTable('Apelido', true);
     await queryRunner.dropTable('Evento', true);
     await queryRunner.dropTable('Aula_Professor', true);
@@ -567,6 +541,7 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
     await queryRunner.dropTable('Turma', true);
     await queryRunner.dropTable('Materia', true);
     await queryRunner.dropTable('Professor', true);
+    await queryRunner.dropTable('Grupo', true);
     await queryRunner.dropTable('UnidadeEstudantil_Usuario', true);
     await queryRunner.dropTable('UnidadeEstudantil', true);
     await queryRunner.dropTable('Usuario', true);

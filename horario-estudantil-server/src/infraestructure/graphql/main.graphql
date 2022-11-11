@@ -1,0 +1,119 @@
+type Apelido {
+  id: ID
+
+  apelido: String
+}
+
+type Aula {
+  id: ID
+
+  evento: Evento!
+  materia: Materia
+
+  turmas: [Turma!]!
+  professores: [Professor!]!
+}
+
+type Etapa {
+  id: ID
+
+  semanas: [Semana!]!
+  periodoLetivo: PeriodoLetivo!
+}
+
+type Evento {
+  id: ID
+
+  diaDaSemana: Int
+  inicio: String
+  fim: String
+
+  semana: Semana!
+  aula: Aula
+}
+
+type Grupo {
+  id: ID
+
+  titulo: String
+
+  turmas: [Turma]
+  grupoPai: Grupo
+  unidadeEstudantil: UnidadeEstudantil
+}
+
+type Materia {
+  id: ID
+
+  nome: String
+
+  aulas: [Aula]
+  apelidos: [Apelido]
+}
+
+type PeriodoLetivo {
+  id: ID
+
+  etapas: [Etapa]
+  unidadeEstudantil: UnidadeEstudantil
+}
+
+type Professor {
+  id: ID
+
+  nome: String
+
+  apelidos: [Apelido]
+  aulas: [Aula]
+}
+
+type Semana {
+  id: ID
+
+  inicio: String
+  fim: String
+
+  etapa: Etapa
+  eventos: [Evento]
+}
+
+type Turma {
+  id: ID
+
+  aulas: [Aula]
+  apelidos: [Apelido]
+  grupo: Grupo
+}
+
+type UnidadeEstudantilMembership {
+  id: ID
+
+  usuario: Usuario
+  unidadeEstudantil: UnidadeEstudantil
+}
+
+type UnidadeEstudantil {
+  id: ID
+
+  nome: String
+  sigla: String
+  apelido: String
+
+  grupos: [Grupo]!
+  memberships: [UnidadeEstudantilMembership]!
+  periodosLetivos: [PeriodoLetivo]!
+}
+
+type Usuario {
+  id: ID
+
+  nome: String
+
+  memberships: [UnidadeEstudantilMembership]
+}
+
+type Query {
+  unidadeEstudantil(sigla: String!): UnidadeEstudantil
+
+  unidadesEstudantis: [UnidadeEstudantil]
+}

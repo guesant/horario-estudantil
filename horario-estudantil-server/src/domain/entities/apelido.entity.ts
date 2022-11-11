@@ -11,12 +11,12 @@ export class ApelidoEntity {
   @Column({ name: 'apelido_ape' })
   apelido: string;
 
-  @ManyToOne(() => ProfessorEntity)
-  professor: ProfessorEntity | null;
-
-  @ManyToOne(() => TurmaEntity)
+  @ManyToOne(() => TurmaEntity, (turma) => turma.apelidos)
   turma: TurmaEntity | null;
 
-  @ManyToOne(() => MateriaEntity)
+  @ManyToOne(() => ProfessorEntity, (professor) => professor.apelidos)
+  professor: ProfessorEntity | null;
+
+  @ManyToOne(() => MateriaEntity, (materia) => materia.apelidos)
   materia: MateriaEntity | null;
 }

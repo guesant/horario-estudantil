@@ -18,7 +18,8 @@ export type LayoutBaseNavigationDrawerProps = {
 
 const drawerWidth = {
   lg: 260,
-  xs: 220,
+  md: 240,
+  sm: 220,
 };
 
 const LayoutBaseNavigationDrawer = (props: LayoutBaseNavigationDrawerProps) => {
