@@ -22,14 +22,16 @@ export class UnidadeEstudantilResolver {
   @ResolveField('grupos')
   async getGrupos(@Parent() unidadeEstudantil) {
     const { id } = unidadeEstudantil;
-    return [];
+    return this.unidadeEstudantilService.findUnidadeEstudantilGrupos({ id });
   }
 
   @SkipAuth()
   @ResolveField('memberships')
   async getMemberships(@Parent() unidadeEstudantil) {
     const { id } = unidadeEstudantil;
-    return [];
+    return this.unidadeEstudantilService.findUnidadeEstudantilMemberships({
+      id,
+    });
   }
 
   @SkipAuth()

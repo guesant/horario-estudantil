@@ -8,9 +8,8 @@ type Aula {
   id: ID
 
   evento: Evento!
-  materia: Materia
-
   turmas: [Turma!]!
+  materia: Materia
   professores: [Professor!]!
 }
 
@@ -24,12 +23,12 @@ type Etapa {
 type Evento {
   id: ID
 
-  diaDaSemana: Int
-  inicio: String
   fim: String
+  inicio: String
+  diaDaSemana: Int
 
-  semana: Semana!
   aula: Aula
+  semana: Semana!
 }
 
 type Grupo {
@@ -38,7 +37,6 @@ type Grupo {
   titulo: String
 
   turmas: [Turma]
-  grupoPai: Grupo
   unidadeEstudantil: UnidadeEstudantil
 }
 
@@ -63,8 +61,8 @@ type Professor {
 
   nome: String
 
-  apelidos: [Apelido]
   aulas: [Aula]
+  apelidos: [Apelido]
 }
 
 type Semana {
@@ -80,9 +78,9 @@ type Semana {
 type Turma {
   id: ID
 
+  grupo: Grupo
   aulas: [Aula]
   apelidos: [Apelido]
-  grupo: Grupo
 }
 
 type UnidadeEstudantilMembership {

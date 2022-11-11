@@ -4,7 +4,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TurmaEntity } from './turma.entity';
@@ -18,14 +17,11 @@ export class GrupoEntity {
   @Column({ name: 'titulo_gru' })
   titulo: string;
 
-  @OneToOne(() => GrupoEntity, (grupo) => grupo.id)
-  @JoinColumn()
-  grupoPai: GrupoEntity | null;
-
   @ManyToOne(
     () => UnidadeEstudantilEntity,
     (unidadeEstudantil) => unidadeEstudantil.grupos,
   )
+  @JoinColumn({ name: 'id_ue_fk', referencedColumnName: 'id' })
   unidadeEstudantil: UnidadeEstudantilEntity;
 
   @OneToMany(() => TurmaEntity, (turma) => turma.grupo)

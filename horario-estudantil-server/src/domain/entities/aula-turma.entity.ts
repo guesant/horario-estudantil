@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AulaEntity } from './aula.entity';
 import { TurmaEntity } from './turma.entity';
 
@@ -8,8 +8,10 @@ export class AulaTurmaEntity {
   id!: number;
 
   @ManyToOne(() => AulaEntity, (aula) => aula.aulaTurmaRelations)
+  @JoinColumn({ name: 'id_aul_fk', referencedColumnName: 'id' })
   aula: AulaEntity;
 
   @ManyToOne(() => TurmaEntity, (turma) => turma.aulaTurmaRelations)
+  @JoinColumn({ name: 'id_tur_fk', referencedColumnName: 'id' })
   turma: TurmaEntity;
 }

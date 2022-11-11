@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { GrupoEntity } from './grupo.entity';
 import { PeriodoLetivoEntity } from './periodo-letivo.entity';
-import { UnidadeEstudantilUsuarioEntity } from './unidade-estudantil-usuario.entity';
+import { UnidadeEstudantilMembershipEntity } from './unidade-estudantil-membership.entity';
 
 @Entity('UnidadeEstudantil')
 export class UnidadeEstudantilEntity {
@@ -21,10 +21,10 @@ export class UnidadeEstudantilEntity {
   grupos: GrupoEntity[];
 
   @OneToMany(
-    () => UnidadeEstudantilUsuarioEntity,
-    (obj) => obj.unidadeEstudantil,
+    () => UnidadeEstudantilMembershipEntity,
+    (membership) => membership.unidadeEstudantil,
   )
-  memberships: UnidadeEstudantilUsuarioEntity[];
+  memberships: UnidadeEstudantilMembershipEntity[];
 
   @OneToMany(
     () => PeriodoLetivoEntity,

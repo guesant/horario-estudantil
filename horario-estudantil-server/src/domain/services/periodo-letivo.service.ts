@@ -1,12 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { REPOSITORY_PERIODO_LETIVO } from 'src/infraestructure/constants';
+import { FindOneOptions } from 'typeorm';
 import { PeriodoLetivoEntity } from '../entities/periodo-letivo.entity';
-import { UnidadeEstudantilEntity } from '../entities/unidade-estudantil.entity';
 import { IPeriodoLetivoRepository } from '../repositories/periodo-letivo.repository';
 
-export type IFindUnidadeEstudantilQuery = Partial<
-  Pick<UnidadeEstudantilEntity, 'sigla' | 'id'>
->;
+export type IFindPeriodoLetivoQuery = Partial<Pick<PeriodoLetivoEntity, 'id'>>;
 
 @Injectable()
 export class PeriodoLetivoService {
@@ -15,17 +13,41 @@ export class PeriodoLetivoService {
     private periodoLeitivoRepository: IPeriodoLetivoRepository,
   ) {}
 
-  async findPeriodoLetivo(periodoId: PeriodoLetivoEntity['id']) {
+  async findPeriodoLetivo(
+    query: IFindPeriodoLetivoQuery,
+    options?: FindOneOptions<PeriodoLetivoEntity>,
+  ) {
+    const { id } = query;
+
     const periodoLetivo = await this.periodoLeitivoRepository.findOne({
-      where: {
-        id: periodoId,
-      },
+      where: { id },
+      ...options,
     });
 
     if (!periodoLetivo) {
       throw new NotFoundException('Período Letivo not found');
     }
 
-    return { data: periodoLetivo };
+    return periodoLetivo;
+  }
+
+  async findPeriodoLetivoEtapas(query: IFindPeriodoLetivoQuery) {
+    const periodoLetivo = await this.findPeriodoLetivo(query, {
+      relations: ['etapas'],
+    });
+
+    const { etapas } = periodoLetivo;
+
+    return etapas;
+  }
+
+  async findPeriodoLetivoUnidadeEstudantil(query: IFindPeriodoLetivoQuery) {
+    const periodoLetivo = await this.findPeriodoLetivo(query, {
+      relations: ['unidadeEstudantil'],
+    });
+
+    const { unidadeEstudantil } = periodoLetivo;
+
+    return unidadeEstudantil;
   }
 }

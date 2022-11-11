@@ -3,13 +3,12 @@ import {
   REPOSITORY_AULA,
   REPOSITORY_AULA_PROFESSOR,
   REPOSITORY_AULA_TURMA,
-  REPOSITORY_TURMA,
 } from 'src/infraestructure/constants';
+import { FindOneOptions } from 'typeorm';
 import { AulaEntity } from '../entities/aula.entity';
 import { IAulaProfessorRepository } from '../repositories/aula-professor.repository';
 import { IAulaTurmaRepository } from '../repositories/aula-turma.repository';
 import { IAulaRepository } from '../repositories/aula.repository';
-import { ITurmaRepository } from '../repositories/turma.repository';
 
 export type IFindAulaQuery = Partial<Pick<AulaEntity, 'id'>>;
 
@@ -26,11 +25,12 @@ export class AulaService {
     private aulaProfessorRepository: IAulaProfessorRepository,
   ) {}
 
-  async findAula(query: IFindAulaQuery) {
+  async findAula(query: IFindAulaQuery, options?: FindOneOptions<AulaEntity>) {
     const { id } = query;
 
     const aula = await this.aulaRepository.findOne({
       where: { id },
+      ...options,
     });
 
     if (!aula) {
@@ -38,6 +38,22 @@ export class AulaService {
     }
 
     return aula;
+  }
+
+  async findAulaEvento(query: IFindAulaQuery) {
+    const aula = await this.findAula(query, { relations: ['evento'] });
+
+    const { evento } = aula;
+
+    return evento;
+  }
+
+  async findAulaMateria(query: IFindAulaQuery) {
+    const aula = await this.findAula(query, { relations: ['materia'] });
+
+    const { materia } = aula;
+
+    return materia;
   }
 
   async findAulaTurmas(query: IFindAulaQuery) {

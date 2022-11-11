@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UnidadeEstudantilUsuarioEntity } from './unidade-estudantil-usuario.entity';
+import { UnidadeEstudantilMembershipEntity } from './unidade-estudantil-membership.entity';
 
 @Entity('Usuario')
 export class UsuarioEntity {
@@ -13,8 +13,8 @@ export class UsuarioEntity {
   nome!: string;
 
   @OneToMany(
-    () => UnidadeEstudantilUsuarioEntity,
+    () => UnidadeEstudantilMembershipEntity,
     (membership) => membership.usuario,
   )
-  unidadeEstudantilMemberships: UnidadeEstudantilUsuarioEntity[];
+  unidadeEstudantilMemberships: UnidadeEstudantilMembershipEntity[];
 }

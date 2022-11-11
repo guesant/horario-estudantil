@@ -1,7 +1,6 @@
 import {
   Entity,
-  JoinTable,
-  ManyToMany,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -11,7 +10,6 @@ import { AulaProfessorEntity } from './aula-professor.entity';
 import { AulaTurmaEntity } from './aula-turma.entity';
 import { EventoEntity } from './evento.entity';
 import { MateriaEntity } from './materia.entity';
-import { ProfessorEntity } from './professor.entity';
 
 @Entity('Aula')
 export class AulaEntity {
@@ -22,6 +20,7 @@ export class AulaEntity {
   evento: EventoEntity;
 
   @ManyToOne(() => MateriaEntity)
+  @JoinColumn({ name: 'id_mat_fk', referencedColumnName: 'id' })
   materia: MateriaEntity | null;
 
   @OneToMany(() => AulaTurmaEntity, (aulaTurma) => aulaTurma.aula)
@@ -29,12 +28,4 @@ export class AulaEntity {
 
   @OneToMany(() => AulaProfessorEntity, (aulaProfessor) => aulaProfessor.aula)
   aulaProfessorRelations: AulaProfessorEntity[];
-
-  // @ManyToMany(() => ProfessorEntity, (professor) => professor.aulas)
-  // @JoinTable()
-  // professores: ProfessorEntity[];
-
-  // @ManyToMany(() => TurmaEntity)
-  // @JoinTable()
-  // turmas: TurmaEntity[];
 }

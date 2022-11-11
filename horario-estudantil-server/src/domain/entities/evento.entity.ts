@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToOne,
   OneToOne,
@@ -24,6 +25,7 @@ export class EventoEntity {
   fim: Date;
 
   @ManyToOne(() => SemanaEntity, (semana) => semana.eventos)
+  @JoinColumn({ name: 'id_sem_fk', referencedColumnName: 'id' })
   semana: SemanaEntity;
 
   @OneToOne(() => AulaEntity, (aula) => aula.evento)

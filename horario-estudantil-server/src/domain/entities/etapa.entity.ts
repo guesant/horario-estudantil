@@ -1,4 +1,10 @@
-import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { PeriodoLetivoEntity } from './periodo-letivo.entity';
 import { SemanaEntity } from './semana.entity';
 
@@ -11,5 +17,6 @@ export class EtapaEntity {
   semanas: SemanaEntity[];
 
   @ManyToOne(() => PeriodoLetivoEntity, (periodoLetivo) => periodoLetivo.etapas)
+  @JoinColumn({ name: 'id_per_fk', referencedColumnName: 'id' })
   periodoLetivo: PeriodoLetivoEntity;
 }

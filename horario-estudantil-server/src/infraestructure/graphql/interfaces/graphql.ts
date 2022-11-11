@@ -16,8 +16,8 @@ export class Apelido {
 export class Aula {
     id?: Nullable<string>;
     evento: Evento;
-    materia?: Nullable<Materia>;
     turmas: Turma[];
+    materia?: Nullable<Materia>;
     professores: Professor[];
 }
 
@@ -29,18 +29,17 @@ export class Etapa {
 
 export class Evento {
     id?: Nullable<string>;
-    diaDaSemana?: Nullable<number>;
-    inicio?: Nullable<string>;
     fim?: Nullable<string>;
-    semana: Semana;
+    inicio?: Nullable<string>;
+    diaDaSemana?: Nullable<number>;
     aula?: Nullable<Aula>;
+    semana: Semana;
 }
 
 export class Grupo {
     id?: Nullable<string>;
     titulo?: Nullable<string>;
     turmas?: Nullable<Nullable<Turma>[]>;
-    grupoPai?: Nullable<Grupo>;
     unidadeEstudantil?: Nullable<UnidadeEstudantil>;
 }
 
@@ -60,8 +59,8 @@ export class PeriodoLetivo {
 export class Professor {
     id?: Nullable<string>;
     nome?: Nullable<string>;
-    apelidos?: Nullable<Nullable<Apelido>[]>;
     aulas?: Nullable<Nullable<Aula>[]>;
+    apelidos?: Nullable<Nullable<Apelido>[]>;
 }
 
 export class Semana {
@@ -74,9 +73,9 @@ export class Semana {
 
 export class Turma {
     id?: Nullable<string>;
+    grupo?: Nullable<Grupo>;
     aulas?: Nullable<Nullable<Aula>[]>;
     apelidos?: Nullable<Nullable<Apelido>[]>;
-    grupo?: Nullable<Grupo>;
 }
 
 export class UnidadeEstudantilMembership {

@@ -1,4 +1,10 @@
-import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ApelidoEntity } from './apelido.entity';
 import { AulaTurmaEntity } from './aula-turma.entity';
 import { GrupoEntity } from './grupo.entity';
@@ -18,5 +24,6 @@ export class TurmaEntity {
   aulaTurmaRelations: AulaTurmaEntity[];
 
   @ManyToOne(() => GrupoEntity, (grupo) => grupo.turmas)
+  @JoinColumn({ name: 'id_gru_fk', referencedColumnName: 'id' })
   grupo: GrupoEntity | null;
 }
