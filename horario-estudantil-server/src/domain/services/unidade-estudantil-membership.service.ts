@@ -28,7 +28,7 @@ export class UnidadeEstudantilMembershipService {
       });
 
     if (!unidadeEstudantilMembership) {
-      throw new NotFoundException('Unidade Estudantil Membership not found');
+      throw new NotFoundException();
     }
 
     return unidadeEstudantilMembership;

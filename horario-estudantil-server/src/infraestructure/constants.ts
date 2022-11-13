@@ -15,7 +15,7 @@ export const REPOSITORY_ETAPA = Symbol();
 export const REPOSITORY_UNIDADE_ESTUDANTIL = Symbol();
 export const REPOSITORY_EVENTO = Symbol();
 export const REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP = Symbol();
-export const REPOSITORY_GRUPO = Symbol();
+export const REPOSITORY_CATEGORIA_TURMA = Symbol();
 export const REPOSITORY_USUARIO = Symbol();
 export const REPOSITORY_MATERIA = Symbol();
 

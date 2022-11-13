@@ -43,7 +43,7 @@ export class UsuarioService {
     });
 
     if (!usuario) {
-      throw new NotFoundException('Usuário not found');
+      throw new NotFoundException();
     }
 
     return usuario;

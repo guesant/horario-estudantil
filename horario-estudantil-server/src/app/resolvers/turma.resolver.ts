@@ -7,10 +7,10 @@ export class TurmaResolver {
   constructor(private turmaService: TurmaService) {}
 
   @SkipAuth()
-  @ResolveField('grupo')
-  async getGrupo(@Parent() turma) {
+  @ResolveField('categoriaTurma')
+  async getCategoriaTurma(@Parent() turma) {
     const { id } = turma;
-    return this.turmaService.findTurmaGrupo({ id });
+    return this.turmaService.findTurmaCategoriaTurma({ id });
   }
 
   @SkipAuth()

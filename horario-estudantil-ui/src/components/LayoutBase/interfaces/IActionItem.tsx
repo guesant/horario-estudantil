@@ -1,7 +1,7 @@
-import { ActionDisplay } from "./IAction";
+import { ActionDisplay, ActionType } from "./IAction";
 
 export type IActionItem = {
-  type?: "item";
+  type: ActionType.ITEM;
 
   icon: any;
   label: string;

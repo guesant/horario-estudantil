@@ -25,7 +25,7 @@ export class ProfessorService {
     });
 
     if (!professor) {
-      throw new NotFoundException('Professor not found');
+      throw new NotFoundException();
     }
 
     return professor;

@@ -1,6 +1,7 @@
 import { IWeekParsedDataProfessor } from "./IWeekParsedDataProfessor";
 import { IWeekParsedDataMateria } from "./IWeekParsedDataMateria";
 import { IWeekParsedDataTurma } from "./IWeekParsedDataTurma";
+import { IWeekParsedDataDia } from "./IWeekParsedDataDia";
 
 export type IWeekParsedDataAula = {
   dia: Pick<IWeekParsedDataDia, "slug">;

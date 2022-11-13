@@ -34,7 +34,7 @@ export class AulaService {
     });
 
     if (!aula) {
-      throw new NotFoundException('Aula not found');
+      throw new NotFoundException();
     }
 
     return aula;

@@ -1,21 +1,20 @@
+import Box from "@mui/material/Box";
+import { useMemo } from "react";
+import AppContainer from "../AppContainer";
 import AppHeader, { AppHeaderProps } from "../AppHeader";
 import AppPage from "../AppPage/AppPage";
 import AppPageContent from "../AppPageContent/AppPageContent";
-import LayoutBaseSubHeader, {
-  ILayoutBaseSubHeaderProps,
-} from "./LayoutBaseSubHeader";
-import Box from "@mui/material/Box";
-import AppContainer from "../AppContainer";
+import { getActionsForDisplay } from "./interfaces/getActionsForDisplay";
+import { ActionDisplay, IAction } from "./interfaces/IAction";
 import LayoutBaseNavigationDrawer, {
   LayoutBaseNavigationDrawerProps,
 } from "./LayoutBaseNavigationDrawer";
 import LayoutBaseNavigationTabs, {
   ILayoutBaseNavigationTabsProps,
 } from "./LayoutBaseNavigationTabs";
-import { ListSubheaderProps } from "@mui/material";
-import { ActionDisplay, IAction } from "./interfaces/IAction";
-import { useMemo } from "react";
-import { getActionsForDisplay } from "./interfaces/getActionsForDisplay";
+import LayoutBaseSubHeader, {
+  ILayoutBaseSubHeaderProps,
+} from "./LayoutBaseSubHeader";
 
 export type LayoutBaseProps = {
   AppHeaderProps?: AppHeaderProps;
@@ -62,51 +61,63 @@ const LayoutBase = (props: LayoutBaseProps) => {
 
         <AppPageContent>
           <Box
-            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+            sx={{
+              height: "100%",
+              display: "flex",
+              overflow: "hidden",
+              flexDirection: "column",
+            }}
           >
             <LayoutBaseSubHeader {...SubHeaderProps} />
 
-            <Box sx={{ overflow: "auto", height: "100%" }}>
-              <AppContainer disableGutters sx={{ height: "100%" }}>
+            <AppContainer
+              disableGutters
+              sx={{ height: "100%", overflow: "hidden" }}
+            >
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  overflow: "hidden",
+                  flexDirection: { xs: "column", md: "row" },
+                }}
+              >
                 <Box
                   sx={{
-                    height: "100%",
-                    display: "grid",
-                    gridTemplateRows: "1fr auto",
-                    gridTemplateColumns: "auto 1fr",
+                    display: { xs: "none", md: "block" },
                   }}
                 >
-                  <Box
-                    sx={{
-                      flexShrink: 0,
-                      gridRow: "1/-1",
-                      gridColumn: "1/2",
-                      display: { xs: "none", sm: "block" },
-                    }}
-                  >
-                    <LayoutBaseNavigationDrawer
-                      {...NavigationDrawerProps}
-                      actions={navigationDrawerActions}
-                    />
-                  </Box>
-
-                  <Box sx={{ gridColumnEnd: "-1" }}>{children}</Box>
-
-                  <Box
-                    sx={{
-                      gridRow: "2/-1",
-                      gridColumn: "1/-1",
-                      display: { xs: "block", sm: "none" },
-                    }}
-                  >
-                    <LayoutBaseNavigationTabs
-                      {...NavigationTabsProps}
-                      actions={navigationTabsActions}
-                    />
-                  </Box>
+                  <LayoutBaseNavigationDrawer
+                    {...NavigationDrawerProps}
+                    actions={navigationDrawerActions}
+                  />
                 </Box>
-              </AppContainer>
-            </Box>
+
+                <Box
+                  sx={{
+                    flex: "1 1",
+                    overflow: "auto",
+
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  {children}
+                </Box>
+
+                <Box
+                  sx={{
+                    flexShrink: 0,
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  <LayoutBaseNavigationTabs
+                    {...NavigationTabsProps}
+                    actions={navigationTabsActions}
+                  />
+                </Box>
+              </Box>
+            </AppContainer>
           </Box>
         </AppPageContent>
       </AppPage>

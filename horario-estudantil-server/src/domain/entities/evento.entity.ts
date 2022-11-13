@@ -2,7 +2,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -15,20 +14,20 @@ export class EventoEntity {
   @PrimaryGeneratedColumn({ name: 'id_eve' })
   id!: number;
 
-  @Column({ name: 'dia_da_sem_eve' })
-  diaDaSemana: number;
+  @Column({ name: 'fim_eve' })
+  fim: Date;
 
   @Column({ name: 'inicio_eve' })
   inicio: Date;
 
-  @Column({ name: 'fim_eve' })
-  fim: Date;
+  @Column({ name: 'dia_da_sem_eve' })
+  diaDaSemana: number;
 
   @ManyToOne(() => SemanaEntity, (semana) => semana.eventos)
   @JoinColumn({ name: 'id_sem_fk', referencedColumnName: 'id' })
   semana: SemanaEntity;
 
   @OneToOne(() => AulaEntity, (aula) => aula.evento)
-  @JoinTable()
+  @JoinColumn({ name: 'id_aul_fk', referencedColumnName: 'id' })
   aula: AulaEntity | null;
 }

@@ -19,10 +19,13 @@ export class UnidadeEstudantilResolver {
   }
 
   @SkipAuth()
-  @ResolveField('grupos')
-  async getGrupos(@Parent() unidadeEstudantil) {
+  @ResolveField('categoriasTurma')
+  async getCategoriasTurma(@Parent() unidadeEstudantil) {
     const { id } = unidadeEstudantil;
-    return this.unidadeEstudantilService.findUnidadeEstudantilGrupos({ id });
+
+    return this.unidadeEstudantilService.findUnidadeEstudantilCategoriasTurma({
+      id,
+    });
   }
 
   @SkipAuth()

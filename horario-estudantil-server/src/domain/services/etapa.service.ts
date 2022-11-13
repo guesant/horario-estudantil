@@ -32,7 +32,7 @@ export class EtapaService {
     });
 
     if (!etapa) {
-      throw new NotFoundException('Etapa not found');
+      throw new NotFoundException();
     }
 
     return etapa;

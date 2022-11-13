@@ -32,7 +32,7 @@ export class EventoService {
     });
 
     if (!evento) {
-      throw new NotFoundException('Evento not found');
+      throw new NotFoundException();
     }
 
     return evento;

@@ -25,7 +25,7 @@ export class MateriaService {
     });
 
     if (!materia) {
-      throw new NotFoundException('Materia not found');
+      throw new NotFoundException();
     }
 
     return materia;

@@ -36,10 +36,12 @@ export class Evento {
     semana: Semana;
 }
 
-export class Grupo {
+export class CategoriaTurma {
     id?: Nullable<string>;
     titulo?: Nullable<string>;
+    tituloFilhos?: Nullable<string>;
     turmas?: Nullable<Nullable<Turma>[]>;
+    categoriaTurmaPai?: Nullable<CategoriaTurma>;
     unidadeEstudantil?: Nullable<UnidadeEstudantil>;
 }
 
@@ -73,9 +75,10 @@ export class Semana {
 
 export class Turma {
     id?: Nullable<string>;
-    grupo?: Nullable<Grupo>;
+    nome?: Nullable<string>;
     aulas?: Nullable<Nullable<Aula>[]>;
     apelidos?: Nullable<Nullable<Apelido>[]>;
+    categoriaTurma?: Nullable<CategoriaTurma>;
 }
 
 export class UnidadeEstudantilMembership {
@@ -89,8 +92,8 @@ export class UnidadeEstudantil {
     nome?: Nullable<string>;
     sigla?: Nullable<string>;
     apelido?: Nullable<string>;
-    grupos: Nullable<Grupo>[];
     memberships: Nullable<UnidadeEstudantilMembership>[];
+    categoriasTurma: Nullable<CategoriaTurma>[];
     periodosLetivos: Nullable<PeriodoLetivo>[];
 }
 

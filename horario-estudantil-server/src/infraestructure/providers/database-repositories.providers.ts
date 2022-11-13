@@ -1,9 +1,9 @@
 import { getApelidoRepository } from 'src/domain/repositories/apelido.repository';
 import { getAulaTurmaRepository } from 'src/domain/repositories/aula-turma.repository';
 import { getAulaRepository } from 'src/domain/repositories/aula.repository';
+import { getCategoriaTurmaRepository } from 'src/domain/repositories/categoria-turma.repository';
 import { getEtapaRepository } from 'src/domain/repositories/etapa.repository';
 import { getEventoRepository } from 'src/domain/repositories/evento.repository';
-import { getGrupoRepository } from 'src/domain/repositories/grupo.repository';
 import { getMateriaRepository } from 'src/domain/repositories/materia.repository';
 import { getPeriodoLetivoRepository } from 'src/domain/repositories/periodo-letivo.repository';
 import { getProfessorRepository } from 'src/domain/repositories/professor.repository';
@@ -21,7 +21,7 @@ import {
   REPOSITORY_AULA_TURMA,
   REPOSITORY_ETAPA,
   REPOSITORY_EVENTO,
-  REPOSITORY_GRUPO,
+  REPOSITORY_CATEGORIA_TURMA,
   REPOSITORY_MATERIA,
   REPOSITORY_PERIODO_LETIVO,
   REPOSITORY_PROFESSOR,
@@ -118,9 +118,9 @@ export const databaseRepositoriesProviders = [
     inject: [DATA_SOURCE],
   },
   {
-    provide: REPOSITORY_GRUPO,
+    provide: REPOSITORY_CATEGORIA_TURMA,
     useFactory: (dataSource: DataSource) => {
-      return getGrupoRepository(dataSource);
+      return getCategoriaTurmaRepository(dataSource);
     },
     inject: [DATA_SOURCE],
   },

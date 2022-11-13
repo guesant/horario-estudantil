@@ -25,20 +25,20 @@ export class TurmaService {
     });
 
     if (!turma) {
-      throw new NotFoundException('Turma not found');
+      throw new NotFoundException();
     }
 
     return turma;
   }
 
-  async findTurmaGrupo(query: IFindTurmaQuery) {
+  async findTurmaCategoriaTurma(query: IFindTurmaQuery) {
     const turma = await this.findTurma(query, {
-      relations: ['grupo'],
+      relations: ['categoriaTurma'],
     });
 
-    const { grupo } = turma;
+    const { categoriaTurma } = turma;
 
-    return grupo;
+    return categoriaTurma;
   }
 
   async findTurmaAulas(query: IFindTurmaQuery) {

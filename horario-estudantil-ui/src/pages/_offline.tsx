@@ -5,7 +5,7 @@ import React from "react";
 import AppContainer from "../components/AppContainer";
 import AppHeader from "../components/AppHeader";
 import AppPage from "../components/AppPage/AppPage";
-import { buildPageTitle } from "../helpers/buildPageTitle";
+import { buildPageTitle } from "../etc/domain/app/skeleton/buildPageTitle";
 
 type Props = {};
 

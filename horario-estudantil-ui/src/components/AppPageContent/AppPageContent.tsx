@@ -6,7 +6,9 @@ type Props = {
 
 const AppPageContent = (props: Props) => {
   const { children } = props;
-  return <Box sx={{ flex: 1 }}>{children}</Box>;
+  return (
+    <Box sx={{ flex: 1, overflow: "hidden", height: "100%" }}>{children}</Box>
+  );
 };
 
 export default AppPageContent;

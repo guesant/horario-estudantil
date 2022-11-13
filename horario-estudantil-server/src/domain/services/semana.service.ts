@@ -25,7 +25,7 @@ export class SemanaService {
     });
 
     if (!semana) {
-      throw new NotFoundException('Semana not found');
+      throw new NotFoundException();
     }
 
     return semana;

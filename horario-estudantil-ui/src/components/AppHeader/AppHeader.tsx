@@ -4,14 +4,15 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
-import * as React from "react";
+import { ReactNode } from "react";
 import AppContainer from "../AppContainer";
+import AppLink from "../AppLink/AppLink";
+import AppHeaderSearch from "./AppHeaderSearch";
 
 export const ITEM_HEIGHT = 48;
 
 export type AppHeaderProps = {
-  menu?: React.ReactNode;
+  menu?: ReactNode;
 };
 
 const AppHeader = (props: AppHeaderProps) => {
@@ -31,7 +32,7 @@ const AppHeader = (props: AppHeaderProps) => {
           >
             <Box
               href="/"
-              component={Link}
+              component={AppLink}
               sx={{
                 // flex: 1,
 
@@ -64,6 +65,10 @@ const AppHeader = (props: AppHeaderProps) => {
               >
                 Horário Estudantil
               </Typography>
+            </Box>
+
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <AppHeaderSearch />
             </Box>
 
             <Box

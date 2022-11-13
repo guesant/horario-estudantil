@@ -1,12 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import {
-  REPOSITORY_GRUPO,
+  REPOSITORY_CATEGORIA_TURMA,
   REPOSITORY_PERIODO_LETIVO,
   REPOSITORY_UNIDADE_ESTUDANTIL,
   REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP,
 } from 'src/infraestructure/constants';
 import { UnidadeEstudantilEntity } from '../entities/unidade-estudantil.entity';
-import { IGrupoRepository } from '../repositories/grupo.repository';
+import { ICategoriaTurmaRepository } from '../repositories/categoria-turma.repository';
 import { IPeriodoLetivoRepository } from '../repositories/periodo-letivo.repository';
 import { IUnidadeEstudantilMembershipRepository } from '../repositories/unidade-estudantil-membership.repository';
 import { IUnidadeEstudantilRepository } from '../repositories/unidade-estudantil.repository';
@@ -24,8 +24,8 @@ export class UnidadeEstudantilService {
     @Inject(REPOSITORY_PERIODO_LETIVO)
     private periodoLeitivoRepository: IPeriodoLetivoRepository,
 
-    @Inject(REPOSITORY_GRUPO)
-    private grupoRepository: IGrupoRepository,
+    @Inject(REPOSITORY_CATEGORIA_TURMA)
+    private categoriaTurmaRepository: ICategoriaTurmaRepository,
 
     @Inject(REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP)
     private unidadeEstudantilMembershipRepository: IUnidadeEstudantilMembershipRepository,
@@ -39,7 +39,7 @@ export class UnidadeEstudantilService {
     });
 
     if (!unidadeEstudantil) {
-      throw new NotFoundException('Unidade estudantil not found');
+      throw new NotFoundException();
     }
 
     return unidadeEstudantil;
@@ -60,14 +60,17 @@ export class UnidadeEstudantilService {
     return periodosLetivos;
   }
 
-  async findUnidadeEstudantilGrupos(query: IFindUnidadeEstudantilQuery) {
+  async findUnidadeEstudantilCategoriasTurma(
+    query: IFindUnidadeEstudantilQuery,
+  ) {
     const unidadeEstudantil = await this.findUnidadeEstudantil(query);
 
-    const grupos = await this.grupoRepository.find({
+    const categoriasTurma = await this.categoriaTurmaRepository.find({
       where: { unidadeEstudantil },
+      relations: ['categoriaTurmaPai'],
     });
 
-    return grupos;
+    return categoriasTurma;
   }
 
   async findUnidadeEstudantilMemberships(query: IFindUnidadeEstudantilQuery) {

@@ -31,12 +31,14 @@ type Evento {
   semana: Semana!
 }
 
-type Grupo {
+type CategoriaTurma {
   id: ID
 
   titulo: String
+  tituloFilhos: String
 
   turmas: [Turma]
+  categoriaTurmaPai: CategoriaTurma
   unidadeEstudantil: UnidadeEstudantil
 }
 
@@ -78,9 +80,11 @@ type Semana {
 type Turma {
   id: ID
 
-  grupo: Grupo
+  nome: String
+
   aulas: [Aula]
   apelidos: [Apelido]
+  categoriaTurma: CategoriaTurma
 }
 
 type UnidadeEstudantilMembership {
@@ -97,8 +101,8 @@ type UnidadeEstudantil {
   sigla: String
   apelido: String
 
-  grupos: [Grupo]!
   memberships: [UnidadeEstudantilMembership]!
+  categoriasTurma: [CategoriaTurma]!
   periodosLetivos: [PeriodoLetivo]!
 }
 

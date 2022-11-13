@@ -25,7 +25,7 @@ export class PeriodoLetivoService {
     });
 
     if (!periodoLetivo) {
-      throw new NotFoundException('Período Letivo not found');
+      throw new NotFoundException();
     }
 
     return periodoLetivo;

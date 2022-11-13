@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AulaResolver } from 'src/app/resolvers/aula.resolver';
+import { CategoriaTurmaResolver } from 'src/app/resolvers/categoria-turma.resolver';
 import { EtapaResolver } from 'src/app/resolvers/etapa.resolver';
 import { EventoResolver } from 'src/app/resolvers/evento.resolver';
-import { GrupoResolver } from 'src/app/resolvers/grupo.resolver';
 import { MateriaResolver } from 'src/app/resolvers/materia.resolver';
 import { PeriodoLetivoResolver } from 'src/app/resolvers/periodo-letivo.resolver';
 import { ProfessorResolver } from 'src/app/resolvers/professor.resolver';
@@ -14,7 +14,6 @@ import { UsuarioResolver } from 'src/app/resolvers/usuario.resolver';
 import { AulaService } from 'src/domain/services/aula.service';
 import { EtapaService } from 'src/domain/services/etapa.service';
 import { EventoService } from 'src/domain/services/evento.service';
-import { GrupoService } from 'src/domain/services/grupo.service';
 import { MateriaService } from 'src/domain/services/materia.service';
 import { PeriodoLetivoService } from 'src/domain/services/periodo-letivo.service';
 import { ProfessorService } from 'src/domain/services/professor.service';
@@ -25,6 +24,7 @@ import { UsuarioService } from 'src/domain/services/usuario.service';
 import { UnidadeEstudantilController } from '../../app/controllers/unidade-estudantil.controller';
 import { UnidadeEstudantilService } from '../../domain/services/unidade-estudantil.service';
 
+import { CategoriaTurmaService } from 'src/domain/services/categoria-turma.service';
 import { DatabaseModule } from './database.module';
 
 @Module({
@@ -36,7 +36,7 @@ import { DatabaseModule } from './database.module';
     AulaService,
     EtapaService,
     EventoService,
-    GrupoService,
+    CategoriaTurmaService,
     MateriaService,
     PeriodoLetivoService,
     ProfessorService,
@@ -51,7 +51,7 @@ import { DatabaseModule } from './database.module';
     AulaResolver,
     EtapaResolver,
     EventoResolver,
-    GrupoResolver,
+    CategoriaTurmaResolver,
     MateriaResolver,
     PeriodoLetivoResolver,
     ProfessorResolver,

@@ -1,29 +1,22 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Head from "next/head";
-import { buildPageTitle } from "../../helpers/buildPageTitle";
-import LayoutBase from "../LayoutBase/LayoutBase";
-import { CONFIGURACOES_LAYOUT_ACTIONS } from "./CONFIGURACOES_LAYOUT_ACTIONS";
+import { buildPageTitle } from "../../etc/domain/app/skeleton/buildPageTitle";
+import { getSharedServerSideProps } from "../../etc/domain/app/getSharedServerSideProps";
+import { IAppPage } from "../../etc/domain/app/IAppPage";
+import LayoutApp from "../LayoutApp/LayoutApp";
 
-export default function Configuracoes() {
+const Configuracoes: IAppPage = () => {
   return (
     <>
       <Head>
         <title>{buildPageTitle("Configurações")}</title>
       </Head>
 
-      <LayoutBase
-        navigationActions={CONFIGURACOES_LAYOUT_ACTIONS}
-        SubHeaderProps={{
-          children: (
-            <>
-              <Typography variant="h6">Configurações</Typography>
-            </>
-          ),
-        }}
-      >
+      <LayoutApp>
         <Box>...</Box>
-      </LayoutBase>
+      </LayoutApp>
     </>
   );
-}
+};
+
+export default Configuracoes;

@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import * as React from "react";
+import { useMemo } from "react";
 import AppLayoutTab from "../AppLayoutTab/AppLayoutTab";
 import AppLayoutTabs from "../AppLayoutTabs/AppLayoutTabs";
+import Link from "../AppLink";
 import { IAction } from "./interfaces/IAction";
 import { IActionItem } from "./interfaces/IActionItem";
 import { useActionRouter } from "./interfaces/useActionRouter";
@@ -12,20 +11,18 @@ export type ILayoutBaseNavigationTabsProps = {
 };
 
 const LayoutBaseNavigationTabs = (props: ILayoutBaseNavigationTabsProps) => {
-  const { pathname } = useRouter();
-
   const { match } = useActionRouter();
 
   const { actions = [] } = props;
 
-  const tabActions = React.useMemo(
+  const tabActions = useMemo(
     () => actions.filter((i) => i.type === "item"),
     [actions]
   ) as IActionItem[];
 
-  const currentTabIndex = React.useMemo(
+  const currentTabIndex = useMemo(
     () => tabActions.findIndex((action) => match(action).isMatch),
-    [pathname, match]
+    [match, tabActions]
   );
 
   return (

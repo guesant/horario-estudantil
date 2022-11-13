@@ -103,10 +103,10 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
-        name: 'Grupo',
+        name: 'CategoriaTurma',
         columns: [
           {
-            name: 'id_gru',
+            name: 'id_cat_tur',
             type: 'int',
             isPrimary: true,
             isGenerated: true,
@@ -114,12 +114,25 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'titulo_gru',
+            name: 'titulo_cat_tur',
             type: 'varchar(255)',
+            isNullable: true,
+          },
+
+          {
+            name: 'titulo_filhos_cat_tur',
+            type: 'varchar(255)',
+            isNullable: true,
           },
 
           {
             name: 'id_ue_fk',
+            type: 'int',
+            isNullable: true,
+          },
+
+          {
+            name: 'id_cat_tur_pai_fk',
             type: 'int',
             isNullable: true,
           },
@@ -130,6 +143,12 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             columnNames: ['id_ue_fk'],
             referencedColumnNames: ['id_ue'],
             referencedTableName: 'UnidadeEstudantil',
+          }),
+
+          new TableForeignKey({
+            columnNames: ['id_cat_tur_pai_fk'],
+            referencedColumnNames: ['id_cat_tur'],
+            referencedTableName: 'CategoriaTurma',
           }),
         ],
       }),
@@ -196,16 +215,16 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'id_gru_fk',
+            name: 'id_cat_tur_fk',
             type: 'int',
             isNullable: true,
           },
         ],
         foreignKeys: [
           new TableForeignKey({
-            columnNames: ['id_gru_fk'],
-            referencedTableName: 'Grupo',
-            referencedColumnNames: ['id_gru'],
+            columnNames: ['id_cat_tur_fk'],
+            referencedTableName: 'CategoriaTurma',
+            referencedColumnNames: ['id_cat_tur'],
           }),
         ],
       }),

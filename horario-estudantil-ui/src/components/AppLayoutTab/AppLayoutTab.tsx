@@ -5,27 +5,25 @@ import * as React from "react";
 const AppLayoutTab = styled((props: TabProps) => (
   <MuiTab iconPosition="bottom" disableRipple {...props} />
 ))(({ theme }) => ({
-  textTransform: "none",
-
   minWidth: 0,
 
   minHeight: 0,
 
-  [theme.breakpoints.up("sm")]: {
-    minWidth: 0,
-  },
+  textTransform: "none",
 
   fontWeight: theme.typography.fontWeightRegular,
 
   color: theme.palette.action.active,
 
-  padding: theme.spacing(1.25, 0.25),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "3.5vw",
 
-  fontSize: "3.5vw",
+    padding: theme.spacing(1.25, 0.25),
 
-  "& .MuiTab-iconWrapper": {
-    fontSize: "6vw",
-    marginTop: theme.spacing(0.7),
+    "& .MuiTab-iconWrapper": {
+      fontSize: "6vw",
+      marginTop: theme.spacing(0.7),
+    },
   },
 
   "&:hover": {
