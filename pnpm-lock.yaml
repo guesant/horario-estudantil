@@ -145,6 +145,7 @@ importers:
       '@mui/material': ^5.10.11
       '@types/lodash': ^4.14.182
       '@types/node': 18.11.7
+      '@types/nprogress': ^0.2.0
       '@types/react': 18.0.24
       '@types/react-dom': 18.0.8
       babel-loader: ^9.0.0
@@ -154,6 +155,7 @@ importers:
       lodash: ^4.17.21
       next: 13.0.0
       next-pwa: ^5.6.0
+      nprogress: ^0.2.0
       react: 18.2.0
       react-dom: 18.2.0
       typescript: 4.8.4
@@ -167,11 +169,13 @@ importers:
       lodash: 4.17.21
       next: 13.0.0_biqbaboplfbrettd7655fr4n2y
       next-pwa: 5.6.0_next@13.0.0
+      nprogress: 0.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
       '@types/lodash': 4.14.188
       '@types/node': 18.11.7
+      '@types/nprogress': 0.2.0
       '@types/react': 18.0.24
       '@types/react-dom': 18.0.8
       babel-loader: 9.1.0
@@ -3103,6 +3107,10 @@ packages:
 
   /@types/node/18.11.9:
     resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
+    dev: true
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -7052,6 +7060,10 @@ packages:
       console-control-strings: 1.1.0
       gauge: 3.0.2
       set-blocking: 2.0.0
+    dev: false
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
 
   /object-assign/4.1.1:

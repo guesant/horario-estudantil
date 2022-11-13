@@ -1,1 +1,1 @@
-export { default } from "./PageProfessores";
+export { default, getServerSideProps } from "./PageProfessores";

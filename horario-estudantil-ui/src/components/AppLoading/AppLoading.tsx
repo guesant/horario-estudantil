@@ -9,11 +9,11 @@ const AppLoading = (props: Props) => {
       sx={{
         flex: 1,
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <CircularProgress />
+      <CircularProgress color="success" />
     </Box>
   );
 };

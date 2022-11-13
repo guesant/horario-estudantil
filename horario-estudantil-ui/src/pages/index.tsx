@@ -1,1 +1,1 @@
-export { default } from "../components/PageHome";
+export { default, getServerSideProps } from "../components/PageHome";

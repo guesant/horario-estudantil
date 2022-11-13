@@ -1,4 +1,4 @@
-import { gql, QueryResult, useQuery } from "@apollo/client";
+import { QueryResult, useQuery } from "@apollo/client";
 import {
   createContext,
   FC,
@@ -7,34 +7,14 @@ import {
   useMemo,
 } from "react";
 import { AppContext } from "../AppContext/AppContext";
-
-const GET_PAGE_TURMAS_DATA = gql`
-  query PageTurmasData($sigla: String!) {
-    unidadeEstudantil(sigla: $sigla) {
-      categoriasTurma {
-        id
-        titulo
-        tituloFilhos
-
-        categoriaTurmaPai {
-          id
-        }
-
-        turmas {
-          id
-          nome
-        }
-      }
-    }
-  }
-`;
+import { PAGE_TURMAS_DATA_CATEGORIAS } from "./PageTurmasData";
 
 export type ICategoria = any;
 
 export type IPageTurmasContext = {
   categorias: ICategoria[];
 
-  pageTurmasQuery: QueryResult<any, any>;
+  categoriasQuery: QueryResult<any, any>;
 };
 
 export const PageTurmasContext = createContext({} as IPageTurmasContext);
@@ -42,22 +22,25 @@ export const PageTurmasContext = createContext({} as IPageTurmasContext);
 export const PageTurmasContextProvider: FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const { selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
 
-  const pageTurmasQuery = useQuery(GET_PAGE_TURMAS_DATA, {
+  const categoriasQuery = useQuery(PAGE_TURMAS_DATA_CATEGORIAS, {
     variables: { sigla: selectedUnidadeDeEnsino },
   });
 
-  const pageTurmasQueryData = pageTurmasQuery.data;
+  const { data } = categoriasQuery;
 
   const categorias: ICategoria[] = useMemo(
-    () => pageTurmasQueryData?.unidadeEstudantil.categoriasTurma ?? [],
-    [JSON.stringify(pageTurmasQueryData)]
+    () => data?.unidadeEstudantil.categoriasTurma ?? [],
+    [data]
   );
 
   return (
     <PageTurmasContext.Provider
-      value={{ pageTurmasQuery: pageTurmasQuery, categorias }}
+      value={{
+        categorias,
+        categoriasQuery,
+      }}
     >
       {children}
     </PageTurmasContext.Provider>

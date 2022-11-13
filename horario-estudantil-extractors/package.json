@@ -1,6 +1,6 @@
 {
   "name": "@horario-estudantil/extractors",
-  "version": "5.0.0-beta",
+  "version": "4.0.0-beta",
   "main": "dist/index.js",
   "scripts": {
     "build": "pnpm run clear && tsc -p .",

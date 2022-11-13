@@ -4,23 +4,26 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import AppLink from "../AppLink";
 import { useContext } from "react";
 import { AppContext } from "../AppContext/AppContext";
+import { ButtonSelectUnidadeDeEnsinoSelectedInfo } from "./ButtonSelectUnidadeDeEnsinoSelectedInfo";
 
-type Props = {
+type IButtonSelectUnidadeDeEnsinoProps = {
   ButtonProps?: ButtonProps;
 };
 
-const ButtonSelectUnidadeDeEnsino = (props: Props) => {
+const ButtonSelectUnidadeDeEnsino = (
+  props: IButtonSelectUnidadeDeEnsinoProps
+) => {
   const { ButtonProps } = props;
-  const { selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { selectedUE } = useContext(AppContext);
 
   return (
     <>
       <Button
         color="inherit"
-        startIcon={<LocationOnIcon />}
-        endIcon={<ArrowDropDownIcon />}
         {...ButtonProps}
         LinkComponent={AppLink}
+        startIcon={<LocationOnIcon />}
+        endIcon={<ArrowDropDownIcon />}
         sx={{
           py: 1,
           px: 2,
@@ -36,9 +39,8 @@ const ButtonSelectUnidadeDeEnsino = (props: Props) => {
           ...ButtonProps?.sx,
         }}
       >
-        {selectedUnidadeDeEnsino !== null
-          ? "IFRO - Campus Ji-Paraná"
-          : "Selecione uma Unidade de Ensino"}
+        {selectedUE === null && "Selecione uma Instituição"}
+        {selectedUE !== null && <ButtonSelectUnidadeDeEnsinoSelectedInfo />}
       </Button>
     </>
   );

@@ -1,1 +1,1 @@
-export { default } from "./PageTurmas";
+export { default, getServerSideProps } from "./PageTurmas";

@@ -20,7 +20,7 @@ const ACTION_SPACE: IAction = {
 };
 
 export const useLayoutAppNavigationActions = () => {
-  const { selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
 
   const navigationActions: IAction[] = useMemo(
     () =>

@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/router";
 import {
   memo,
   useCallback,
@@ -15,6 +14,7 @@ import { ICategoria } from "./PageTurmasContext";
 import { PageTurmasResultsListNodesContainer } from "./PageTurmasResultsListNodesContainer";
 import PageTurmasResultsListNodesNode from "./PageTurmasResultsListNodesNode";
 import { PageTurmasResultsViewContext } from "./PageTurmasResultsViewContext";
+import { useNavigateToTurma } from "./useNavigateToTurma";
 
 const checkIsBaseCategorias = (categorias: ICategoria[]) =>
   categorias.length > 0 &&
@@ -22,139 +22,123 @@ const checkIsBaseCategorias = (categorias: ICategoria[]) =>
 
 type IPageTurmasResultsListNodesProps = { categorias: ICategoria[] };
 
-const useNavigateToTurma = () => {
-  const router = useRouter();
+const PageTurmasResultsListNodes = (
+  props: IPageTurmasResultsListNodesProps
+) => {
+  const { categorias } = props;
 
-  const navigateToTurma = useCallback(
-    (turmaId: string | number) => {
-      router.push({
-        pathname: `/h/turmas/${turmaId}`,
-        query: {
-          ue: router.query.ue,
-        },
-      });
-    },
-    [router.push]
+  const navigateToTurma = useNavigateToTurma();
+
+  const bgWrapperElRef = useRef<HTMLDivElement>();
+
+  const { getSubCategorias, getParentCategoria, getCategoria } = useContext(
+    PageTurmasResultsViewContext
   );
 
-  return navigateToTurma;
-};
+  const [selectedId, setSelectedId] = useState<number | string | null>(null);
 
-const PageTurmasResultsListNodes = memo(
-  (props: IPageTurmasResultsListNodesProps) => {
-    const { categorias } = props;
+  const selectedCategoria = useMemo(
+    () => getCategoria(selectedId),
+    [getCategoria, selectedId]
+  );
 
-    const navigateToTurma = useNavigateToTurma();
+  const isBase = checkIsBaseCategorias(categorias);
 
-    const bgWrapperElRef = useRef<HTMLDivElement>();
+  const subCategorias = useMemo(
+    () => getSubCategorias(selectedId),
+    [getSubCategorias, selectedId]
+  );
 
-    const { getSubCategorias, getParentCategoria, getCategoria } = useContext(
-      PageTurmasResultsViewContext
-    );
-
-    const [selectedId, setSelectedId] = useState<number | string | null>(null);
-
-    const selectedCategoria = useMemo(
-      () => getCategoria(selectedId),
-      [getCategoria, selectedId]
-    );
-
-    const isBase = checkIsBaseCategorias(categorias);
-
-    const subCategorias = useMemo(
-      () => getSubCategorias(selectedId),
-      [getSubCategorias, selectedId]
-    );
-
-    const parentCategoria = useMemo(() => {
-      if (categorias.length === 0) {
-        return null;
-      }
-
-      const [{ id }] = categorias;
-
-      return getParentCategoria(id);
-    }, [categorias, getParentCategoria]);
-
-    const scrollIntoView = useCallback(() => {
-      const bgContainerEl = bgWrapperElRef.current;
-
-      if (bgContainerEl) {
-        bgContainerEl.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
-        });
-      }
-    }, [bgWrapperElRef]);
-
-    const scrollNextIntoView = useCallback(() => {
-      const bgContainerEl = bgWrapperElRef.current;
-
-      if (bgContainerEl) {
-        const nextEl = bgContainerEl.nextElementSibling;
-
-        nextEl?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
-        });
-      }
-    }, [bgWrapperElRef]);
-
-    useEffect(() => void scrollIntoView(), [scrollIntoView]);
-
-    useEffect(() => {
-      setSelectedId(categorias.length === 1 ? categorias[0].id : null);
-    }, [categorias]);
-
-    useEffect(() => {
-      if (selectedCategoria) {
-        const { turmas } = selectedCategoria;
-
-        if (turmas.length === 1) {
-          navigateToTurma(turmas[0].id);
-        }
-      }
-    }, [selectedCategoria, navigateToTurma]);
-
-    if (categorias.length <= 1) {
+  const parentCategoria = useMemo(() => {
+    if (categorias.length === 0) {
       return null;
     }
 
-    const title = parentCategoria?.tituloFilhos ?? "Categoria";
+    const [{ id }] = categorias;
 
-    return (
-      <PageTurmasResultsListNodesContainer isBase={isBase}>
-        <Box ref={bgWrapperElRef}>
-          <Typography variant="h5" sx={{ mb: 3 }}>
-            {title}
-          </Typography>
+    return getParentCategoria(id);
+  }, [categorias, getParentCategoria]);
 
-          <ButtonGroup fullWidth variant="outlined">
-            {categorias.map((cat) => (
-              <PageTurmasResultsListNodesNode
-                key={cat.id}
-                categoria={cat}
-                isSelected={cat.id === selectedId}
-                onSetSelected={() => {
-                  setSelectedId(cat.id);
-                  scrollNextIntoView();
-                }}
-              />
-            ))}
-          </ButtonGroup>
-        </Box>
+  const scrollIntoView = useCallback(() => {
+    const bgContainerEl = bgWrapperElRef.current;
 
-        {subCategorias.length > 0 && (
-          <PageTurmasResultsListNodes
-            key={selectedId}
-            categorias={subCategorias}
-          />
-        )}
-      </PageTurmasResultsListNodesContainer>
-    );
+    if (bgContainerEl) {
+      bgContainerEl.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+    }
+  }, [bgWrapperElRef]);
+
+  const scrollNextIntoView = useCallback(() => {
+    const bgContainerEl = bgWrapperElRef.current;
+
+    if (bgContainerEl) {
+      const nextEl = bgContainerEl.nextElementSibling;
+
+      nextEl?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+    }
+  }, [bgWrapperElRef]);
+
+  useEffect(() => void scrollIntoView(), [scrollIntoView]);
+
+  useEffect(() => {
+    setSelectedId(categorias.length === 1 ? categorias[0].id : null);
+  }, [categorias]);
+
+  useEffect(() => {
+    if (selectedCategoria) {
+      const { turmas } = selectedCategoria;
+
+      if (turmas.length === 1) {
+        const [turma] = turmas;
+        console.log({ turma });
+        navigateToTurma(turma.id);
+      }
+    }
+  }, [selectedCategoria, navigateToTurma]);
+
+  if (categorias.length <= 1) {
+    return null;
   }
-);
 
-export default PageTurmasResultsListNodes;
+  const title = parentCategoria?.tituloFilhos ?? "Categoria";
+
+  return (
+    <PageTurmasResultsListNodesContainer isBase={isBase}>
+      <Box ref={bgWrapperElRef}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
+          {title}
+        </Typography>
+
+        <ButtonGroup fullWidth variant="outlined">
+          {categorias.map((cat) => (
+            <PageTurmasResultsListNodesNode
+              key={cat.id}
+              categoria={cat}
+              isSelected={cat.id === selectedId}
+              onSetSelected={() => {
+                setSelectedId(cat.id);
+                scrollNextIntoView();
+              }}
+            />
+          ))}
+        </ButtonGroup>
+      </Box>
+
+      {subCategorias.length > 0 && (
+        <PageTurmasResultsListNodes
+          key={selectedId}
+          categorias={subCategorias}
+        />
+      )}
+    </PageTurmasResultsListNodesContainer>
+  );
+};
+
+export default memo(PageTurmasResultsListNodes);

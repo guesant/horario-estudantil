@@ -1,1 +1,4 @@
-export { default } from "../../../../components/PageMateria";
+export {
+  default,
+  getServerSideProps,
+} from "../../../../components/PageMateria";

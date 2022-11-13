@@ -1,6 +1,13 @@
 import Box from "@mui/material/Box";
-import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
+import {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import throttle from "lodash/throttle";
+import AppLoading from "../AppLoading/AppLoading";
 
 export const PageTurmasResultsListNodesContainer = (
   props: PropsWithChildren<{ isBase: boolean }>
@@ -8,6 +15,8 @@ export const PageTurmasResultsListNodesContainer = (
   const { isBase, children } = props;
 
   const wrapperElRef = useRef<HTMLDivElement>();
+
+  const [wasLoaded, setWasLoaded] = useState(false);
 
   const computeSpacing = useCallback(() => {
     const wrapperEl = wrapperElRef.current;
@@ -23,8 +32,10 @@ export const PageTurmasResultsListNodesContainer = (
         24
       );
 
+      wrapperEl.style.justifyContent = "unset";
       wrapperEl.style.paddingTop = `${targetSpacing}px`;
       wrapperEl.style.paddingBottom = `${targetSpacing}px`;
+      setWasLoaded(true);
     }
   }, [wrapperElRef]);
 
@@ -45,17 +56,26 @@ export const PageTurmasResultsListNodesContainer = (
   }
 
   return (
-    <Box
-      ref={wrapperElRef}
-      sx={{
-        gap: 5,
-        height: "100%",
-        display: "flex",
-        overflow: "auto",
-        flexDirection: "column",
-      }}
-    >
-      {children}
-    </Box>
+    <>
+      <Box
+        ref={wrapperElRef}
+        sx={{
+          pr: 1,
+          mr: -1,
+          gap: 5,
+
+          height: "100%",
+          display: "flex",
+
+          overflowX: "auto",
+          overflowY: "scroll",
+
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {children}
+      </Box>
+    </>
   );
 };

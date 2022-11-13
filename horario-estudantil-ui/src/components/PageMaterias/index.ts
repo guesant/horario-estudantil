@@ -1,1 +1,1 @@
-export { default } from "./PageMaterias";
+export { default, getServerSideProps } from "./PageMaterias";

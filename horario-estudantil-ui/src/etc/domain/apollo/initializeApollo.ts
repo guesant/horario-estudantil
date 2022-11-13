@@ -1,6 +1,6 @@
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { createApolloClient } from "./createApolloClient";
-import { isSSR } from "./isSSR";
+import { isSSR } from "../app/isSSR";
 
 let apolloClientCache: ApolloClient<NormalizedCacheObject>;
 

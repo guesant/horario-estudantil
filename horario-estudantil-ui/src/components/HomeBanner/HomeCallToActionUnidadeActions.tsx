@@ -10,7 +10,7 @@ import { ActionType } from "../LayoutBase/interfaces/IAction";
 import { IActionItem } from "../LayoutBase/interfaces/IActionItem";
 
 const useCoreActions = () => {
-  const { selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
 
   const actions = useMemo(
     () =>
@@ -23,7 +23,7 @@ const useCoreActions = () => {
   return actions;
 };
 
-const HomeCallToActionUnidadeSelected = () => {
+const HomeCallToActionUnidadeActions = () => {
   const actions = useCoreActions();
 
   return (
@@ -86,4 +86,4 @@ const HomeCallToActionUnidadeSelected = () => {
   );
 };
 
-export default HomeCallToActionUnidadeSelected;
+export default HomeCallToActionUnidadeActions;

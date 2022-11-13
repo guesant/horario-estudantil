@@ -5,7 +5,7 @@ import { IActionItem } from "./IActionItem";
 export const useActionRouter = () => {
   const router = useRouter();
 
-  const { asPath, isReady } = router;
+  const { asPath } = router;
 
   const currentPathname = new URL(`http://hostname${asPath}`).pathname;
 
@@ -29,7 +29,7 @@ export const useActionRouter = () => {
 
       return { isMatch: false, realTarget: null };
     },
-    [router, currentPathname]
+    [currentPathname]
   );
 
   return { match };

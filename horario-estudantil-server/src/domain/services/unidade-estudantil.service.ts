@@ -39,7 +39,11 @@ export class UnidadeEstudantilService {
     });
 
     if (!unidadeEstudantil) {
-      throw new NotFoundException();
+      throw new NotFoundException({
+        message: 'Unidade Estudantil was not found.',
+        resource: 'UnidadeEstudantil',
+        code: 'not-found',
+      });
     }
 
     return unidadeEstudantil;

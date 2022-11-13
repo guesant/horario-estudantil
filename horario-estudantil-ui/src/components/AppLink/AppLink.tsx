@@ -1,36 +1,53 @@
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/router";
-import React, { forwardRef, PropsWithChildren } from "react";
+import React, {
+  forwardRef,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from "react";
 import { UrlObject } from "url";
+import { AppRoutingContext } from "../AppRoutingContext/AppRoutingContext";
+import pick from "lodash/pick";
 
 type IAppLinkProps = PropsWithChildren<
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
-    LinkProps
+    LinkProps & {
+      keep?: string[];
+    }
 >;
 
+const getUrlObjectFromHref = (href: string | UrlObject) =>
+  typeof href === "string"
+    ? {
+        pathname: href,
+      }
+    : {
+        ...href,
+      };
+
 const AppLink = forwardRef((props: IAppLinkProps, ref) => {
-  const { href: baseHref, ...otherProps } = props;
+  const { href, keep, ...otherProps } = props;
 
-  const { query } = useRouter();
+  const { query } = useContext(AppRoutingContext);
 
-  const baseHrefAsObject: UrlObject =
-    typeof baseHref === "string"
-      ? {
-          pathname: baseHref,
-        }
-      : {
-          ...baseHref,
-        };
+  const urlObject = useMemo(() => getUrlObjectFromHref(href), [href]);
+
+  const targetQuery = useMemo(
+    () => pick(query, ["ue", ...(keep ?? [])]),
+    [query, keep]
+  );
 
   return (
     <Link
       {...otherProps}
       href={{
-        ...baseHrefAsObject,
-        query: { ue: query.ue },
+        ...urlObject,
+        query: targetQuery,
       }}
     />
   );
 });
+
+AppLink.displayName = "AppLink";
 
 export default AppLink;

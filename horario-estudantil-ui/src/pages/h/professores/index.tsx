@@ -1,1 +1,4 @@
-export { default } from "../../../components/PageProfessores";
+export {
+  default,
+  getServerSideProps,
+} from "../../../components/PageProfessores";

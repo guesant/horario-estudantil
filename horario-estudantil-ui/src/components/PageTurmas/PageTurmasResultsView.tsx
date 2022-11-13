@@ -13,7 +13,7 @@ const useAllCategorias = () => {
 const getBaseCategorias = (categorias: ICategoria[]) =>
   categorias.filter((categoria) => categoria.categoriaTurmaPai === null);
 
-const PageTurmasResultsView = (props: Props) => {
+const PageTurmasResultsView = () => {
   const allCategorias = useAllCategorias();
 
   const baseCategorias = useMemo(
