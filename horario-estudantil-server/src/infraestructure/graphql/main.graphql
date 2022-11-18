@@ -114,10 +114,25 @@ type Usuario {
   memberships: [UnidadeEstudantilMembership]
 }
 
+type SearchUnidadesEstudantisResult {
+  hits: [UnidadeEstudantil]
+
+  limit: Int
+  offset: Int
+  estimatedTotalHits: Int
+
+  # "query": "botman",
+  # "processingTimeMs": 12
+}
+
 type Query {
   unidadeEstudantil(sigla: String!): UnidadeEstudantil
 
   # unidadesEstudantis: [UnidadeEstudantil]
 
-  searchUnidadesEstudantis(query: String): [UnidadeEstudantil]
+  searchUnidadesEstudantis(
+    query: String
+    limit: Int
+    offset: Int
+  ): SearchUnidadesEstudantisResult
 }

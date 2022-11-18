@@ -1,5 +1,6 @@
 export const DATA_SOURCE = Symbol();
 export const OPENID_CLIENT = Symbol();
+export const MEILISEARCH_CLIENT = Symbol();
 
 //
 

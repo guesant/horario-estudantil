@@ -26,9 +26,10 @@ import { UnidadeEstudantilService } from '../../domain/services/unidade-estudant
 
 import { CategoriaTurmaService } from 'src/domain/services/categoria-turma.service';
 import { DatabaseModule } from './database.module';
+import { SearchModule } from './search.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, SearchModule],
   controllers: [UnidadeEstudantilController],
   providers: [
     //

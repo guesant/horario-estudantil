@@ -1,10 +1,13 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import MeiliSearch from 'meilisearch';
 import {
+  MEILISEARCH_CLIENT,
   REPOSITORY_CATEGORIA_TURMA,
   REPOSITORY_PERIODO_LETIVO,
   REPOSITORY_UNIDADE_ESTUDANTIL,
   REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP,
 } from 'src/infraestructure/constants';
+import { INDEX_INSTITUICAO } from 'src/infraestructure/meilisearch/SEARCH_INDEXES';
 import { UnidadeEstudantilEntity } from '../entities/unidade-estudantil.entity';
 import { ICategoriaTurmaRepository } from '../repositories/categoria-turma.repository';
 import { IPeriodoLetivoRepository } from '../repositories/periodo-letivo.repository';
@@ -14,6 +17,22 @@ import { IUnidadeEstudantilRepository } from '../repositories/unidade-estudantil
 export type IFindUnidadeEstudantilQuery = Partial<
   Pick<UnidadeEstudantilEntity, 'sigla' | 'id'>
 >;
+
+const parseLimit = (reqLimit: any) => {
+  if (Number.isInteger(reqLimit)) {
+    return Math.min(Math.max(reqLimit, 1), 100);
+  }
+
+  return 20;
+};
+
+const parseOffset = (reqOffset: any) => {
+  if (Number.isInteger(reqOffset)) {
+    return Math.max(reqOffset, 0);
+  }
+
+  return 0;
+};
 
 @Injectable()
 export class UnidadeEstudantilService {
@@ -29,6 +48,9 @@ export class UnidadeEstudantilService {
 
     @Inject(REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP)
     private unidadeEstudantilMembershipRepository: IUnidadeEstudantilMembershipRepository,
+
+    @Inject(MEILISEARCH_CLIENT)
+    private meilisearchClient: MeiliSearch,
   ) {}
 
   async findUnidadeEstudantil(query: IFindUnidadeEstudantilQuery) {
@@ -49,9 +71,19 @@ export class UnidadeEstudantilService {
     return unidadeEstudantil;
   }
 
-  async findUnidadesEstudantis() {
-    const data = await this.unidadeEstudantilRepository.find();
-    return data;
+  async searchUnidadesEstudantis(
+    query: string,
+    reqLimit?: number,
+    reqOffset?: number,
+  ) {
+    const limit = parseLimit(reqLimit);
+    const offset = parseOffset(reqOffset);
+
+    const results = await this.meilisearchClient
+      .index(INDEX_INSTITUICAO)
+      .search(query, { limit, offset });
+
+    return results;
   }
 
   async findUnidadeEstudantilPeriodos(query: IFindUnidadeEstudantilQuery) {

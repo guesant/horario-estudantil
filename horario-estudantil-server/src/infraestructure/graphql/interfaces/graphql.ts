@@ -103,10 +103,17 @@ export class Usuario {
     memberships?: Nullable<Nullable<UnidadeEstudantilMembership>[]>;
 }
 
+export class SearchUnidadesEstudantisResult {
+    hits?: Nullable<Nullable<UnidadeEstudantil>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    estimatedTotalHits?: Nullable<number>;
+}
+
 export abstract class IQuery {
     abstract unidadeEstudantil(sigla: string): Nullable<UnidadeEstudantil> | Promise<Nullable<UnidadeEstudantil>>;
 
-    abstract searchUnidadesEstudantis(query?: Nullable<string>): Nullable<Nullable<UnidadeEstudantil>[]> | Promise<Nullable<Nullable<UnidadeEstudantil>[]>>;
+    abstract searchUnidadesEstudantis(query?: Nullable<string>, limit?: Nullable<number>, offset?: Nullable<number>): Nullable<SearchUnidadesEstudantisResult> | Promise<Nullable<SearchUnidadesEstudantisResult>>;
 }
 
 type Nullable<T> = T | null;

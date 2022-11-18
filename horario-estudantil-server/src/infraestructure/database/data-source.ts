@@ -10,8 +10,11 @@ export const getDataSource = () => {
     url: DATABASE_CONNECTION,
 
     logging: ['warn', 'error', 'migration', 'schema'],
+
     entities: [__dirname + '/../../domain/entities/*{.ts,.js}'],
+    subscribers: [__dirname + '/../../domain/subscribers/*{.ts,.js}'],
     migrations: [__dirname + '/migrations/*{.ts,.js}'],
+
     migrationsTableName: 'app_migration',
   });
 

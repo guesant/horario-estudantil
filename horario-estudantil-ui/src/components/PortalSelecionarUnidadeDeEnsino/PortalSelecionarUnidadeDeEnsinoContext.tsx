@@ -1,4 +1,4 @@
-import { gql, QueryResult, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import {
   createContext,
   Dispatch,
@@ -6,15 +6,20 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useDebounce } from "use-debounce";
 
 const SEARCH_UNIDADES_ESTUDANTIS = gql`
   query SearchUnidadesEstudantis($query: String) {
-    searchUnidadesEstudantis(query: $query) {
-      id
-
-      nome
-      sigla
-      apelido
+    searchUnidadesEstudantis(query: $query, limit: 15) {
+      hits {
+        id
+        nome
+        sigla
+        apelido
+      }
+      limit
+      offset
+      estimatedTotalHits
     }
   }
 `;
@@ -42,6 +47,8 @@ export type IPortalSelecionarUnidadeDeEnsinoContextProviderProps = {
   children?: any;
 };
 
+const SEARCH_DELAY = 150;
+
 export const PortalSelecionarUnidadeDeEnsinoContextProvider = (
   props: IPortalSelecionarUnidadeDeEnsinoContextProviderProps
 ) => {
@@ -49,17 +56,20 @@ export const PortalSelecionarUnidadeDeEnsinoContextProvider = (
 
   const [searchText, setSearchText] = useState("");
 
+  const [debouncedSearchText] = useDebounce(searchText, SEARCH_DELAY);
+
   const searchQuery = useQuery(SEARCH_UNIDADES_ESTUDANTIS, {
-    variables: { query: searchText },
+    variables: { query: debouncedSearchText },
   });
 
   const data = searchQuery.data;
   const hasData = Boolean(data);
   const isError = Boolean(searchQuery.error);
-  const isLoading = Boolean(searchQuery.loading);
+  const isLoading =
+    debouncedSearchText !== searchText || Boolean(searchQuery.loading);
 
   const unidadesEstudantis = useMemo(
-    (): any[] => data?.searchUnidadesEstudantis ?? [],
+    (): any[] => data?.searchUnidadesEstudantis.hits ?? [],
     [data]
   );
 

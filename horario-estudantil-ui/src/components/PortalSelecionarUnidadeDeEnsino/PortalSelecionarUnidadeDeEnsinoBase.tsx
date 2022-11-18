@@ -2,10 +2,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import PortalSelecionarUnidadeDeEnsinoHeader from "./PortalSelecionarUnidadeDeEnsinoHeader";
-import PortalSelecionarUnidadeDeEnsinoSearchField from "./PortalSelecionarUnidadeDeEnsinoSearchField";
 import PortalSelecionarUnidadeDeEnsinoResults from "./PortalSelecionarUnidadeDeEnsinoResults";
-
-const SHOW_SEARCH_FIELD = process.env.NODE_ENV !== "production";
+import PortalSelecionarUnidadeDeEnsinoSearchField from "./PortalSelecionarUnidadeDeEnsinoSearchField";
 
 const PortalSelecionarUnidadeDeEnsinoBase = () => {
   return (
@@ -22,15 +20,11 @@ const PortalSelecionarUnidadeDeEnsinoBase = () => {
         >
           <PortalSelecionarUnidadeDeEnsinoHeader />
 
-          {SHOW_SEARCH_FIELD && (
-            <>
-              <Divider />
+          <Divider />
 
-              <Box sx={{ my: 2 }}>
-                <PortalSelecionarUnidadeDeEnsinoSearchField />
-              </Box>
-            </>
-          )}
+          <Box sx={{ my: 2 }}>
+            <PortalSelecionarUnidadeDeEnsinoSearchField />
+          </Box>
 
           <Box sx={{ flex: 1, overflow: "auto" }}>
             <PortalSelecionarUnidadeDeEnsinoResults />

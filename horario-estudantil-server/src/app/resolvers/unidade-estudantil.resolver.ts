@@ -8,8 +8,16 @@ export class UnidadeEstudantilResolver {
 
   @SkipAuth()
   @Query()
-  async searchUnidadesEstudantis(@Args('query') query: string) {
-    return this.unidadeEstudantilService.findUnidadesEstudantis();
+  async searchUnidadesEstudantis(
+    @Args('query') query: string,
+    @Args('limit') limit: number,
+    @Args('offset') offset: number,
+  ) {
+    return this.unidadeEstudantilService.searchUnidadesEstudantis(
+      query,
+      limit,
+      offset,
+    );
   }
 
   @SkipAuth()

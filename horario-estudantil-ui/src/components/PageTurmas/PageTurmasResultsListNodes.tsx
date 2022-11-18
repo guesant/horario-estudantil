@@ -97,7 +97,6 @@ const PageTurmasResultsListNodes = (
 
       if (turmas.length === 1) {
         const [turma] = turmas;
-        console.log({ turma });
         navigateToTurma(turma.id);
       }
     }

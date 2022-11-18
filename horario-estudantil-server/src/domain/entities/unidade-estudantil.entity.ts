@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { CategoriaTurmaEntity } from './catergoria-turma.entity';
 import { PeriodoLetivoEntity } from './periodo-letivo.entity';
 import { UnidadeEstudantilMembershipEntity } from './unidade-estudantil-membership.entity';
@@ -31,4 +37,10 @@ export class UnidadeEstudantilEntity {
     (periodosLetivos) => periodosLetivos.unidadeEstudantil,
   )
   periodosLetivos: PeriodoLetivoEntity[];
+
+  @UpdateDateColumn({ name: 'data_last_update' })
+  lastUpdate: Date;
+
+  @Column({ name: 'data_last_search_sync_ue' })
+  lastSearchSync: Date;
 }

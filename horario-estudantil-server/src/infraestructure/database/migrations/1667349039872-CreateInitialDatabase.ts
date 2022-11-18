@@ -57,8 +57,15 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'sigla_ue',
-            type: 'varchar(255)',
+            name: 'data_last_update',
+            type: 'timestamptz',
+            isNullable: true,
+          },
+
+          {
+            name: 'data_last_search_sync_ue',
+            type: 'timestamptz',
+            isNullable: true,
           },
         ],
       }),
