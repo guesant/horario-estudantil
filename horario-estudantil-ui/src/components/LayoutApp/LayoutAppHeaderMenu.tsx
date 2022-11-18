@@ -55,7 +55,7 @@ const LayoutUnidadeEstudantilHeaderMenu = () => {
               <ListItemIcon>
                 <EditLocationIcon />
               </ListItemIcon>
-              <ListItemText>Alterar Unidade de Ensino</ListItemText>
+              <ListItemText>Alterar Instituição</ListItemText>
             </MenuItem>
           </AppLink>
 

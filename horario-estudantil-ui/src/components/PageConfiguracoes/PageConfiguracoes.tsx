@@ -4,7 +4,7 @@ import { IAppPage } from "../../etc/domain/app/pages/IAppPage";
 import { buildPageTitle } from "../../etc/domain/app/skeleton/buildPageTitle";
 import LayoutApp from "../LayoutApp/LayoutApp";
 
-const Configuracoes: IAppPage = () => {
+const PageConfiguracoes: IAppPage = () => {
   return (
     <>
       <Head>
@@ -18,4 +18,4 @@ const Configuracoes: IAppPage = () => {
   );
 };
 
-export default Configuracoes;
+export default PageConfiguracoes;

@@ -8,7 +8,7 @@ export class UnidadeEstudantilResolver {
 
   @SkipAuth()
   @Query()
-  async unidadesEstudantis() {
+  async searchUnidadesEstudantis(@Args('query') query: string) {
     return this.unidadeEstudantilService.findUnidadesEstudantis();
   }
 

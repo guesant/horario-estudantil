@@ -117,5 +117,7 @@ type Usuario {
 type Query {
   unidadeEstudantil(sigla: String!): UnidadeEstudantil
 
-  unidadesEstudantis: [UnidadeEstudantil]
+  # unidadesEstudantis: [UnidadeEstudantil]
+
+  searchUnidadesEstudantis(query: String): [UnidadeEstudantil]
 }

@@ -106,7 +106,7 @@ export class Usuario {
 export abstract class IQuery {
     abstract unidadeEstudantil(sigla: string): Nullable<UnidadeEstudantil> | Promise<Nullable<UnidadeEstudantil>>;
 
-    abstract unidadesEstudantis(): Nullable<Nullable<UnidadeEstudantil>[]> | Promise<Nullable<Nullable<UnidadeEstudantil>[]>>;
+    abstract searchUnidadesEstudantis(query?: Nullable<string>): Nullable<Nullable<UnidadeEstudantil>[]> | Promise<Nullable<Nullable<UnidadeEstudantil>[]>>;
 }
 
 type Nullable<T> = T | null;

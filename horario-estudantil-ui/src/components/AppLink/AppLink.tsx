@@ -8,13 +8,17 @@ import React, {
 import { UrlObject } from "url";
 import { AppRoutingContext } from "../AppRoutingContext/AppRoutingContext";
 import pick from "lodash/pick";
+import omit from "lodash/omit";
 
-type IAppLinkProps = PropsWithChildren<
+type IAppLinkBaseProps = PropsWithChildren<
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
-    LinkProps & {
-      keep?: string[];
-    }
+    LinkProps
 >;
+
+export type IAppLinkProps = IAppLinkBaseProps & {
+  keep?: string[];
+  ignore?: string[];
+};
 
 const getUrlObjectFromHref = (href: string | UrlObject) =>
   typeof href === "string"
@@ -26,16 +30,25 @@ const getUrlObjectFromHref = (href: string | UrlObject) =>
       };
 
 const AppLink = forwardRef((props: IAppLinkProps, ref) => {
-  const { href, keep, ...otherProps } = props;
+  const { href, keep, ignore, ...otherProps } = props;
 
   const { query } = useContext(AppRoutingContext);
 
   const urlObject = useMemo(() => getUrlObjectFromHref(href), [href]);
 
-  const targetQuery = useMemo(
-    () => pick(query, ["ue", ...(keep ?? [])]),
-    [query, keep]
-  );
+  const targetQuery: any = useMemo(() => {
+    const builtQuery = omit(pick(query, ["ue", ...(keep ?? [])]), [
+      ...(ignore ?? []),
+    ]);
+
+    const clearBuiltQuery = Object.fromEntries(
+      Object.entries(builtQuery).filter(
+        ([k, v]) => v !== undefined && v !== null
+      )
+    );
+
+    return clearBuiltQuery;
+  }, [query, keep, ignore]);
 
   return (
     <Link

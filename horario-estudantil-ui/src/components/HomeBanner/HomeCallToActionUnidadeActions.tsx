@@ -1,13 +1,15 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import AppLink from "../AppLink";
 import { Fragment, useContext, useMemo } from "react";
 import { AppContext } from "../AppContext/AppContext";
+import AppLink from "../AppLink";
 import ButtonSelectUnidadeDeEnsino from "../ButtonSelectUnidadeDeEnsino/ButtonSelectUnidadeDeEnsino";
 import { getActionsForUnidadeDeEnsino } from "../LayoutApp/NavigationActions/getActionsForUnidadeDeEnsino";
 import { ActionType } from "../LayoutBase/interfaces/IAction";
 import { IActionItem } from "../LayoutBase/interfaces/IActionItem";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
 
 const useCoreActions = () => {
   const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
@@ -28,58 +30,88 @@ const HomeCallToActionUnidadeActions = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          gap: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Typography
-          variant="h5"
-          sx={{
-            fontSize: { md: "1.5rem", xs: "1.25rem" },
-          }}
+          variant="h3"
+          sx={{ fontSize: { md: "1.75rem", sm: "1.75rem", xs: "1.5rem" } }}
         >
-          Começe por aqui:
+          Bem-vindo.
         </Typography>
+
+        <Divider />
 
         <ButtonSelectUnidadeDeEnsino
           ButtonProps={{
-            variant: "outlined",
             color: "success",
-            sx: { py: 0.5, px: 1.5 },
+            variant: "outlined",
+            sx: { py: 0.95, px: 1.5 },
           }}
         />
 
+        <Divider />
+
         <Box
           sx={{
-            gap: 1,
+            gap: 2,
             display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
+            flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
-          {actions.map(({ label, icon, route }) => (
-            <Fragment key={label}>
-              <Button
-                color="success"
-                startIcon={icon}
-                disableElevation
-                variant="contained"
-                {...(route
-                  ? {
-                      href: route.target,
-                      LinkComponent: AppLink,
-                    }
-                  : {})}
-                sx={{ py: 1, px: 2, textTransform: "none" }}
-              >
-                {label}
-              </Button>
-            </Fragment>
-          ))}
+          <Typography
+            variant="h5"
+            sx={{ fontSize: { md: "1.5rem", xs: "1.25rem" } }}
+          >
+            Continue por aqui:
+          </Typography>
+
+          <Box
+            sx={{
+              gap: 1,
+
+              width: "100%",
+
+              display: "flex",
+
+              flexWrap: "wrap",
+
+              alignItems: {
+                xs: "stretch",
+                sm: "center",
+              },
+
+              flexDirection: {
+                xs: "column",
+                sm: "row",
+              },
+            }}
+          >
+            {actions.map(({ label, icon, route }) => (
+              <Fragment key={label}>
+                <Button
+                  color="success"
+                  startIcon={icon}
+                  disableElevation
+                  variant="contained"
+                  sx={{
+                    py: 1.75,
+                    flex: 1,
+                    px: 2.15,
+                    fontSize: "1rem",
+                    textTransform: "none",
+                  }}
+                  {...(route
+                    ? {
+                        href: route.target,
+                        LinkComponent: AppLink,
+                      }
+                    : {})}
+                >
+                  {label}
+                </Button>
+              </Fragment>
+            ))}
+          </Box>
         </Box>
       </Box>
     </>
