@@ -49,7 +49,13 @@ export default function App({
         <Backdrop
           open={isLoading}
           onClick={() => {}}
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{
+            zIndex: (theme) =>
+              Object.values(theme.zIndex).reduce(
+                (acc, i) => Math.max(acc, i),
+                0
+              ) + 1,
+          }}
         />
         <ApolloProvider client={client}>
           <AppRoutingContextProvider initialQuery={initialQuery}>

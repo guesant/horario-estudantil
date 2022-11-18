@@ -5,7 +5,7 @@ import PortalSelecionarUnidadeDeEnsinoHeader from "./PortalSelecionarUnidadeDeEn
 import PortalSelecionarUnidadeDeEnsinoSearchField from "./PortalSelecionarUnidadeDeEnsinoSearchField";
 import PortalSelecionarUnidadeDeEnsinoResults from "./PortalSelecionarUnidadeDeEnsinoResults";
 
-const SHOW_SEARCH_FIELD = false;
+const SHOW_SEARCH_FIELD = process.env.NODE_ENV !== "production";
 
 const PortalSelecionarUnidadeDeEnsinoBase = () => {
   return (

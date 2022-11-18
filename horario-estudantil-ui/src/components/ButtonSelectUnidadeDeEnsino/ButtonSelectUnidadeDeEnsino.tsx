@@ -1,6 +1,7 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Button, { ButtonProps } from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import dynamic from "next/dynamic";
 import { MouseEventHandler, useCallback, useContext, useState } from "react";
@@ -73,7 +74,9 @@ const ButtonSelectUnidadeDeEnsino = (
         open={isModalOpened}
         onClose={() => setIsModalOpened(false)}
       >
-        <PortalSelecionarUnidadeDeEnsino />
+        <Box sx={{ height: "100vh", maxHeight: "100%" }}>
+          <PortalSelecionarUnidadeDeEnsino />
+        </Box>
       </Dialog>
     </>
   );
