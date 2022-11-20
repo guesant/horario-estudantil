@@ -3,6 +3,7 @@ import { initializeApollo } from "../../etc/domain/apollo/initializeApollo";
 import { IAppPage } from "../../etc/domain/app/pages/IAppPage";
 import { getSharedServerSideProps } from "../../etc/domain/app/pages/shared/getSharedServerSideProps";
 import { parseQueryData } from "../../etc/domain/app/pages/shared/parseQueryData";
+import log from "../../etc/domain/log/log";
 import PageTurmasBase from "./PageTurmasBase";
 import { PageTurmasContextProvider } from "./PageTurmasContext";
 import { PAGE_TURMAS_DATA_CATEGORIAS } from "./PageTurmasData";
@@ -20,7 +21,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         variables: { sigla: ue },
         query: PAGE_TURMAS_DATA_CATEGORIAS,
       })
-      .catch(() => null);
+      .catch(() => {
+        log.error("Can not fetch turmas", { params: { sigla: ue } });
+      });
   }
 
   return {

@@ -6,11 +6,7 @@ import { buildPageTitle } from "../../etc/domain/app/skeleton/buildPageTitle";
 import HomeBanner from "../HomeBanner/HomeBanner";
 import LayoutApp from "../LayoutApp/LayoutApp";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    ...(await getSharedServerSideProps(context)),
-  };
-};
+export const getServerSideProps: GetServerSideProps = getSharedServerSideProps;
 
 const Home: IAppPage = () => {
   return (

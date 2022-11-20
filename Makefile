@@ -2,7 +2,7 @@ setup-infrastructure:
 	
 	cd infrastructure/sdk && make build-node-pnpm;
 
-start-server-shell:
+start-shell-server:
 
 	make setup-infrastructure;
 
@@ -16,7 +16,7 @@ start-server-shell:
 		--env-file horario-estudantil-server/.env \
 		-it he-local-node bash
 
-start-ui-shell:
+start-shell-ui:
 
 	make setup-infrastructure;
 

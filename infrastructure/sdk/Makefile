@@ -8,7 +8,7 @@ build-node-pnpm:
 build-keycloak:
 	docker build ./docker/keycloak -t he-local-keycloak
 
-service-auth-start:
+start-auth:
 	docker run --rm \
 		-p 8080:8080 \
 		--env-file auth-service/.env \
@@ -16,7 +16,7 @@ service-auth-start:
 		--network horario-estudantil-net \
 		-it he-local-keycloak start-dev
 
-service-database-start:
+start-database:
 	docker run --rm \
 	  -p 5432:5432 \
 		--name horario-estudantil-db \
@@ -25,7 +25,7 @@ service-database-start:
     -v '$(shell pwd)/database-service/volumes/postgres:/var/lib/postgresql/data' \
 		-it postgres:15-alpine
 
-service-meilisearch-start:
+start-meilisearch:
 	docker run -it --rm \
     -p 7700:7700 \
 		--name horario-estudantil-meilisearch  \

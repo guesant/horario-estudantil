@@ -24,63 +24,75 @@ export type IAppContextProviderProps = {
   children: any;
 };
 
-const useRouteUE = () => {
+const useRouteSigla = () => {
   const { query } = useContext(AppRoutingContext);
+
   return query.ue;
+};
+
+const useRouteRequiresSigla = () => {
+  const router = useRouter();
+  const { pathname } = router;
+
+  return pathname.startsWith("/h/");
 };
 
 export const AppContextProvider: FC<IAppContextProviderProps> = ({
   children,
 }) => {
   const router = useRouter();
-  const { pathname } = router;
+  const routeUE = useRouteSigla();
+  const isSiglaRequired = useRouteRequiresSigla();
 
-  const routeUE = useRouteUE();
+  const [selectedSigla, setSelectedSigla] = useState<string | null>(routeUE);
 
-  const [selectedUE, setSelectedUE] = useState<string | null>(routeUE);
+  const hasSigla = typeof selectedSigla === "string";
 
-  const loadCheckQuery = useQuery(QUERY_UNIDADE_DE_ENSINO_INFO, {
-    variables: { sigla: selectedUE },
+  const unidadeDeEnsinoInfoQuery = useQuery(QUERY_UNIDADE_DE_ENSINO_INFO, {
+    skip: !hasSigla,
+    variables: { sigla: selectedSigla },
   });
 
-  useEffect(() => void setSelectedUE(routeUE), [routeUE]);
+  useEffect(() => void setSelectedSigla(routeUE), [routeUE]);
 
   const selectedUEInfo = useMemo(() => {
-    if (pathname.startsWith("/h/") && typeof selectedUE !== "string") {
+    const { loading, called, error } = unidadeDeEnsinoInfoQuery;
+
+    if (isSiglaRequired && !hasSigla) {
       return { isValid: false, reason: "required" };
     }
 
-    if (selectedUE) {
-      const { error } = loadCheckQuery;
+    if (loading || ((isSiglaRequired || hasSigla) && !called)) {
+      return { isValid: false, reason: "loading" };
+    }
 
-      if (error) {
-        const { graphQLErrors } = error;
+    if (error) {
+      const { graphQLErrors } = error;
 
-        const notFoundError = graphQLErrors.some(
-          (graphQLError) =>
-            (graphQLError.extensions?.exception as any)?.status === 404
-        );
+      const notFoundError = graphQLErrors.some(
+        (graphQLError) =>
+          (graphQLError.extensions?.exception as any)?.status === 404
+      );
 
-        if (notFoundError) {
-          return { isValid: false, reason: "not-found" };
-        }
+      if (notFoundError) {
+        return { isValid: false, reason: "not-found" };
       }
     }
 
     return { isValid: true };
-  }, [loadCheckQuery, pathname, selectedUE]);
+  }, [unidadeDeEnsinoInfoQuery, isSiglaRequired, hasSigla]);
 
-  const handleInvalidUE = useCallback(() => {
-    router.push("/");
-  }, [router]);
+  const { isValid, reason } = selectedUEInfo;
+
+  const handleInvalidUE = useCallback(() => void router.push("/"), [router]);
 
   useEffect(() => {
-    if (!selectedUEInfo.isValid) {
+    if (!isValid && reason !== "loading") {
       handleInvalidUE();
     }
-  }, [selectedUEInfo, handleInvalidUE]);
+  }, [isValid, reason, handleInvalidUE]);
 
-  if (loadCheckQuery.loading || !selectedUEInfo.isValid) {
+  if (!isValid) {
     return (
       <>
         <LayoutApp>
@@ -91,7 +103,7 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
   }
 
   return (
-    <AppContext.Provider value={{ selectedUE: selectedUE }}>
+    <AppContext.Provider value={{ selectedUE: selectedSigla }}>
       {children}
     </AppContext.Provider>
   );

@@ -1,6 +1,6 @@
-import { ApolloClient } from "@apollo/client";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import { initializeApollo } from "../../../apollo/initializeApollo";
+import log from "../../../log/log";
 import { QUERY_UNIDADE_DE_ENSINO_INFO } from "../UnidadeDeEnsino/UnidadeDeEnsinoQueries";
 import { parseQueryData } from "./parseQueryData";
 
@@ -20,7 +20,11 @@ export const getSharedServerSideProps = async (
         variables: { sigla: ue },
         query: QUERY_UNIDADE_DE_ENSINO_INFO,
       })
-      .catch(() => null);
+      .catch(() => {
+        log.error("Can not fetch UnidadeDeEnsinoInfo", {
+          params: { sigla: ue },
+        });
+      });
   }
 
   return {
