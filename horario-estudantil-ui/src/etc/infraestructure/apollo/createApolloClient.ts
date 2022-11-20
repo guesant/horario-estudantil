@@ -1,16 +1,18 @@
 import { HttpLink, ApolloClient, InMemoryCache } from "@apollo/client";
-import { isSSR } from "../../domain/app/isSSR";
+import { isServerSide } from "../../domain/app/isServerSide";
+
+const ENDPOINT = isServerSide
+  ? process.env.INTERNAL_ENDPOINT_URL
+  : process.env.NEXT_PUBLIC_ENDPOINT_URL;
 
 export const createApolloClient = () => {
+  const ENPOINT_GRAPHQL = `${ENDPOINT}/graphql`;
+
   return new ApolloClient({
-    ssrMode: isSSR,
+    ssrMode: isServerSide,
     cache: new InMemoryCache({
-      typePolicies: {
-        Instituicao: {
-          merge: true,
-        },
-      },
+      typePolicies: { Instituicao: { merge: true } },
     }),
-    link: new HttpLink({ uri: process.env.NEXT_PUBLIC_ENDPOINT_GRAPHQL_URL }),
+    link: new HttpLink({ uri: ENPOINT_GRAPHQL }),
   });
 };

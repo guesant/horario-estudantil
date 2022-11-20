@@ -1,6 +1,6 @@
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { createApolloClient } from "./createApolloClient";
-import { isSSR } from "../../domain/app/isSSR";
+import { isServerSide } from "../../domain/app/isServerSide";
 
 let apolloClientCache: ApolloClient<NormalizedCacheObject>;
 
@@ -11,7 +11,7 @@ export const initializeApollo = (initialState: any = {}) => {
     apolloClient.cache.restore(initialState);
   }
 
-  if (isSSR) {
+  if (isServerSide) {
     return apolloClient;
   }
 

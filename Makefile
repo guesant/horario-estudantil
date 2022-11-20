@@ -1,6 +1,12 @@
-setup-infrastructure:
-	
-	cd infrastructure/sdk && make build-node-pnpm;
+start-shell:
+	make setup-infrastructure;
+
+	docker run --rm \
+		-u node \
+		-w /app \
+		-v $(shell pwd):/app \
+		--network horario-estudantil-net \
+		-it node:16 bash
 
 start-shell-server:
 

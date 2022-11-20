@@ -3,8 +3,8 @@
   "version": "4.0.0-beta",
   "main": "dist/index.js",
   "scripts": {
-    "build": "pnpm run clear && tsc -p .",
-    "prepare": "pnpm run build",
+    "build": "yarn run clear && tsc -p .",
+    "prepare": "yarn run build",
     "clear": "rimraf dist",
     "format": "prettier --write \"src/**/*.ts\""
   },
@@ -12,7 +12,6 @@
     "/dist"
   ],
   "dependencies": {
-    "@horario-estudantil/shared": "workspace:*",
     "@xmldom/xmldom": "^0.8.4",
     "lodash": "^4.17.21",
     "pdfjs-dist": "^3.0.279",

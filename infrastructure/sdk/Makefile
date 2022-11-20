@@ -1,9 +1,5 @@
-
 setup-env:
 	docker network create horario-estudantil-net
-
-build-node-pnpm:
-	docker build ./docker/node-pnpm -t he-local-node
 
 build-keycloak:
 	docker build ./docker/keycloak -t he-local-keycloak

@@ -2,6 +2,8 @@
 volumes
 .idea
 
+*/*-bundle.tar
+
 .pnpm-store
 
 # dependencies
