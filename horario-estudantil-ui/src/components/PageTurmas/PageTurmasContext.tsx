@@ -22,16 +22,16 @@ export const PageTurmasContext = createContext({} as IPageTurmasContext);
 export const PageTurmasContextProvider: FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { sigla } = useContext(AppContext);
 
   const categoriasQuery = useQuery(PAGE_TURMAS_DATA_CATEGORIAS, {
-    variables: { sigla: selectedUnidadeDeEnsino },
+    variables: { sigla: sigla },
   });
 
   const { data } = categoriasQuery;
 
   const categorias: ICategoria[] = useMemo(
-    () => data?.unidadeEstudantil.categoriasTurma ?? [],
+    () => data?.instituicao.categoriasTurma ?? [],
     [data]
   );
 

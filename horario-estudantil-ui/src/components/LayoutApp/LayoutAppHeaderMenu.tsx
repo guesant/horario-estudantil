@@ -13,7 +13,7 @@ import * as React from "react";
 import { ITEM_HEIGHT } from "../AppHeader/AppHeader";
 import AppLink from "../AppLink";
 
-const LayoutUnidadeEstudantilHeaderMenu = () => {
+const LayoutAppHeaderMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -79,4 +79,4 @@ const LayoutUnidadeEstudantilHeaderMenu = () => {
   );
 };
 
-export default LayoutUnidadeEstudantilHeaderMenu;
+export default LayoutAppHeaderMenu;

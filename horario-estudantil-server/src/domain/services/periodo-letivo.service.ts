@@ -41,13 +41,13 @@ export class PeriodoLetivoService {
     return etapas;
   }
 
-  async findPeriodoLetivoUnidadeEstudantil(query: IFindPeriodoLetivoQuery) {
+  async findPeriodoLetivoInstituicao(query: IFindPeriodoLetivoQuery) {
     const periodoLetivo = await this.findPeriodoLetivo(query, {
-      relations: ['unidadeEstudantil'],
+      relations: ['instituicao'],
     });
 
-    const { unidadeEstudantil } = periodoLetivo;
+    const { instituicao } = periodoLetivo;
 
-    return unidadeEstudantil;
+    return instituicao;
   }
 }

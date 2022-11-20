@@ -9,8 +9,8 @@ import { getPeriodoLetivoRepository } from 'src/domain/repositories/periodo-leti
 import { getProfessorRepository } from 'src/domain/repositories/professor.repository';
 import { getSemanaRepository } from 'src/domain/repositories/semana.repository';
 import { getTurmaRepository } from 'src/domain/repositories/turma.repository';
-import { getUnidadeEstudantilMembershipRepository } from 'src/domain/repositories/unidade-estudantil-membership.repository';
-import { getUnidadeEstudantilRepository } from 'src/domain/repositories/unidade-estudantil.repository';
+import { getInstituicaoMembershipRepository } from 'src/domain/repositories/instituicao-membership.repository';
+import { getInstituicaoRepository } from 'src/domain/repositories/instituicao.repository';
 import { getUsuarioRepository } from 'src/domain/repositories/usuario.repository';
 import { DataSource } from 'typeorm';
 import {
@@ -27,8 +27,8 @@ import {
   REPOSITORY_PROFESSOR,
   REPOSITORY_SEMANA,
   REPOSITORY_TURMA,
-  REPOSITORY_UNIDADE_ESTUDANTIL,
-  REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP,
+  REPOSITORY_INSTITUICAO,
+  REPOSITORY_INSTITUICAO_MEMBERSHIP,
   REPOSITORY_USUARIO,
 } from '../constants';
 
@@ -97,9 +97,9 @@ export const databaseRepositoriesProviders = [
     inject: [DATA_SOURCE],
   },
   {
-    provide: REPOSITORY_UNIDADE_ESTUDANTIL,
+    provide: REPOSITORY_INSTITUICAO,
     useFactory: (dataSource: DataSource) => {
-      return getUnidadeEstudantilRepository(dataSource);
+      return getInstituicaoRepository(dataSource);
     },
     inject: [DATA_SOURCE],
   },
@@ -111,9 +111,9 @@ export const databaseRepositoriesProviders = [
     inject: [DATA_SOURCE],
   },
   {
-    provide: REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP,
+    provide: REPOSITORY_INSTITUICAO_MEMBERSHIP,
     useFactory: (dataSource: DataSource) => {
-      return getUnidadeEstudantilMembershipRepository(dataSource);
+      return getInstituicaoMembershipRepository(dataSource);
     },
     inject: [DATA_SOURCE],
   },

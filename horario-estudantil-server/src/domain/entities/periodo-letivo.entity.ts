@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { EtapaEntity } from './etapa.entity';
-import { UnidadeEstudantilEntity } from './unidade-estudantil.entity';
+import { InstituicaoEntity } from './instituicao.entity';
 
 @Entity('PeriodoLetivo')
 export class PeriodoLetivoEntity {
@@ -16,7 +16,7 @@ export class PeriodoLetivoEntity {
   @OneToMany(() => EtapaEntity, (etapa) => etapa.periodoLetivo)
   etapas: EtapaEntity[];
 
-  @ManyToOne(() => UnidadeEstudantilEntity, (ue) => ue.periodosLetivos)
-  @JoinColumn({ name: 'id_ue_fk', referencedColumnName: 'id' })
-  unidadeEstudantil: UnidadeEstudantilEntity;
+  @ManyToOne(() => InstituicaoEntity, (instituicao) => instituicao.periodosLetivos)
+  @JoinColumn({ name: 'id_ins_fk', referencedColumnName: 'id' })
+  instituicao: InstituicaoEntity;
 }

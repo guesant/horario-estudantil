@@ -14,9 +14,9 @@ export class PeriodoLetivoResolver {
   }
 
   @SkipAuth()
-  @ResolveField('unidadeEstudantil')
-  async getUnidadeEstudantil(@Parent() etapa) {
+  @ResolveField('instituicao')
+  async getInstituicao(@Parent() etapa) {
     const { id } = etapa;
-    return this.periodoLetivoService.findPeriodoLetivoUnidadeEstudantil({ id });
+    return this.periodoLetivoService.findPeriodoLetivoInstituicao({ id });
   }
 }

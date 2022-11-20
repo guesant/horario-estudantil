@@ -38,8 +38,8 @@ type CategoriaTurma {
   tituloFilhos: String
 
   turmas: [Turma]
+  instituicao: Instituicao
   categoriaTurmaPai: CategoriaTurma
-  unidadeEstudantil: UnidadeEstudantil
 }
 
 type Materia {
@@ -55,7 +55,7 @@ type PeriodoLetivo {
   id: ID
 
   etapas: [Etapa]
-  unidadeEstudantil: UnidadeEstudantil
+  instituicao: Instituicao
 }
 
 type Professor {
@@ -87,21 +87,21 @@ type Turma {
   categoriaTurma: CategoriaTurma
 }
 
-type UnidadeEstudantilMembership {
+type InstituicaoMembership {
   id: ID
 
   usuario: Usuario
-  unidadeEstudantil: UnidadeEstudantil
+  instituicao: Instituicao
 }
 
-type UnidadeEstudantil {
+type Instituicao {
   id: ID
 
   nome: String
   sigla: String
   apelido: String
 
-  memberships: [UnidadeEstudantilMembership]!
+  memberships: [InstituicaoMembership]!
   categoriasTurma: [CategoriaTurma]!
   periodosLetivos: [PeriodoLetivo]!
 }
@@ -111,11 +111,11 @@ type Usuario {
 
   nome: String
 
-  memberships: [UnidadeEstudantilMembership]
+  memberships: [InstituicaoMembership]
 }
 
-type SearchUnidadesEstudantisResult {
-  hits: [UnidadeEstudantil]
+type SearchInstituicoesResult {
+  hits: [Instituicao]
 
   limit: Int
   offset: Int
@@ -126,13 +126,11 @@ type SearchUnidadesEstudantisResult {
 }
 
 type Query {
-  unidadeEstudantil(sigla: String!): UnidadeEstudantil
+  instituicao(sigla: String!): Instituicao
 
-  # unidadesEstudantis: [UnidadeEstudantil]
-
-  searchUnidadesEstudantis(
+  searchInstituicoes(
     query: String
     limit: Int
     offset: Int
-  ): SearchUnidadesEstudantisResult
+  ): SearchInstituicoesResult
 }

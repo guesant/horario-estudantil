@@ -14,10 +14,10 @@ export class CategoriaTurmaResolver {
   }
 
   @SkipAuth()
-  @ResolveField('unidadeEstudantil')
-  async getUnidadeEstudantil(@Parent() categoriaTurma) {
+  @ResolveField('instituicao')
+  async getInstituicao(@Parent() categoriaTurma) {
     const { id } = categoriaTurma;
-    return this.categoriaTurmaService.findCategoriaTurmaUnidadeEstudantil({
+    return this.categoriaTurmaService.findCategoriaTurmaInstituicao({
       id,
     });
   }

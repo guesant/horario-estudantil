@@ -7,7 +7,7 @@ import {
 } from "../../LayoutBase/interfaces/IAction";
 import { ACTION_HOME } from "./ACTION_HOME";
 import { ACTION_SETTINGS } from "./ACTION_SETTINGS";
-import { getActionsForUnidadeDeEnsino } from "./getActionsForUnidadeDeEnsino";
+import { getActionsForInstituicao } from "./getActionsForInstituicao";
 
 export const ACTION_DIVIDER: IAction = {
   type: ActionType.DIVIDER,
@@ -20,14 +20,14 @@ const ACTION_SPACE: IAction = {
 };
 
 export const useLayoutAppNavigationActions = () => {
-  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { sigla } = useContext(AppContext);
 
   const navigationActions: IAction[] = useMemo(
     () =>
       [
         ACTION_HOME,
 
-        ...getActionsForUnidadeDeEnsino(selectedUnidadeDeEnsino),
+        ...getActionsForInstituicao(sigla),
 
         ACTION_DIVIDER,
 
@@ -37,7 +37,7 @@ export const useLayoutAppNavigationActions = () => {
 
         ACTION_SETTINGS,
       ] as IAction[],
-    [selectedUnidadeDeEnsino]
+    [sigla]
   );
 
   return { navigationActions };

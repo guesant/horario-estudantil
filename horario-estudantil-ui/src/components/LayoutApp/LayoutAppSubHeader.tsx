@@ -1,17 +1,17 @@
 import Box from "@mui/material/Box";
-import ButtonSelectSemana from "../ButtonSelectSemana/ButtonSelectSemana";
-import ButtonSelectUnidadeDeEnsino from "../ButtonSelectUnidadeDeEnsino/ButtonSelectUnidadeDeEnsino";
+import AppBotaoSelecionarData from "../AppBotaoSelecionarData/AppBotaoSelecionarData";
+import AppBotaoSelecionarInstituicao from "../AppBotaoSelecionarInstituicao/AppBotaoSelecionarInstituicao";
 
-const LayoutUnidadeEstudantilSubHeader = () => {
+const LayoutAppSubHeader = () => {
   return (
     <>
       <Box sx={{ display: { xs: "none", sm: "block" } }}>
-        <ButtonSelectUnidadeDeEnsino />
+        <AppBotaoSelecionarInstituicao />
       </Box>
 
-      <ButtonSelectSemana />
+      <AppBotaoSelecionarData />
     </>
   );
 };
 
-export default LayoutUnidadeEstudantilSubHeader;
+export default LayoutAppSubHeader;

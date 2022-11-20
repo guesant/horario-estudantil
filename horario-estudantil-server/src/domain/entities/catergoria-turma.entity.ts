@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TurmaEntity } from './turma.entity';
-import { UnidadeEstudantilEntity } from './unidade-estudantil.entity';
+import { InstituicaoEntity } from './instituicao.entity';
 
 @Entity('CategoriaTurma')
 export class CategoriaTurmaEntity {
@@ -25,11 +25,11 @@ export class CategoriaTurmaEntity {
   turmas: TurmaEntity[];
 
   @ManyToOne(
-    () => UnidadeEstudantilEntity,
-    (unidadeEstudantil) => unidadeEstudantil.grupos,
+    () => InstituicaoEntity,
+    (instituicao) => instituicao.grupos,
   )
-  @JoinColumn({ name: 'id_ue_fk', referencedColumnName: 'id' })
-  unidadeEstudantil: UnidadeEstudantilEntity;
+  @JoinColumn({ name: 'id_ins_fk', referencedColumnName: 'id' })
+  instituicao: InstituicaoEntity;
 
   @OneToOne(() => CategoriaTurmaEntity)
   @JoinColumn({ name: 'id_cat_tur_pai_fk', referencedColumnName: 'id' })

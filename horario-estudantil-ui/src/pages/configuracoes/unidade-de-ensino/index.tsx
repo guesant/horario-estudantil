@@ -1,1 +1,1 @@
-export { default } from "../../../components/PageConfiguracoesUnidadeDeEnsino";
+export { default } from "../../../components/PageConfiguracoesInstituicao";

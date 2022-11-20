@@ -9,13 +9,13 @@ import {
   useMemo,
   useState,
 } from "react";
-import { QUERY_UNIDADE_DE_ENSINO_INFO } from "../../etc/domain/app/pages/UnidadeDeEnsino/UnidadeDeEnsinoQueries";
+import { QUERY_INSTITUICAO_INFO } from "../../etc/domain/app/queries/InstituicaoQueries";
 import AppLoading from "../AppLoading/AppLoading";
 import { AppRoutingContext } from "../AppRoutingContext/AppRoutingContext";
 import LayoutApp from "../LayoutApp/LayoutApp";
 
 export type IAppContext = {
-  selectedUE: string | null;
+  sigla: string | null;
 };
 
 export const AppContext = createContext({} as IAppContext);
@@ -48,7 +48,7 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
 
   const hasSigla = typeof selectedSigla === "string";
 
-  const unidadeDeEnsinoInfoQuery = useQuery(QUERY_UNIDADE_DE_ENSINO_INFO, {
+  const instituicaoQuery = useQuery(QUERY_INSTITUICAO_INFO, {
     skip: !hasSigla,
     variables: { sigla: selectedSigla },
   });
@@ -56,7 +56,7 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
   useEffect(() => void setSelectedSigla(routeUE), [routeUE]);
 
   const selectedUEInfo = useMemo(() => {
-    const { loading, called, error } = unidadeDeEnsinoInfoQuery;
+    const { loading, called, error } = instituicaoQuery;
 
     if (isSiglaRequired && !hasSigla) {
       return { isValid: false, reason: "required" };
@@ -80,7 +80,7 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
     }
 
     return { isValid: true };
-  }, [unidadeDeEnsinoInfoQuery, isSiglaRequired, hasSigla]);
+  }, [instituicaoQuery, isSiglaRequired, hasSigla]);
 
   const { isValid, reason } = selectedUEInfo;
 
@@ -103,7 +103,7 @@ export const AppContextProvider: FC<IAppContextProviderProps> = ({
   }
 
   return (
-    <AppContext.Provider value={{ selectedUE: selectedSigla }}>
+    <AppContext.Provider value={{ sigla: selectedSigla }}>
       {children}
     </AppContext.Provider>
   );

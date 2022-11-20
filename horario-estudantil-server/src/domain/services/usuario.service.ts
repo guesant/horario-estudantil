@@ -1,10 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import {
-  REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP,
+  REPOSITORY_INSTITUICAO_MEMBERSHIP,
   REPOSITORY_USUARIO,
 } from 'src/infraestructure/constants';
 import { UsuarioEntity } from '../entities/usuario.entity';
-import { IUnidadeEstudantilMembershipRepository } from '../repositories/unidade-estudantil-membership.repository';
+import { IInstituicaoMembershipRepository } from '../repositories/instituicao-membership.repository';
 import { IUsuarioRepository } from '../repositories/usuario.repository';
 
 export type IFindUsuarioQuery = Partial<Pick<UsuarioEntity, 'id'>>;
@@ -15,8 +15,8 @@ export class UsuarioService {
     @Inject(REPOSITORY_USUARIO)
     private usuarioRepository: IUsuarioRepository,
 
-    @Inject(REPOSITORY_UNIDADE_ESTUDANTIL_MEMBERSHIP)
-    private unidadeEstudantilMembershipRepository: IUnidadeEstudantilMembershipRepository,
+    @Inject(REPOSITORY_INSTITUICAO_MEMBERSHIP)
+    private instituicaoembershipRepository: IInstituicaoMembershipRepository,
   ) {}
 
   async ensureIncomingUserFromKeycloak(keycloakId: string) {
@@ -52,7 +52,7 @@ export class UsuarioService {
   async findUsuarioMemberships(query: IFindUsuarioQuery) {
     const usuario = await this.findUsuario(query);
 
-    const memberships = await this.unidadeEstudantilMembershipRepository.find({
+    const memberships = await this.instituicaoembershipRepository.find({
       where: { usuario },
     });
 

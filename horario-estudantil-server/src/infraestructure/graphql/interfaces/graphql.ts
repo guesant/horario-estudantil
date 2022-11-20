@@ -41,8 +41,8 @@ export class CategoriaTurma {
     titulo?: Nullable<string>;
     tituloFilhos?: Nullable<string>;
     turmas?: Nullable<Nullable<Turma>[]>;
+    instituicao?: Nullable<Instituicao>;
     categoriaTurmaPai?: Nullable<CategoriaTurma>;
-    unidadeEstudantil?: Nullable<UnidadeEstudantil>;
 }
 
 export class Materia {
@@ -55,7 +55,7 @@ export class Materia {
 export class PeriodoLetivo {
     id?: Nullable<string>;
     etapas?: Nullable<Nullable<Etapa>[]>;
-    unidadeEstudantil?: Nullable<UnidadeEstudantil>;
+    instituicao?: Nullable<Instituicao>;
 }
 
 export class Professor {
@@ -81,18 +81,18 @@ export class Turma {
     categoriaTurma?: Nullable<CategoriaTurma>;
 }
 
-export class UnidadeEstudantilMembership {
+export class InstituicaoMembership {
     id?: Nullable<string>;
     usuario?: Nullable<Usuario>;
-    unidadeEstudantil?: Nullable<UnidadeEstudantil>;
+    instituicao?: Nullable<Instituicao>;
 }
 
-export class UnidadeEstudantil {
+export class Instituicao {
     id?: Nullable<string>;
     nome?: Nullable<string>;
     sigla?: Nullable<string>;
     apelido?: Nullable<string>;
-    memberships: Nullable<UnidadeEstudantilMembership>[];
+    memberships: Nullable<InstituicaoMembership>[];
     categoriasTurma: Nullable<CategoriaTurma>[];
     periodosLetivos: Nullable<PeriodoLetivo>[];
 }
@@ -100,20 +100,20 @@ export class UnidadeEstudantil {
 export class Usuario {
     id?: Nullable<string>;
     nome?: Nullable<string>;
-    memberships?: Nullable<Nullable<UnidadeEstudantilMembership>[]>;
+    memberships?: Nullable<Nullable<InstituicaoMembership>[]>;
 }
 
-export class SearchUnidadesEstudantisResult {
-    hits?: Nullable<Nullable<UnidadeEstudantil>[]>;
+export class SearchInstituicoesResult {
+    hits?: Nullable<Nullable<Instituicao>[]>;
     limit?: Nullable<number>;
     offset?: Nullable<number>;
     estimatedTotalHits?: Nullable<number>;
 }
 
 export abstract class IQuery {
-    abstract unidadeEstudantil(sigla: string): Nullable<UnidadeEstudantil> | Promise<Nullable<UnidadeEstudantil>>;
+    abstract instituicao(sigla: string): Nullable<Instituicao> | Promise<Nullable<Instituicao>>;
 
-    abstract searchUnidadesEstudantis(query?: Nullable<string>, limit?: Nullable<number>, offset?: Nullable<number>): Nullable<SearchUnidadesEstudantisResult> | Promise<Nullable<SearchUnidadesEstudantisResult>>;
+    abstract searchInstituicoes(query?: Nullable<string>, limit?: Nullable<number>, offset?: Nullable<number>): Nullable<SearchInstituicoesResult> | Promise<Nullable<SearchInstituicoesResult>>;
 }
 
 type Nullable<T> = T | null;

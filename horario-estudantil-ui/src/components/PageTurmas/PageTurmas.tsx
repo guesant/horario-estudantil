@@ -1,9 +1,9 @@
 import { GetServerSideProps } from "next";
-import { initializeApollo } from "../../etc/domain/apollo/initializeApollo";
+import { initializeApollo } from "../../etc/infraestructure/apollo/initializeApollo";
 import { IAppPage } from "../../etc/domain/app/pages/IAppPage";
 import { getSharedServerSideProps } from "../../etc/domain/app/pages/shared/getSharedServerSideProps";
 import { parseQueryData } from "../../etc/domain/app/pages/shared/parseQueryData";
-import log from "../../etc/domain/log/log";
+import log from "../../etc/infraestructure/log/log";
 import PageTurmasBase from "./PageTurmasBase";
 import { PageTurmasContextProvider } from "./PageTurmasContext";
 import { PAGE_TURMAS_DATA_CATEGORIAS } from "./PageTurmasData";

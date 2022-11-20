@@ -52,6 +52,11 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
+            name: 'sigla_ue',
+            type: 'varchar(255)',
+          },
+
+          {
             name: 'apelido_ue',
             type: 'varchar(255)',
           },

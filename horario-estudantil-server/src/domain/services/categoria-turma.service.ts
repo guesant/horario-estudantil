@@ -33,14 +33,14 @@ export class CategoriaTurmaService {
     return categoriaTurma;
   }
 
-  async findCategoriaTurmaUnidadeEstudantil(query: IFindCategoriaTurmaQuery) {
+  async findCategoriaTurmaInstituicao(query: IFindCategoriaTurmaQuery) {
     const categoriaTurma = await this.findCategoriaTurma(query, {
-      relations: ['unidadeEstudantil'],
+      relations: ['instituicao'],
     });
 
-    const { unidadeEstudantil } = categoriaTurma;
+    const { instituicao } = categoriaTurma;
 
-    return unidadeEstudantil;
+    return instituicao;
   }
 
   async findCategoriaTurmaCategoriaTurmaPai(query: IFindCategoriaTurmaQuery) {

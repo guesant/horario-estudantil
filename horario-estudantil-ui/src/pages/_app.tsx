@@ -8,7 +8,7 @@ import "nprogress/nprogress.css";
 import { useEffect, useState } from "react";
 import { AppContextProvider } from "../components/AppContext/AppContext";
 import { AppRoutingContextProvider } from "../components/AppRoutingContext/AppRoutingContext";
-import { useApollo } from "../etc/domain/apollo/useApollo";
+import { useApollo } from "../etc/infraestructure/apollo/useApollo";
 import "../styles/globals.css";
 
 export default function App({

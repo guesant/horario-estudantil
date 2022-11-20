@@ -3,30 +3,30 @@ import { useContext } from "react";
 import { AppContext } from "../AppContext/AppContext";
 import AppLoading from "../AppLoading/AppLoading";
 
-const HomeCallToActionSelectUnidade = dynamic(
-  () => import("./HomeCallToActionSelectUnidade"),
+const HomeCallToActionSelectInstituicao = dynamic(
+  () => import("./HomeCallToActionSelectInstituicao"),
   { loading: () => <AppLoading /> }
 );
 
-const HomeCallToActionUnidadeActions = dynamic(
-  () => import("./HomeCallToActionUnidadeActions"),
+const HomeCallToActionSelectedInstituicaoActions = dynamic(
+  () => import("./HomeCallToActionSelectedInstituicaoActions"),
   { loading: () => <AppLoading /> }
 );
 
 const HomeCallToAction = () => {
-  const { selectedUE: selectedUnidadeDeEnsino } = useContext(AppContext);
+  const { sigla } = useContext(AppContext);
 
-  if (selectedUnidadeDeEnsino === null) {
+  if (sigla === null) {
     return (
       <>
-        <HomeCallToActionSelectUnidade />
+        <HomeCallToActionSelectInstituicao />
       </>
     );
   }
 
   return (
     <>
-      <HomeCallToActionUnidadeActions />
+      <HomeCallToActionSelectedInstituicaoActions />
     </>
   );
 };

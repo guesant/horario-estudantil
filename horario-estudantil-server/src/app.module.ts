@@ -11,7 +11,7 @@ import { IS_PRODUCTION_MODE } from './infraestructure/constants';
 import { AuthModule } from './infraestructure/module/auth.module';
 import { DatabaseModule } from './infraestructure/module/database.module';
 import { SearchModule } from './infraestructure/module/search.module';
-import { UnidadeEstudantilModule } from './infraestructure/module/unidade-estudantil.module';
+import { InstituicaoModule } from './infraestructure/module/instituicao.module';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import { UnidadeEstudantilModule } from './infraestructure/module/unidade-estuda
 
     SearchModule,
 
-    UnidadeEstudantilModule,
+    InstituicaoModule,
     DatabaseModule,
     AuthModule,
   ],

@@ -7,14 +7,14 @@ import {
   RemoveEvent,
   UpdateEvent,
 } from 'typeorm';
-import { UnidadeEstudantilEntity } from '../entities/unidade-estudantil.entity';
+import { InstituicaoEntity } from '../entities/instituicao.entity';
 
-type IEntities = UnidadeEstudantilEntity;
+type IEntities = InstituicaoEntity;
 
 @EventSubscriber()
 export class SearchSubscriber implements EntitySubscriberInterface<IEntities> {
   listenTo() {
-    return UnidadeEstudantilEntity;
+    return InstituicaoEntity;
   }
 
   async beforeInsert(event: InsertEvent<IEntities>) {
