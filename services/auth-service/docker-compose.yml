@@ -1,0 +1,19 @@
+services:
+  keycloak:
+    build:
+      context: ./docker
+      args:
+        - KEYCLOAK_EXTRA_ARGS=-Dkeycloak.profile.feature.scripts=enabled
+    container_name: he-keycloak
+    command: start-dev
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true

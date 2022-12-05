@@ -1,0 +1,19 @@
+{
+  "name": "@horario-estudantil/shared",
+  "version": "4.0.0-beta",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "yarn run clear && tsc -p .",
+    "prepare": "yarn run build",
+    "clear": "rimraf dist"
+  },
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
+  }
+}

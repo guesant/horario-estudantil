@@ -1,0 +1,17 @@
+services:
+  search:
+    image: docker.io/getmeili/meilisearch:v0.29
+    container_name: he-meilisearch
+    restart: always
+    ports:
+      - 7700:7700
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/meili_data:/meili_data
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true

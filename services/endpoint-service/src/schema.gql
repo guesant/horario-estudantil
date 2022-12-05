@@ -1,0 +1,133 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Apelido {
+  apelido: String!
+  id: Int!
+  materia: Materia
+  professor: Professor
+  turma: Turma
+}
+
+type Aula {
+  evento: Evento!
+  id: Int!
+  materia: Materia
+  professores: [Professor!]!
+  turmas: [Turma!]!
+}
+
+input CreateInstituicaoInput {
+  apelido: String!
+  nome: String!
+  sigla: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteInstituicaoInput {
+  id: Float!
+}
+
+type Etapa {
+  id: Int!
+  periodoLetivo: PeriodoLetivo!
+}
+
+type Evento {
+  aula: Aula
+  dataFim: DateTime
+  dataInicio: DateTime
+  id: Int!
+}
+
+type Instituicao {
+  apelido: String!
+  id: Int!
+  lastSearchSync: DateTime
+  lastUpdate: DateTime
+  memberships: [Instituicao_Membership!]!
+  nome: String!
+  periodosLetivos: [PeriodoLetivo!]!
+  sigla: String!
+  turmaCategorias: [TurmaCategoria!]!
+}
+
+type Instituicao_Membership {
+  id: Int!
+  instituicao: Instituicao!
+  usuario: User!
+}
+
+type Materia {
+  apelidos: [Apelido!]!
+  aulas: [Aula!]!
+  id: Int!
+  nome: String!
+}
+
+type Mutation {
+  createInstituicao(data: CreateInstituicaoInput!): Instituicao!
+  deleteInstituicao(data: DeleteInstituicaoInput!): Boolean!
+  updateInstituicao(data: UpdateInstituicaoInput!, id: Int!): Instituicao!
+}
+
+type PeriodoLetivo {
+  etapas: [Etapa!]!
+  id: Int!
+  instituicao: Instituicao!
+}
+
+type Professor {
+  apelidos: [Apelido!]!
+  aulas: [Aula!]!
+  id: Int!
+  nome: String!
+  professores: [Professor!]!
+}
+
+type Query {
+  instituicao(sigla: String!): Instituicao!
+  searchInstituicoes(limit: Float!, offset: Float!, query: String!): SearchInstituicoesResult!
+}
+
+type SearchInstituicoesResult {
+  estimatedTotalHits: Int!
+  hits: [Instituicao!]!
+  limit: Int!
+  offset: Int!
+}
+
+type Turma {
+  apelidos: [Apelido!]!
+  aulas: [Aula!]!
+  id: Int!
+  nome: String
+  turmaCategoria: [TurmaCategoria!]!
+  turmas: [Turma!]!
+}
+
+type TurmaCategoria {
+  id: Int!
+  instituicao: Instituicao!
+  titulo: String
+  tituloFilhos: String!
+  turmaCategoriaPai: TurmaCategoria
+  turmas: [Turma!]!
+}
+
+input UpdateInstituicaoInput {
+  apelido: String
+  nome: String
+  sigla: String
+}
+
+type User {
+  id: Int!
+  memberships: [Instituicao_Membership!]!
+  nome: String!
+}

@@ -1,0 +1,14 @@
+export const REPOSITORY_APELIDO = Symbol();
+export const REPOSITORY_PERIODO_LETIVO = Symbol();
+export const REPOSITORY_AULA_PROFESSOR = Symbol();
+export const REPOSITORY_PROFESSOR = Symbol();
+export const REPOSITORY_AULA = Symbol();
+export const REPOSITORY_AULA_TURMA = Symbol();
+export const REPOSITORY_TURMA = Symbol();
+export const REPOSITORY_ETAPA = Symbol();
+export const REPOSITORY_INSTITUICAO = Symbol();
+export const REPOSITORY_EVENTO = Symbol();
+export const REPOSITORY_INSTITUICAO_MEMBERSHIP = Symbol();
+export const REPOSITORY_TURMA_CATEGORIA = Symbol();
+export const REPOSITORY_USUARIO = Symbol();
+export const REPOSITORY_MATERIA = Symbol();
