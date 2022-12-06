@@ -1,15 +1,15 @@
 services:
   endpoint:
     image: node:16
+    user: node
+    command: sh -c "tail -f /dev/null"
     container_name: he-endpoint
     restart: always
-    command: sh -c "tail -f /dev/null"
+    working_dir: /code
     env_file:
       - .env
     ports:
       - 3001:3001
-    user: node
-    working_dir: /code
     volumes:
       - .:/code
     networks:

@@ -1,13 +1,20 @@
-FROM node:16-alpine as builder
+FROM node:16-alpine as base
 RUN apk update && apk add git
 WORKDIR /app
-COPY ./yarn.lock ./package.json ./
-RUN yarn --frozen-lockfile --network-timeout 100000
-COPY . .
-RUN yarn --frozen-lockfile
-RUN yarn build
 
-FROM node:16-alpine
-COPY --from=builder /app /app
+FROM base as prod-deps
+COPY package.json package-lock.json ./
+RUN npm install --omit=dev
+
+FROM prod-deps as dev-deps
+RUN npm install
+
+FROM dev-deps as assets
+COPY . .
+RUN npm run build
+RUN rm -rf node_modules
+
+FROM prod-deps
+COPY --from=assets /app /app
 WORKDIR /app
-CMD yarn run db:migration:run && yarn start 
+CMD npm run db:migrate && npm run seed:run && npm run start:prod

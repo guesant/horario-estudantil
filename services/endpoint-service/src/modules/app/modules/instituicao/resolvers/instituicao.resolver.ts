@@ -27,9 +27,9 @@ export class InstituicaoResolver {
   @SkipAuth()
   @Query(() => SearchInstituicoesResult)
   async searchInstituicoes(
-    @Args('query') query: string,
-    @Args('limit') limit: number = 20,
-    @Args('offset') offset: number = 0,
+    @Args('query', { nullable: true } ) query: string = '',
+    @Args('limit', { type: () => Int, nullable: true }) limit: number = 20,
+    @Args('offset', { type: () => Int, nullable: true }) offset: number = 0,
   ) {
     return this.instituicaoService.searchInstituicoes(query, limit, offset);
   }

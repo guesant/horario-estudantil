@@ -1,5 +1,5 @@
 dev-shell:
-	docker run \
+	sudo docker run \
 		--rm \
 		--hostname he-dev-shell \
 		-v $(shell pwd):/code \

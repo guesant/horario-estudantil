@@ -92,7 +92,7 @@ type Professor {
 
 type Query {
   instituicao(sigla: String!): Instituicao!
-  searchInstituicoes(limit: Float!, offset: Float!, query: String!): SearchInstituicoesResult!
+  searchInstituicoes(limit: Int, offset: Int, query: String): SearchInstituicoesResult!
 }
 
 type SearchInstituicoesResult {
