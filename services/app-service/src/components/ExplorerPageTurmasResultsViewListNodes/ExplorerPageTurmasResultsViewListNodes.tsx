@@ -5,7 +5,9 @@ import {memo, useCallback, useContext, useEffect, useMemo, useRef, useState,} fr
 import {ICategoria} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
 import {ExplorerPageTurmasResultsViewListNodesContainer} from "./ExplorerPageTurmasResultsViewListNodesContainer";
 import ExplorerPageTurmasResultsViewListNodesNode from "./ExplorerPageTurmasResultsViewListNodesNode";
-import {ExplorerPageTurmasResultsViewContext} from "../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsViewContext";
+import {
+  ExplorerPageTurmasResultsViewContext
+} from "../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsViewContext";
 import {useNavigateToTurma} from "../ExplorerPageTurmas/useNavigateToTurma";
 
 const checkIsBaseCategorias = (categorias: ICategoria[]) =>

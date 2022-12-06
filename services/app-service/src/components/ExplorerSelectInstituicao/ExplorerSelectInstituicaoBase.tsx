@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import ExplorerSelectInstituicaoResults from "../ExplorerSelectInstituicaoResults/ExplorerSelectInstituicaoResults";
-import ExplorerSelectInstituicaoSearchField from "../ExplorerSelectInstituicaoSearchField/ExplorerSelectInstituicaoSearchField";
+import ExplorerSelectInstituicaoSearchField
+  from "../ExplorerSelectInstituicaoSearchField/ExplorerSelectInstituicaoSearchField";
 
 const ExplorerSelectInstituicaoBase = () => {
   return (

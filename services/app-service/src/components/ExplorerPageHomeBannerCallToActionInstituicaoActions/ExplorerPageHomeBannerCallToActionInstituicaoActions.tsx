@@ -81,7 +81,7 @@ const ExplorerPageHomeBannerCallToActionInstituicaoActions = () => {
                   disableElevation
                   variant="contained"
 
-                  startIcon={createElement(icon, {   sx: { fontSize: "1.85rem !important" } })}
+                  startIcon={createElement(icon, {sx: {fontSize: "1.85rem !important"}})}
                   sx={{
                     flex: 1,
 
@@ -93,8 +93,8 @@ const ExplorerPageHomeBannerCallToActionInstituicaoActions = () => {
                     borderRadius: "0.625rem",
 
                     display: "flex",
-                    alignItems:"center",
-                    flexDirection:"column",
+                    alignItems: "center",
+                    flexDirection: "column",
                     gap: 1,
 
 

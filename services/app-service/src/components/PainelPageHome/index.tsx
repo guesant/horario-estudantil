@@ -1,1 +1,1 @@
-export { default } from "./PainelPageHome";
+export {default} from "./PainelPageHome";

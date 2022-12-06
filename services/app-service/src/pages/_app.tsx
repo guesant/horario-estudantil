@@ -21,7 +21,7 @@ export default function App({
                               pageProps,
                             }: IAppProps) {
 
-  const { session, initialQuery = {}, initialApolloState, ...restPageProps} = pageProps;
+  const {session, initialQuery = {}, initialApolloState, ...restPageProps} = pageProps;
 
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function App({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    NProgress.configure({ showSpinner: false });
+    NProgress.configure({showSpinner: false});
 
     const handleStart = () => {
       NProgress.start();
@@ -57,27 +57,27 @@ export default function App({
     <>
       <CssBaseline>
         <SessionProvider session={session}>
-        <Backdrop
-          open={isLoading}
-          onClick={() => void 0}
-          sx={{
-            zIndex: (theme) =>
-              Object.values(theme.zIndex).reduce(
-                (acc, i) => Math.max(acc, i),
-                0
-              ) + 1,
-          }}
-        />
-        <ApolloProvider client={client}>
-          <ExplorerRoutingContextProvider initialQuery={initialQuery}>
-            <ExplorerContextProvider>
-              <AuthGuard strict={Component.auth === true}>
-                <Component {...restPageProps} />
-              </AuthGuard>
-            </ExplorerContextProvider>
-          </ExplorerRoutingContextProvider>
-        </ApolloProvider>
-      </SessionProvider>
+          <Backdrop
+            open={isLoading}
+            onClick={() => void 0}
+            sx={{
+              zIndex: (theme) =>
+                Object.values(theme.zIndex).reduce(
+                  (acc, i) => Math.max(acc, i),
+                  0
+                ) + 1,
+            }}
+          />
+          <ApolloProvider client={client}>
+            <ExplorerRoutingContextProvider initialQuery={initialQuery}>
+              <ExplorerContextProvider>
+                <AuthGuard strict={Component.auth === true}>
+                  <Component {...restPageProps} />
+                </AuthGuard>
+              </ExplorerContextProvider>
+            </ExplorerRoutingContextProvider>
+          </ApolloProvider>
+        </SessionProvider>
       </CssBaseline>
     </>
   );

@@ -6,7 +6,9 @@ import AppPage from "../UIExplorerPage/AppPage";
 import AppPageContent from "../UIExplorerPageContent/AppPageContent";
 import {getActionsForDisplay} from "./interfaces/getActionsForDisplay";
 import {ActionDisplay, IAction} from "./interfaces/IAction";
-import ExplorerBaseLayoutNavigationDrawer, {LayoutBaseNavigationDrawerProps,} from "./ExplorerBaseLayoutNavigationDrawer";
+import ExplorerBaseLayoutNavigationDrawer, {
+  LayoutBaseNavigationDrawerProps,
+} from "./ExplorerBaseLayoutNavigationDrawer";
 import ExplorerBaseLayoutNavigationTabs, {ILayoutBaseNavigationTabsProps,} from "./ExplorerBaseLayoutNavigationTabs";
 import ExplorerBaseLayoutSubHeader, {ILayoutBaseSubHeaderProps,} from "./ExplorerBaseLayoutSubHeader";
 

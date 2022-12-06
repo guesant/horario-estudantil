@@ -18,8 +18,8 @@ export type IExplorerContextProviderProps = {
 };
 
 export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
-                                                                   children,
-                                                                 }) => {
+                                                                             children,
+                                                                           }) => {
   const router = useRouter();
   const routeUE = useRouteSigla();
   const isSiglaRequired = useRouteRequiresSigla();
@@ -30,7 +30,7 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
 
   const instituicaoQuery = useQuery(QUERY_INSTITUICAO_INFO, {
     skip: !hasSigla,
-    variables: { sigla: selectedSigla },
+    variables: {sigla: selectedSigla},
   });
 
   useEffect(() => void setSelectedSigla(routeUE), [routeUE]);

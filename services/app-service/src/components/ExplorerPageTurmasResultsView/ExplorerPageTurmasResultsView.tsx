@@ -1,6 +1,7 @@
 import React, {useContext, useMemo} from "react";
-import {ICategoria, ExplorerPageTurmasContext} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
-import PageTurmasResultsListNodes from "../ExplorerPageTurmasResultsViewListNodes/ExplorerPageTurmasResultsViewListNodes";
+import {ExplorerPageTurmasContext, ICategoria} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
+import PageTurmasResultsListNodes
+  from "../ExplorerPageTurmasResultsViewListNodes/ExplorerPageTurmasResultsViewListNodes";
 import {PageTurmasResultsViewContextProvider} from "./ExplorerPageTurmasResultsViewContext";
 
 type Props = {};

@@ -1,5 +1,6 @@
 import Paper from "@mui/material/Paper";
-import ExplorerPageHomeBannerCallToAction from "../ExplorerPageHomeBannerCallToAction/ExplorerPageHomeBannerCallToAction";
+import ExplorerPageHomeBannerCallToAction
+  from "../ExplorerPageHomeBannerCallToAction/ExplorerPageHomeBannerCallToAction";
 
 const ExplorerPageHomeBanner = () => {
   return (

@@ -9,7 +9,7 @@ const CLIENT_SECRET = process.env.OAUTH2_CLIENT_SECRET;
 const getProviders = () => {
   const providers: Provider[] = [];
 
-  if(CLIENT_ID !== undefined && CLIENT_SECRET !== undefined && ISSUER !== undefined) {
+  if (CLIENT_ID !== undefined && CLIENT_SECRET !== undefined && ISSUER !== undefined) {
     providers.push(KeycloakProvider({
       issuer: ISSUER,
       clientId: CLIENT_ID,
@@ -28,22 +28,22 @@ export const authOptions: NextAuthOptions = {
     colorScheme: "light"
   },
   providers: [
-      ...getProviders()
+    ...getProviders()
   ],
 
 
   callbacks: {
-  async jwt({ token, account }) {
-    if (account) {
-      token.accessToken = account.access_token as string;
+    async jwt({token, account}) {
+      if (account) {
+        token.accessToken = account.access_token as string;
+      }
+      return token
+    },
+    async session({session, token, user}) {
+      session.accessToken = token.accessToken;
+      return session
     }
-    return token
-  },
-  async session({ session, token, user }) {
-    session.accessToken = token.accessToken;
-    return session
   }
-}
 }
 
 export default NextAuth(authOptions)

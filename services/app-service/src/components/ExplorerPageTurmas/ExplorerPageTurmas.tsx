@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
       .catch((err) => {
         log.error("Can not fetch turmas", {params: {sigla: ue}});
-        console.error({ err });
+        console.error({err});
       });
   }
 

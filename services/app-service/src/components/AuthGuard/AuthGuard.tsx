@@ -6,17 +6,17 @@ type IAuthGuardProps = {
 }
 
 const AuthGuard = (props: IAuthGuardProps) => {
-  const { children, strict = false } = props;
+  const {children, strict = false} = props;
 
   const handleUnauthenticated = () => {
-    if(strict) {
+    if (strict) {
       signIn("keycloak")
     }
   }
 
-  const { status } = useSession({ required: strict, onUnauthenticated: handleUnauthenticated });
+  const {status} = useSession({required: strict, onUnauthenticated: handleUnauthenticated});
 
-  if(strict && status === "loading") {
+  if (strict && status === "loading") {
     return <></>
   }
 

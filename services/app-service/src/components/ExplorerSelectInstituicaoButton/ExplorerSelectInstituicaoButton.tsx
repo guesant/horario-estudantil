@@ -12,8 +12,9 @@ type IAppBotaoSelecionarInstituicaoProps = {
   ButtonProps?: ButtonProps;
 };
 
-const AppBotaoSelecionarInstituicaoLink = forwardRef<any, IUIExplorerLinkProps>((props, ref) => <UIExplorerLink ref={ref}
-                                                                                                                ignore={["ue"]} {...props} />)
+const AppBotaoSelecionarInstituicaoLink = forwardRef<any, IUIExplorerLinkProps>((props, ref) => <UIExplorerLink
+  ref={ref}
+  ignore={["ue"]} {...props} />)
 
 AppBotaoSelecionarInstituicaoLink.displayName = AppBotaoSelecionarInstituicaoLink.name;
 

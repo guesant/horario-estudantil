@@ -17,7 +17,7 @@ export type AppHeaderProps = {
 };
 
 const UIExplorerHeader = (props: AppHeaderProps) => {
-  const { menu } = props;
+  const {menu} = props;
 
   return (
     <>
@@ -61,7 +61,7 @@ const UIExplorerHeader = (props: AppHeaderProps) => {
               </Box>
 
               <Box sx={{display: {xs: "none", sm: "block"}}}>
-                <AppHeaderSearch />
+                <AppHeaderSearch/>
               </Box>
             </Box>
 
@@ -76,7 +76,9 @@ const UIExplorerHeader = (props: AppHeaderProps) => {
               {menu}
             </Box>
 
-            <Button component={Link} href={"/painel"} color="inherit">Painel Administrativo</Button>
+            <Box sx={{display: {xs: "none", sm: "block"}}}>
+              <Button component={Link} href={"/painel"} color="inherit">Painel Administrativo</Button>
+            </Box>
           </Toolbar>
         </AppContainer>
       </AppBar>

@@ -20,7 +20,7 @@ const ExplorerMainLayout = (props: LayoutAppProps) => {
         SubHeaderProps={{
           children: <ExplorerMainLayoutSubHeader/>,
           WrapperProps: {
-            // sx: {display: {xs: "none", sm: "block"}}
+            sx: {display: {xs: "none", sm: "block"}}
           }
         }}
         AppHeaderProps={{
