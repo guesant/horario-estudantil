@@ -8,7 +8,7 @@ type IContainerPageContentProps = {
 }
 
 const ExplorerUIPageContent = (props: IContainerPageContentProps) => {
-  const { children, title } = props;
+  const {children, title} = props;
 
   return (
     <>
@@ -18,15 +18,15 @@ const ExplorerUIPageContent = (props: IContainerPageContentProps) => {
           display: "flex",
           overflow: "auto",
           flexDirection: "column",
-          p: { xs: 2, sm: 3, md: 5 },
+          p: {xs: 2, sm: 3, md: 5},
         }}
       >
         {title && <>
-            <Typography variant="h4" sx={{ my: 1 }}>
+            <Typography variant="h4" sx={{my: 1}}>
               {title}
             </Typography>
 
-            <Divider sx={{ my: 2 }} />
+            <Divider sx={{my: 2}}/>
         </>}
 
 

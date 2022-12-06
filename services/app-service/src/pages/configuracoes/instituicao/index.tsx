@@ -1,1 +1,1 @@
-export { default } from "../../../components/ExplorerPageConfiguracoesInstituicao";
+export {default} from "../../../components/ExplorerPageSettingsInstituicao";

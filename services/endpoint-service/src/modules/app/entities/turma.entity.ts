@@ -40,6 +40,6 @@ export class TurmaEntity {
     () => TurmaCategoriaEntity,
     (turmaCategoria) => turmaCategoria.turmas,
   )
-  @JoinColumn({ name: 'id_cat_tur_fk', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'id_tur_cat_fk', referencedColumnName: 'id' })
   turmaCategoria!: TurmaCategoriaEntity | null;
 }

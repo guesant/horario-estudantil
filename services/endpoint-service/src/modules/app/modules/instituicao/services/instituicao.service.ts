@@ -98,12 +98,13 @@ export class InstituicaoService {
   }
 
   async searchInstituicoes(
-    query: string,
+    reqQuery: string,
     reqLimit?: number,
     reqOffset?: number,
   ) {
     const limit = parseLimit(reqLimit);
     const offset = parseOffset(reqOffset);
+    const query = reqQuery.trim().slice(0, 100);
 
     const results = await this.meilisearchClient
       .index(INDEX_INSTITUICAO)

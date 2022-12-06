@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from "./PageExplorerMateria";
+export {default, getServerSideProps} from "./ExplorerPageMateria";

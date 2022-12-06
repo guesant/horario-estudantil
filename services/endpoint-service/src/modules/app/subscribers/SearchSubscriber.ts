@@ -41,7 +41,7 @@ export class SearchSubscriber
 
     await client
       .index(INDEX_INSTITUICAO)
-      .addDocuments([entity], { primaryKey: PRIMARY_KEY });
+      .updateDocuments([entity], { primaryKey: PRIMARY_KEY });
   }
 
   async afterUpdate(event: UpdateEvent<InstituicaoEntity>) {
@@ -52,7 +52,7 @@ export class SearchSubscriber
     if (entity) {
       await client
         .index(INDEX_INSTITUICAO)
-        .addDocuments([entity], { primaryKey: PRIMARY_KEY });
+        .updateDocuments([entity], { primaryKey: PRIMARY_KEY });
     }
   }
 

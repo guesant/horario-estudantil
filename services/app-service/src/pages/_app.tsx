@@ -1,27 +1,37 @@
-import { ApolloProvider } from "@apollo/client";
+import {ApolloProvider} from "@apollo/client";
 import Backdrop from "@mui/material/Backdrop";
 import CssBaseline from "@mui/material/CssBaseline";
-import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
+import type {AppProps} from "next/app";
+import {useRouter} from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { useEffect, useState } from "react";
-import { AppContextProvider } from "../components/AppContext/AppContext";
-import { AppRoutingContextProvider } from "../components/AppRoutingContext/AppRoutingContext";
-import { useApollo } from "../etc/infraestructure/apollo/useApollo";
+import {useEffect, useState} from "react";
+import {ExplorerContextProvider} from "../components/ExplorerContext/ExplorerContext";
+import {ExplorerRoutingContextProvider} from "../components/ExplorerRoutingContext/ExplorerRoutingContext";
+import {useApollo} from "../etc/infraestructure/apollo/useApollo";
 import "../styles/globals.css";
+import {SessionProvider} from "next-auth/react";
+import AuthGuard from "../components/AuthGuard/AuthGuard";
+import {IAppPage} from "../etc/domain/app/pages/IAppPage";
+
+type IAppProps = AppProps & { Component: IAppPage }
 
 export default function App({
-  Component,
-  pageProps: { initialQuery = {}, ...pageProps },
-}: AppProps) {
+                              Component,
+                              pageProps,
+                            }: IAppProps) {
+
+  const { session, initialQuery = {}, initialApolloState, ...restPageProps} = pageProps;
+
   const router = useRouter();
 
-  const client = useApollo(pageProps.initialApolloState);
+  const client = useApollo(initialApolloState);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+
     const handleStart = () => {
       NProgress.start();
       setIsLoading(true);
@@ -46,9 +56,10 @@ export default function App({
   return (
     <>
       <CssBaseline>
+        <SessionProvider session={session}>
         <Backdrop
           open={isLoading}
-          onClick={() => {}}
+          onClick={() => void 0}
           sx={{
             zIndex: (theme) =>
               Object.values(theme.zIndex).reduce(
@@ -58,12 +69,15 @@ export default function App({
           }}
         />
         <ApolloProvider client={client}>
-          <AppRoutingContextProvider initialQuery={initialQuery}>
-            <AppContextProvider>
-              <Component {...pageProps} />
-            </AppContextProvider>
-          </AppRoutingContextProvider>
+          <ExplorerRoutingContextProvider initialQuery={initialQuery}>
+            <ExplorerContextProvider>
+              <AuthGuard strict={Component.auth === true}>
+                <Component {...restPageProps} />
+              </AuthGuard>
+            </ExplorerContextProvider>
+          </ExplorerRoutingContextProvider>
         </ApolloProvider>
+      </SessionProvider>
       </CssBaseline>
     </>
   );

@@ -1,4 +1,4 @@
-import { ParsedUrlQuery } from "querystring";
+import {ParsedUrlQuery} from "querystring";
 
 const parseUE = (rawUE: any) => {
   if (typeof rawUE !== "string") {

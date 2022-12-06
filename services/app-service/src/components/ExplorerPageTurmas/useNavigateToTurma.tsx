@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import { useCallback, useContext } from "react";
-import { AppRoutingContext } from "../AppRoutingContext/AppRoutingContext";
+import {useRouter} from "next/router";
+import {useCallback, useContext} from "react";
+import {ExplorerRoutingContext} from "../ExplorerRoutingContext/ExplorerRoutingContext";
 
 export const useNavigateToTurma = () => {
   const router = useRouter();
 
-  const { query } = useContext(AppRoutingContext);
+  const {query} = useContext(ExplorerRoutingContext);
 
   const navigateToTurma = useCallback(
     (turma: string | number) => {
