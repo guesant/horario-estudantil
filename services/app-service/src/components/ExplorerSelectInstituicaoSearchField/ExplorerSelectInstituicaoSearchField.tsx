@@ -1,17 +1,17 @@
-import {useContext} from "react";
-import UISearchField from "../UISearchField/UISearchField";
-import {ExplorerSelectInstituicaoContext} from "../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext";
+import { useContext } from 'react';
+import UISearchField from '../UISearchField/UISearchField';
+import { ExplorerSelectInstituicaoContext } from '../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext';
 
 const usePortalSelecionarInstituicaoSearchFieldValues = () => {
-  const {searchText, setSearchText} = useContext(
-    ExplorerSelectInstituicaoContext
+  const { searchText, setSearchText } = useContext(
+    ExplorerSelectInstituicaoContext,
   );
 
-  return {searchText, setSearchText};
+  return { searchText, setSearchText };
 };
 
 const ExplorerSelectInstituicaoSearchField = () => {
-  const {searchText, setSearchText} =
+  const { searchText, setSearchText } =
     usePortalSelecionarInstituicaoSearchFieldValues();
 
   return (
@@ -20,12 +20,14 @@ const ExplorerSelectInstituicaoSearchField = () => {
         value={searchText}
         setValue={setSearchText}
         TextFieldProps={{
-          size: "small",
-          autoFocus: true,
+          size: 'small',
           fullWidth: true,
-          color: "success",
-          autoComplete: "off",
-          placeholder: "Refinar os resultados…",
+          color: 'success',
+          InputProps: {
+            autoFocus: true,
+            autoComplete: 'off',
+          },
+          placeholder: 'Refinar os resultados…',
         }}
       />
     </>

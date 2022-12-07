@@ -1,4 +1,4 @@
 export {
   default,
   getServerSideProps,
-} from "../../../components/ExplorerPageProfessores";
+} from '../../../components/ExplorerPageProfessores';

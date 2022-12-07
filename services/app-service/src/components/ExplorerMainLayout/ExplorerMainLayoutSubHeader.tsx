@@ -1,11 +1,11 @@
-import Box from "@mui/material/Box";
-import ExplorerSelectInstituicaoButton from "../ExplorerSelectInstituicaoButton/ExplorerSelectInstituicaoButton";
+import Box from '@mui/material/Box';
+import ExplorerSelectInstituicaoButton from '../ExplorerSelectInstituicaoButton/ExplorerSelectInstituicaoButton';
 
 const ExplorerMainLayoutSubHeader = () => {
   return (
     <>
       <Box>
-        <ExplorerSelectInstituicaoButton/>
+        <ExplorerSelectInstituicaoButton />
       </Box>
     </>
   );

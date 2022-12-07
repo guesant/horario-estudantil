@@ -1,13 +1,13 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SearchIcon from "@mui/icons-material/Search";
-import MenuList from "@mui/material/MenuList";
-import IconButton from "@mui/material/IconButton";
-import ListItemText from "@mui/material/ListItemText";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import * as React from "react";
-import {ITEM_HEIGHT} from "../UIExplorerHeader/UIExplorerHeader";
-import Link from "next/link";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SearchIcon from '@mui/icons-material/Search';
+import MenuList from '@mui/material/MenuList';
+import IconButton from '@mui/material/IconButton';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import * as React from 'react';
+import { ITEM_HEIGHT } from '../UIExplorerHeader/UIHeader';
+import Link from 'next/link';
 
 const ExplorerMainLayoutHeaderMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -25,11 +25,11 @@ const ExplorerMainLayoutHeaderMenu = () => {
   return (
     <>
       <IconButton color="inherit">
-        <SearchIcon/>
+        <SearchIcon />
       </IconButton>
 
       <IconButton onClick={handleClick} color="inherit">
-        <MoreVertIcon/>
+        <MoreVertIcon />
       </IconButton>
 
       <Menu
@@ -44,14 +44,14 @@ const ExplorerMainLayoutHeaderMenu = () => {
       >
         <MenuList>
           <Link
-            href="/painel"
-            style={{textDecoration: "none", color: "inherit"}}
+            href="/dashboard"
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <MenuItem>
               {/*<ListItemIcon>*/}
               {/*  <SettingsIcon/>*/}
               {/*</ListItemIcon>*/}
-              <ListItemText>Painel Administrativo</ListItemText>
+              <ListItemText>Painel de Administração</ListItemText>
             </MenuItem>
           </Link>
         </MenuList>

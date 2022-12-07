@@ -1,19 +1,23 @@
-import HomeIcon from "@mui/icons-material/Home";
-import {ActionDisplay, ActionType, IAction,} from "../../ExplorerBaseLayout/interfaces/IAction";
+import HomeIcon from '@mui/icons-material/Home';
+import {
+  ActionDisplay,
+  ActionType,
+  IAction,
+} from '../../ExplorerBaseLayout/interfaces/IAction';
 
 export const ACTION_HOME: IAction = {
   type: ActionType.ITEM,
   display: ActionDisplay.BOTH,
 
-  label: "Início",
+  label: 'Início',
   icon: HomeIcon,
 
   route: {
-    target: "/",
+    target: '/',
     exact: true,
   },
 
   tabOptions: {
-    hideTabsOnActive: true
-  }
+    hideTabsOnActive: true,
+  },
 };

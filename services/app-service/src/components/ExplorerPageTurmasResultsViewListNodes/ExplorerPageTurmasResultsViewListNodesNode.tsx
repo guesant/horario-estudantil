@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button";
-import {ICategoria} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
+import Button from '@mui/material/Button';
+import { ICategoria } from '../ExplorerPageTurmas/ExplorerPageTurmasContext';
 
 type IPageTurmasResultsListNodesNodeProps = {
   categoria: ICategoria;
@@ -9,9 +9,9 @@ type IPageTurmasResultsListNodesNodeProps = {
 };
 
 const ExplorerPageTurmasResultsViewListNodesNode = (
-  props: IPageTurmasResultsListNodesNodeProps
+  props: IPageTurmasResultsListNodesNodeProps,
 ) => {
-  const {categoria, isSelected, onSetSelected} = props;
+  const { categoria, isSelected, onSetSelected } = props;
 
   return (
     <Button
@@ -19,13 +19,13 @@ const ExplorerPageTurmasResultsViewListNodesNode = (
       disableElevation
       key={categoria.id}
       onClick={() => onSetSelected()}
-      variant={isSelected ? "contained" : "outlined"}
+      variant={isSelected ? 'contained' : 'outlined'}
       sx={{
         py: 4,
         fontSize: {
-          xs: "0.975rem",
-          sm: "1rem",
-          md: "1.2rem",
+          xs: '0.975rem',
+          sm: '1rem',
+          md: '1.2rem',
         },
       }}
     >

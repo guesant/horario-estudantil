@@ -1,1 +1,1 @@
-export {default} from "./UIExplorerLink";
+export { default } from './UIExplorerLink';

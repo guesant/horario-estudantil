@@ -1,6 +1,6 @@
-import {ApolloClient, NormalizedCacheObject} from "@apollo/client";
-import {createApolloClient} from "./createApolloClient";
-import {isServerSide} from "../../domain/app/isServerSide";
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { createApolloClient } from './createApolloClient';
+import { isServerSide } from '../../domain/app/isServerSide';
 
 let apolloClientCache: ApolloClient<NormalizedCacheObject>;
 

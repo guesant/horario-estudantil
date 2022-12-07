@@ -1,1 +1,1 @@
-export {default} from "./ExplorerSelectInstituicao";
+export { default } from './ExplorerSelectInstituicao';

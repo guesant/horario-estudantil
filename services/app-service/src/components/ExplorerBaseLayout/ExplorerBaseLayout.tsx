@@ -1,21 +1,25 @@
-import Box from "@mui/material/Box";
-import {useMemo} from "react";
-import AppContainer from "../UIExplorerContainer";
-import UIExplorerHeader, {AppHeaderProps} from "../UIExplorerHeader";
-import AppPage from "../UIExplorerPage/AppPage";
-import AppPageContent from "../UIExplorerPageContent/AppPageContent";
-import {getActionsForDisplay} from "./interfaces/getActionsForDisplay";
-import {ActionDisplay, IAction} from "./interfaces/IAction";
+import Box from '@mui/material/Box';
+import { useMemo } from 'react';
+import AppContainer from '../UIExplorerContainer';
+import UIHeader, { IUIHeaderProps } from '../UIExplorerHeader';
+import AppPage from '../UIExplorerPage/AppPage';
+import AppPageContent from '../UIExplorerPageContent/AppPageContent';
+import { getActionsForDisplay } from './interfaces/getActionsForDisplay';
+import { ActionDisplay, IAction } from './interfaces/IAction';
 import ExplorerBaseLayoutNavigationDrawer, {
   LayoutBaseNavigationDrawerProps,
-} from "./ExplorerBaseLayoutNavigationDrawer";
-import ExplorerBaseLayoutNavigationTabs, {ILayoutBaseNavigationTabsProps,} from "./ExplorerBaseLayoutNavigationTabs";
-import ExplorerBaseLayoutSubHeader, {ILayoutBaseSubHeaderProps,} from "./ExplorerBaseLayoutSubHeader";
+} from './ExplorerBaseLayoutNavigationDrawer';
+import ExplorerBaseLayoutNavigationTabs, {
+  ILayoutBaseNavigationTabsProps,
+} from './ExplorerBaseLayoutNavigationTabs';
+import ExplorerBaseLayoutSubHeader, {
+  ILayoutBaseSubHeaderProps,
+} from './ExplorerBaseLayoutSubHeader';
 
 export type LayoutBaseProps = {
   children?: React.ReactNode;
 
-  AppHeaderProps?: AppHeaderProps;
+  HeaderProps?: IUIHeaderProps;
 
   SubHeaderProps?: ILayoutBaseSubHeaderProps;
 
@@ -29,10 +33,10 @@ export type LayoutBaseProps = {
 const ExplorerBaseLayout = (props: LayoutBaseProps) => {
   const {
     children,
-    AppHeaderProps,
+    HeaderProps,
     SubHeaderProps,
-    NavigationDrawerProps,
     NavigationTabsProps,
+    NavigationDrawerProps,
     navigationActions = [],
   } = props;
 
@@ -40,47 +44,47 @@ const ExplorerBaseLayout = (props: LayoutBaseProps) => {
     () =>
       NavigationDrawerProps?.actions ??
       getActionsForDisplay(navigationActions, ActionDisplay.DRAWER),
-    [NavigationDrawerProps, navigationActions]
+    [NavigationDrawerProps, navigationActions],
   );
 
   const navigationTabsActions = useMemo(
     () =>
       NavigationTabsProps?.actions ??
       getActionsForDisplay(navigationActions, ActionDisplay.TABS),
-    [NavigationTabsProps, navigationActions]
+    [NavigationTabsProps, navigationActions],
   );
 
   return (
     <>
       <AppPage>
-        <UIExplorerHeader {...AppHeaderProps} />
+        <UIHeader {...HeaderProps} />
 
         <AppPageContent>
           <Box
             sx={{
-              height: "100%",
-              display: "flex",
-              overflow: "hidden",
-              flexDirection: "column",
+              height: '100%',
+              display: 'flex',
+              overflow: 'hidden',
+              flexDirection: 'column',
             }}
           >
             <ExplorerBaseLayoutSubHeader {...SubHeaderProps} />
 
             <AppContainer
               disableGutters
-              sx={{height: "100%", overflow: "hidden"}}
+              sx={{ height: '100%', overflow: 'hidden' }}
             >
               <Box
                 sx={{
-                  height: "100%",
-                  display: "flex",
-                  overflow: "hidden",
-                  flexDirection: {xs: "column", md: "row"},
+                  height: '100%',
+                  display: 'flex',
+                  overflow: 'hidden',
+                  flexDirection: { xs: 'column', md: 'row' },
                 }}
               >
                 <Box
                   sx={{
-                    display: {xs: "none", md: "block"},
+                    display: { xs: 'none', md: 'block' },
                   }}
                 >
                   <ExplorerBaseLayoutNavigationDrawer
@@ -91,10 +95,10 @@ const ExplorerBaseLayout = (props: LayoutBaseProps) => {
 
                 <Box
                   sx={{
-                    flex: "1 1",
-                    display: "flex",
-                    overflow: "auto",
-                    flexDirection: "column",
+                    flex: '1 1',
+                    display: 'flex',
+                    overflow: 'auto',
+                    flexDirection: 'column',
                   }}
                 >
                   {children}
@@ -103,7 +107,7 @@ const ExplorerBaseLayout = (props: LayoutBaseProps) => {
                 <Box
                   sx={{
                     flexShrink: 0,
-                    display: {xs: "block", md: "none"},
+                    display: { xs: 'block', md: 'none' },
                   }}
                 >
                   <ExplorerBaseLayoutNavigationTabs

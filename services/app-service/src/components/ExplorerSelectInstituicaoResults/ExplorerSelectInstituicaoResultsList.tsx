@@ -1,19 +1,17 @@
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import Alert from "@mui/material/Alert";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
-import {Fragment, useContext} from "react";
-import {ExplorerSelectInstituicaoContext} from "../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext";
-import UIExplorerLink from "../UIExplorerLink";
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import { Fragment, useContext } from 'react';
+import { ExplorerSelectInstituicaoContext } from '../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext';
+import UIExplorerLink from '../UIExplorerLink';
 
 const ExplorerSelectInstituicaoResultsList = () => {
-  const {instituicoes} = useContext(
-    ExplorerSelectInstituicaoContext
-  );
+  const { instituicoes } = useContext(ExplorerSelectInstituicaoContext);
 
   if (instituicoes.length === 0) {
     return (
@@ -25,8 +23,8 @@ const ExplorerSelectInstituicaoResultsList = () => {
 
   return (
     <>
-      <List sx={{my: 0, py: 0, bgcolor: "background.paper"}}>
-        <Divider component="li"/>
+      <List sx={{ my: 0, py: 0, bgcolor: 'background.paper' }}>
+        <Divider component="li" />
 
         {instituicoes.map((instituicao) => (
           <Fragment key={instituicao.id}>
@@ -49,7 +47,7 @@ const ExplorerSelectInstituicaoResultsList = () => {
                       variant="body2"
                       component="span"
                       color="text.primary"
-                      sx={{display: "inline"}}
+                      sx={{ display: 'inline' }}
                     >
                       {instituicao.nome}
                     </Typography>
@@ -58,7 +56,7 @@ const ExplorerSelectInstituicaoResultsList = () => {
               />
             </ListItemButton>
 
-            <Divider component="li"/>
+            <Divider component="li" />
           </Fragment>
         ))}
       </List>

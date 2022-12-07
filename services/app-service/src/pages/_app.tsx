@@ -1,27 +1,28 @@
-import {ApolloProvider} from "@apollo/client";
-import Backdrop from "@mui/material/Backdrop";
-import CssBaseline from "@mui/material/CssBaseline";
-import type {AppProps} from "next/app";
-import {useRouter} from "next/router";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-import {useEffect, useState} from "react";
-import {ExplorerContextProvider} from "../components/ExplorerContext/ExplorerContext";
-import {ExplorerRoutingContextProvider} from "../components/ExplorerRoutingContext/ExplorerRoutingContext";
-import {useApollo} from "../etc/infraestructure/apollo/useApollo";
-import "../styles/globals.css";
-import {SessionProvider} from "next-auth/react";
-import AuthGuard from "../components/AuthGuard/AuthGuard";
-import {IAppPage} from "../etc/domain/app/pages/IAppPage";
+import { ApolloProvider } from '@apollo/client';
+import Backdrop from '@mui/material/Backdrop';
+import CssBaseline from '@mui/material/CssBaseline';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { useEffect, useState } from 'react';
+import { ExplorerContextProvider } from '../components/ExplorerContext/ExplorerContext';
+import { ExplorerRoutingContextProvider } from '../components/ExplorerRoutingContext/ExplorerRoutingContext';
+import { useApollo } from '../etc/infraestructure/apollo/useApollo';
+import '../styles/globals.css';
+import { SessionProvider } from 'next-auth/react';
+import AuthGuard from '../components/AuthGuard/AuthGuard';
+import { IAppPage } from '../etc/domain/app/pages/IAppPage';
 
-type IAppProps = AppProps & { Component: IAppPage }
+type IAppProps = AppProps & { Component: IAppPage };
 
-export default function App({
-                              Component,
-                              pageProps,
-                            }: IAppProps) {
-
-  const {session, initialQuery = {}, initialApolloState, ...restPageProps} = pageProps;
+export default function App({ Component, pageProps }: IAppProps) {
+  const {
+    session,
+    initialQuery = {},
+    initialApolloState,
+    ...restPageProps
+  } = pageProps;
 
   const router = useRouter();
 
@@ -30,7 +31,7 @@ export default function App({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    NProgress.configure({showSpinner: false});
+    NProgress.configure({ showSpinner: false });
 
     const handleStart = () => {
       NProgress.start();
@@ -42,14 +43,14 @@ export default function App({
       setIsLoading(false);
     };
 
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleStop);
-    router.events.on("routeChangeError", handleStop);
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleStop);
+    router.events.on('routeChangeError', handleStop);
 
     return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleStop);
-      router.events.off("routeChangeError", handleStop);
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleStop);
+      router.events.off('routeChangeError', handleStop);
     };
   }, [router]);
 
@@ -57,18 +58,19 @@ export default function App({
     <>
       <CssBaseline>
         <SessionProvider session={session}>
-          <Backdrop
-            open={isLoading}
-            onClick={() => void 0}
-            sx={{
-              zIndex: (theme) =>
-                Object.values(theme.zIndex).reduce(
-                  (acc, i) => Math.max(acc, i),
-                  0
-                ) + 1,
-            }}
-          />
           <ApolloProvider client={client}>
+            <Backdrop
+              open={isLoading}
+              onClick={() => void 0}
+              sx={{
+                zIndex: (theme) =>
+                  Object.values(theme.zIndex).reduce(
+                    (acc, i) => Math.max(acc, i),
+                    0,
+                  ) + 1,
+              }}
+            />
+
             <ExplorerRoutingContextProvider initialQuery={initialQuery}>
               <ExplorerContextProvider>
                 <AuthGuard strict={Component.auth === true}>

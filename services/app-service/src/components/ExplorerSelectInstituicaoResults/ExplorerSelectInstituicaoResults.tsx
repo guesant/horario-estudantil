@@ -1,12 +1,10 @@
-import Alert from "@mui/material/Alert";
-import {useContext} from "react";
-import {ExplorerSelectInstituicaoContext} from "../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext";
-import ExplorerSelectInstituicaoResultsList from "./ExplorerSelectInstituicaoResultsList";
+import Alert from '@mui/material/Alert';
+import { useContext } from 'react';
+import { ExplorerSelectInstituicaoContext } from '../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext';
+import ExplorerSelectInstituicaoResultsList from './ExplorerSelectInstituicaoResultsList';
 
 const ExplorerSelectInstituicaoResults = () => {
-  const {isLoading, isError} = useContext(
-    ExplorerSelectInstituicaoContext
-  );
+  const { isLoading, isError } = useContext(ExplorerSelectInstituicaoContext);
 
   if (isLoading) {
     return (
@@ -28,7 +26,7 @@ const ExplorerSelectInstituicaoResults = () => {
 
   return (
     <>
-      <ExplorerSelectInstituicaoResultsList/>
+      <ExplorerSelectInstituicaoResultsList />
     </>
   );
 };

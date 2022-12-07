@@ -1,2 +1,3 @@
-export * from "./UIExplorerHeader";
-export {default} from "./UIExplorerHeader";
+export * from './UIHeader';
+export { default } from './UIHeader';
+export {UIHeaderBrand} from "./UIHeaderBrand";

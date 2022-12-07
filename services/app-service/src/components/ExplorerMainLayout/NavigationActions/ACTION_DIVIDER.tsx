@@ -1,4 +1,8 @@
-import {ActionDisplay, ActionType, IAction} from "../../ExplorerBaseLayout/interfaces/IAction";
+import {
+  ActionDisplay,
+  ActionType,
+  IAction,
+} from '../../ExplorerBaseLayout/interfaces/IAction';
 
 export const ACTION_DIVIDER: IAction = {
   type: ActionType.DIVIDER,

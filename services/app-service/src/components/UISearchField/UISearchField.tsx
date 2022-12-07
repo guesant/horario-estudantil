@@ -1,16 +1,16 @@
-import CloseIcon from "@mui/icons-material/Close";
-import SearchIcon from "@mui/icons-material/Search";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField, {TextFieldProps} from "@mui/material/TextField";
-import {ChangeEvent, useRef} from "react";
+import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
+import { ChangeEvent, useRef } from 'react';
 
 export type IUISearchFieldProps = {
   value: string;
 
   setValue: (
     newValue: string,
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null,
   ) => void;
 
   TextFieldProps?: TextFieldProps;
@@ -19,13 +19,13 @@ export type IUISearchFieldProps = {
 const UISearchField = (props: IUISearchFieldProps) => {
   const inputRef = useRef<HTMLInputElement>();
 
-  const {value = "", setValue, TextFieldProps} = props;
+  const { value = '', setValue, TextFieldProps } = props;
 
   const hasValue = value.trim().length > 0;
 
   const SearchAdornment = (
     <InputAdornment position="start">
-      <SearchIcon/>
+      <SearchIcon />
     </InputAdornment>
   );
 
@@ -35,12 +35,12 @@ const UISearchField = (props: IUISearchFieldProps) => {
         edge="end"
         disabled={!hasValue}
         onClick={() => {
-          setValue("", null);
+          setValue('', null);
           inputRef.current?.focus();
         }}
-        sx={{visibility: hasValue ? "" : "hidden"}}
+        sx={{ visibility: hasValue ? '' : 'hidden' }}
       >
-        <CloseIcon/>
+        <CloseIcon />
       </IconButton>
     </InputAdornment>
   );

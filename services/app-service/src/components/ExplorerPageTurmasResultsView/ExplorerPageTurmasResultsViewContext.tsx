@@ -1,5 +1,5 @@
-import {createContext, useCallback} from "react";
-import {ICategoria} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
+import { createContext, useCallback } from 'react';
+import { ICategoria } from '../ExplorerPageTurmas/ExplorerPageTurmasContext';
 
 export type IPageTurmasResultsViewContext = {
   allCategorias: ICategoria[];
@@ -12,7 +12,7 @@ export type IPageTurmasResultsViewContext = {
 };
 
 export const ExplorerPageTurmasResultsViewContext = createContext(
-  {} as IPageTurmasResultsViewContext
+  {} as IPageTurmasResultsViewContext,
 );
 
 export type IPageTurmasResultsViewContextProviderProps = {
@@ -22,20 +22,20 @@ export type IPageTurmasResultsViewContextProviderProps = {
 };
 
 export const PageTurmasResultsViewContextProvider = (
-  props: IPageTurmasResultsViewContextProviderProps
+  props: IPageTurmasResultsViewContextProviderProps,
 ) => {
-  const {children, allCategorias} = props;
+  const { children, allCategorias } = props;
 
   const getSubCategorias = useCallback(
     (parentId: string | number | null): ICategoria[] =>
       parentId !== null
         ? allCategorias.filter(
-          (i) =>
-            i.categoriaTurmaPai &&
-            String(i.categoriaTurmaPai.id) === String(parentId)
-        )
+            (i) =>
+              i.categoriaTurmaPai &&
+              String(i.categoriaTurmaPai.id) === String(parentId),
+          )
         : [],
-    [allCategorias]
+    [allCategorias],
   );
 
   const getCategoria = useCallback(
@@ -45,10 +45,10 @@ export const PageTurmasResultsViewContextProvider = (
       }
 
       return allCategorias.find(
-        (cat) => String(cat.id) === String(categoriaId)
+        (cat) => String(cat.id) === String(categoriaId),
       );
     },
-    [allCategorias]
+    [allCategorias],
   );
 
   const getParentCategoria = useCallback(
@@ -57,7 +57,7 @@ export const PageTurmasResultsViewContextProvider = (
       const parentId = childCategoria?.categoriaTurmaPai?.id;
       return getCategoria(parentId);
     },
-    [getCategoria]
+    [getCategoria],
   );
 
   return (

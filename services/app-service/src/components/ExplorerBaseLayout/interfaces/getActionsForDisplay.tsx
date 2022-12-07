@@ -1,6 +1,6 @@
-import {ActionDisplay, IAction} from "./IAction";
+import { ActionDisplay, IAction } from './IAction';
 
 export const getActionsForDisplay = (
   actions: IAction[],
-  display = ActionDisplay.BOTH
+  display = ActionDisplay.BOTH,
 ) => actions.filter((i) => i.display & display);

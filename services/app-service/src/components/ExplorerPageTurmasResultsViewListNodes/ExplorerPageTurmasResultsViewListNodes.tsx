@@ -1,14 +1,20 @@
-import Box from "@mui/material/Box";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Typography from "@mui/material/Typography";
-import {memo, useCallback, useContext, useEffect, useMemo, useRef, useState,} from "react";
-import {ICategoria} from "../ExplorerPageTurmas/ExplorerPageTurmasContext";
-import {ExplorerPageTurmasResultsViewListNodesContainer} from "./ExplorerPageTurmasResultsViewListNodesContainer";
-import ExplorerPageTurmasResultsViewListNodesNode from "./ExplorerPageTurmasResultsViewListNodesNode";
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Typography from '@mui/material/Typography';
 import {
-  ExplorerPageTurmasResultsViewContext
-} from "../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsViewContext";
-import {useNavigateToTurma} from "../ExplorerPageTurmas/useNavigateToTurma";
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { ICategoria } from '../ExplorerPageTurmas/ExplorerPageTurmasContext';
+import { ExplorerPageTurmasResultsViewListNodesContainer } from './ExplorerPageTurmasResultsViewListNodesContainer';
+import ExplorerPageTurmasResultsViewListNodesNode from './ExplorerPageTurmasResultsViewListNodesNode';
+import { ExplorerPageTurmasResultsViewContext } from '../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsViewContext';
+import { useNavigateToTurma } from '../ExplorerPageTurmas/useNavigateToTurma';
 
 const checkIsBaseCategorias = (categorias: ICategoria[]) =>
   categorias.length > 0 &&
@@ -17,30 +23,30 @@ const checkIsBaseCategorias = (categorias: ICategoria[]) =>
 type IPageTurmasResultsListNodesProps = { categorias: ICategoria[] };
 
 const ExplorerPageTurmasResultsViewListNodes = (
-  props: IPageTurmasResultsListNodesProps
+  props: IPageTurmasResultsListNodesProps,
 ) => {
-  const {categorias} = props;
+  const { categorias } = props;
 
   const navigateToTurma = useNavigateToTurma();
 
   const bgWrapperElRef = useRef<HTMLDivElement>();
 
-  const {getSubCategorias, getParentCategoria, getCategoria} = useContext(
-    ExplorerPageTurmasResultsViewContext
+  const { getSubCategorias, getParentCategoria, getCategoria } = useContext(
+    ExplorerPageTurmasResultsViewContext,
   );
 
   const [selectedId, setSelectedId] = useState<number | string | null>(null);
 
   const selectedCategoria = useMemo(
     () => getCategoria(selectedId),
-    [getCategoria, selectedId]
+    [getCategoria, selectedId],
   );
 
   const isBase = checkIsBaseCategorias(categorias);
 
   const subCategorias = useMemo(
     () => getSubCategorias(selectedId),
-    [getSubCategorias, selectedId]
+    [getSubCategorias, selectedId],
   );
 
   const parentCategoria = useMemo(() => {
@@ -48,7 +54,7 @@ const ExplorerPageTurmasResultsViewListNodes = (
       return null;
     }
 
-    const [{id}] = categorias;
+    const [{ id }] = categorias;
 
     return getParentCategoria(id);
   }, [categorias, getParentCategoria]);
@@ -58,9 +64,9 @@ const ExplorerPageTurmasResultsViewListNodes = (
 
     if (bgContainerEl) {
       bgContainerEl.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
       });
     }
   }, [bgWrapperElRef]);
@@ -72,9 +78,9 @@ const ExplorerPageTurmasResultsViewListNodes = (
       const nextEl = bgContainerEl.nextElementSibling;
 
       nextEl?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
       });
     }
   }, [bgWrapperElRef]);
@@ -87,7 +93,7 @@ const ExplorerPageTurmasResultsViewListNodes = (
 
   useEffect(() => {
     if (selectedCategoria) {
-      const {turmas} = selectedCategoria;
+      const { turmas } = selectedCategoria;
 
       if (turmas.length === 1) {
         const [turma] = turmas;
@@ -100,12 +106,12 @@ const ExplorerPageTurmasResultsViewListNodes = (
     return null;
   }
 
-  const title = parentCategoria?.tituloFilhos ?? "Categoria";
+  const title = parentCategoria?.tituloFilhos ?? 'Categoria';
 
   return (
     <ExplorerPageTurmasResultsViewListNodesContainer isBase={isBase}>
       <Box ref={bgWrapperElRef}>
-        <Typography variant="h5" sx={{mb: 3}}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
           {title}
         </Typography>
 

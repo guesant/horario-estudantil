@@ -1,11 +1,11 @@
-import {useRouter} from "next/router";
-import {useCallback} from "react";
-import {IActionItem} from "./IActionItem";
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import { IActionItem } from './IActionItem';
 
 export const useActionRouter = () => {
   const router = useRouter();
 
-  const {asPath} = router;
+  const { asPath } = router;
 
   const currentPathname = new URL(`http://hostname${asPath}`).pathname;
 
@@ -14,7 +14,7 @@ export const useActionRouter = () => {
       const route = action.route;
 
       if (route) {
-        const {target, exact} = route;
+        const { target, exact } = route;
 
         const isMatch =
           Boolean(target) &&
@@ -24,13 +24,13 @@ export const useActionRouter = () => {
 
         const realTarget = target;
 
-        return {isMatch, realTarget};
+        return { isMatch, realTarget };
       }
 
-      return {isMatch: false, realTarget: null};
+      return { isMatch: false, realTarget: null };
     },
-    [currentPathname]
+    [currentPathname],
   );
 
-  return {match};
+  return { match };
 };

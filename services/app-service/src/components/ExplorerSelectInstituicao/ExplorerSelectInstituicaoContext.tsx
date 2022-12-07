@@ -1,22 +1,28 @@
-import {gql, useQuery} from "@apollo/client";
-import {createContext, Dispatch, SetStateAction, useMemo, useState,} from "react";
-import {useDebounce} from "use-debounce";
-import {SEARCH_DELAY} from "./SEARCH_DELAY";
+import { gql, useQuery } from '@apollo/client';
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from 'react';
+import { useDebounce } from 'use-debounce';
+import { SEARCH_DELAY } from './SEARCH_DELAY';
 
 const SEARCH_INSTITUICOES = gql`
-    query SearchInstituicoes($query: String!) {
-        searchInstituicoes(query: $query, limit: 15) {
-            hits {
-                id
-                nome
-                sigla
-                apelido
-            }
-            limit
-            offset
-            estimatedTotalHits
-        }
+  query SearchInstituicoes($query: String!) {
+    searchInstituicoes(query: $query, limit: 15) {
+      hits {
+        id
+        nome
+        sigla
+        apelido
+      }
+      limit
+      offset
+      estimatedTotalHits
     }
+  }
 `;
 
 export type IPortalSelecionarInstituicaoContext = {
@@ -35,7 +41,7 @@ export type IPortalSelecionarInstituicaoContext = {
 };
 
 export const ExplorerSelectInstituicaoContext = createContext(
-  {} as IPortalSelecionarInstituicaoContext
+  {} as IPortalSelecionarInstituicaoContext,
 );
 
 export type IPortalSelecionarInstituicaoContextProviderProps = {
@@ -43,16 +49,16 @@ export type IPortalSelecionarInstituicaoContextProviderProps = {
 };
 
 export const PortalSelecionarInstituicaoContextProvider = (
-  props: IPortalSelecionarInstituicaoContextProviderProps
+  props: IPortalSelecionarInstituicaoContextProviderProps,
 ) => {
-  const {children} = props;
+  const { children } = props;
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DELAY);
 
   const searchQuery = useQuery(SEARCH_INSTITUICOES, {
-    variables: {query: debouncedSearchText},
+    variables: { query: debouncedSearchText },
   });
 
   const data = searchQuery.data;
@@ -63,7 +69,7 @@ export const PortalSelecionarInstituicaoContextProvider = (
 
   const instituicoes = useMemo(
     (): any[] => data?.searchInstituicoes.hits ?? [],
-    [data]
+    [data],
   );
 
   return (

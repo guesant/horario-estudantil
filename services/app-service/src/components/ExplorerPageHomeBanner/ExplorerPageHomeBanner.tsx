@@ -1,6 +1,5 @@
-import Paper from "@mui/material/Paper";
-import ExplorerPageHomeBannerCallToAction
-  from "../ExplorerPageHomeBannerCallToAction/ExplorerPageHomeBannerCallToAction";
+import Paper from '@mui/material/Paper';
+import ExplorerPageHomeBannerCallToAction from '../ExplorerPageHomeBannerCallToAction/ExplorerPageHomeBannerCallToAction';
 
 const ExplorerPageHomeBanner = () => {
   return (
@@ -9,11 +8,11 @@ const ExplorerPageHomeBanner = () => {
         variant="outlined"
         sx={{
           borderRadius: 4,
-          my: {xs: 1, sm: 1, md: 2},
-          p: {xs: 3, sm: 4, md: 5},
+          my: { xs: 1, sm: 1, md: 2 },
+          p: { xs: 3, sm: 4, md: 5 },
         }}
       >
-        <ExplorerPageHomeBannerCallToAction/>
+        <ExplorerPageHomeBannerCallToAction />
       </Paper>
     </>
   );

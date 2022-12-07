@@ -1,6 +1,6 @@
-import {IActionDivider} from "./IActionDivider";
-import {IActionItem} from "./IActionItem";
-import {IActionSpace} from "./IActionSpace";
+import { IActionDivider } from './IActionDivider';
+import { IActionItem } from './IActionItem';
+import { IActionSpace } from './IActionSpace';
 
 export type IAction = IActionItem | IActionSpace | IActionDivider;
 
@@ -11,7 +11,7 @@ export enum ActionDisplay {
 }
 
 export enum ActionType {
-  ITEM = "item",
-  SPACE = "space",
-  DIVIDER = "divider",
+  ITEM = 'item',
+  SPACE = 'space',
+  DIVIDER = 'divider',
 }

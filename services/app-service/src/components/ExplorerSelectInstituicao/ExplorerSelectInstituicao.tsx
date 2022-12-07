@@ -1,11 +1,11 @@
-import ExplorerSelectInstituicaoBase from "./ExplorerSelectInstituicaoBase";
-import {PortalSelecionarInstituicaoContextProvider} from "./ExplorerSelectInstituicaoContext";
+import ExplorerSelectInstituicaoBase from './ExplorerSelectInstituicaoBase';
+import { PortalSelecionarInstituicaoContextProvider } from './ExplorerSelectInstituicaoContext';
 
 const ExplorerSelectInstituicao = () => {
   return (
     <>
       <PortalSelecionarInstituicaoContextProvider>
-        <ExplorerSelectInstituicaoBase/>
+        <ExplorerSelectInstituicaoBase />
       </PortalSelecionarInstituicaoContextProvider>
     </>
   );

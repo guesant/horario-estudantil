@@ -1,8 +1,8 @@
-import {useContext} from "react";
-import {ExplorerRoutingContext} from "../ExplorerRoutingContext/ExplorerRoutingContext";
+import { useContext } from 'react';
+import { ExplorerRoutingContext } from '../ExplorerRoutingContext/ExplorerRoutingContext';
 
 export const useRouteSigla = () => {
-  const {query} = useContext(ExplorerRoutingContext);
+  const { query } = useContext(ExplorerRoutingContext);
 
   return query.ue;
 };

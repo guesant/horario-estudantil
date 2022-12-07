@@ -1,5 +1,5 @@
-import {ActionDisplay, ActionType} from "./IAction";
-import {SvgIcon} from "@mui/material";
+import { ActionDisplay, ActionType } from './IAction';
+import { SvgIcon } from '@mui/material';
 
 export type IActionItem = {
   type: ActionType.ITEM;
@@ -17,5 +17,5 @@ export type IActionItem = {
 
   tabOptions?: {
     hideTabsOnActive?: boolean;
-  }
+  };
 };

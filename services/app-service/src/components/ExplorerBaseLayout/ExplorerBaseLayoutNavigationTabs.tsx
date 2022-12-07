@@ -1,31 +1,36 @@
-import {createElement, useMemo} from "react";
-import AppLayoutTab from "../UILayoutTab/AppLayoutTab";
-import AppLayoutTabs from "../UILayoutTabs/AppLayoutTabs";
-import Link from "../UIExplorerLink";
-import {IAction} from "./interfaces/IAction";
-import {IActionItem} from "./interfaces/IActionItem";
-import {useActionRouter} from "./interfaces/useActionRouter";
+import { createElement, useMemo } from 'react';
+import AppLayoutTab from '../UILayoutTab/AppLayoutTab';
+import AppLayoutTabs from '../UILayoutTabs/AppLayoutTabs';
+import Link from '../UIExplorerLink';
+import { IAction } from './interfaces/IAction';
+import { IActionItem } from './interfaces/IActionItem';
+import { useActionRouter } from './interfaces/useActionRouter';
 
 export type ILayoutBaseNavigationTabsProps = {
   actions?: IAction[];
 };
 
-const ExplorerBaseLayoutNavigationTabs = (props: ILayoutBaseNavigationTabsProps) => {
-  const {match} = useActionRouter();
+const ExplorerBaseLayoutNavigationTabs = (
+  props: ILayoutBaseNavigationTabsProps,
+) => {
+  const { match } = useActionRouter();
 
-  const {actions = []} = props;
+  const { actions = [] } = props;
 
   const tabActions = useMemo(
-    () => actions.filter((i) => i.type === "item"),
-    [actions]
+    () => actions.filter((i) => i.type === 'item'),
+    [actions],
   ) as IActionItem[];
 
   const activeTabIndex = useMemo(
     () => tabActions.findIndex((action) => match(action).isMatch),
-    [match, tabActions]
+    [match, tabActions],
   );
 
-  const activeTabAction = useMemo(() => tabActions[activeTabIndex], [tabActions, activeTabIndex])
+  const activeTabAction = useMemo(
+    () => tabActions[activeTabIndex],
+    [tabActions, activeTabIndex],
+  );
 
   if (!activeTabAction) {
     return null;
@@ -39,8 +44,8 @@ const ExplorerBaseLayoutNavigationTabs = (props: ILayoutBaseNavigationTabsProps)
     <>
       <AppLayoutTabs variant="fullWidth" value={activeTabIndex}>
         {tabActions.map((action) => {
-          if (action.type === "item") {
-            const {realTarget} = match(action);
+          if (action.type === 'item') {
+            const { realTarget } = match(action);
 
             return (
               <AppLayoutTab
@@ -48,7 +53,7 @@ const ExplorerBaseLayoutNavigationTabs = (props: ILayoutBaseNavigationTabsProps)
                 icon={createElement(action.icon)}
                 label={action.label}
                 LinkComponent={Link}
-                {...{href: realTarget ?? "#"}}
+                {...{ href: realTarget ?? '#' }}
               />
             );
           }

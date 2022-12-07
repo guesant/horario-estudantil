@@ -1,9 +1,9 @@
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router';
 
 export const useRouteRequiresSigla = () => {
   const router = useRouter();
 
-  const {pathname} = router;
+  const { pathname } = router;
 
-  return pathname.startsWith("/h/");
+  return pathname.startsWith('/h/');
 };
