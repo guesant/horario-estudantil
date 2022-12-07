@@ -435,6 +435,11 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             type: 'int',
             isNullable: true,
           },
+
+          {
+            name: 'id_eta_fk',
+            type: 'int',
+          },
         ],
 
         foreignKeys: [
@@ -442,6 +447,12 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             columnNames: ['id_aul_fk'],
             referencedColumnNames: ['id_aul'],
             referencedTableName: 'Aula',
+          }),
+
+          new TableForeignKey({
+            columnNames: ['id_eta_fk'],
+            referencedColumnNames: ['id_eta'],
+            referencedTableName: 'Etapa',
           }),
         ],
       }),
