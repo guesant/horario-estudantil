@@ -46,14 +46,14 @@ export const ExplorerSelectInstituicaoDialog = (props: IExplorerSelectInstituica
         <Toolbar>
 
           <Typography sx={{flex: 1}} variant="h6" component="div">
-            Selecionar Instituição de Ensino
+            Selecionar Instituição
           </Typography>
 
           <IconButton
             edge="start"
             color="inherit"
-            onClick={handleClose}
             aria-label="close"
+            onClick={handleClose}
           >
             <CloseIcon/>
           </IconButton>

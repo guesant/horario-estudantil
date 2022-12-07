@@ -1,15 +1,15 @@
-html {
-    height: 100vh;
-    overflow: hidden;
-}
-
+html,
 body,
 #__next,
-.app-container-wrapper,
+.app-page,
 .loading-backdrop {
     width: 100%;
     height: 100%;
     overflow: hidden;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
 }
 
 #nprogress .bar {

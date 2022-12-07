@@ -5,6 +5,7 @@ import {getSharedServerSideProps} from "../../etc/domain/app/pages/shared/getSha
 import {buildPageTitle} from "../../etc/domain/app/skeleton/buildPageTitle";
 import AppPage from "../UIExplorerPage/AppPage";
 import ExplorerMainLayout from "../ExplorerMainLayout/ExplorerMainLayout";
+import ExplorerUIPageContent from "../ExplorerUIPageContent";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -20,7 +21,11 @@ const ExplorerPageMaterias: IAppPage = () => {
           <title>{buildPageTitle("Matérias")}</title>
         </Head>
 
-        <ExplorerMainLayout>Matérias</ExplorerMainLayout>
+        <ExplorerMainLayout>
+          <ExplorerUIPageContent title={"Matérias"}>
+            TBI.
+          </ExplorerUIPageContent>
+        </ExplorerMainLayout>
       </AppPage>
     </>
   );

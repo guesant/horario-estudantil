@@ -9,6 +9,7 @@ const AppPage = (props: Props) => {
 
   return (
     <Box
+      className={"app-page"}
       sx={{
         width: "100%",
         height: "100%",
