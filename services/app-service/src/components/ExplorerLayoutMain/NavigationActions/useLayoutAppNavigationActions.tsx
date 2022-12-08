@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { ExplorerContext } from '../../ExplorerContext/ExplorerContext';
-import { IAction } from '../../ExplorerLayoutBase/interfaces/IAction';
+import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
 import { ACTION_HOME } from './ACTION_HOME';
 import { getActionsForInstituicao } from './getActionsForInstituicao';
 import { ACTION_DIVIDER } from './ACTION_DIVIDER';
@@ -9,7 +9,7 @@ import { ACTION_SPACE } from './ACTION_SPACE';
 export const useLayoutAppNavigationActions = () => {
   const { sigla } = useContext(ExplorerContext);
 
-  const navigationActions: IAction[] = useMemo(
+  const navigationActions: IExplorerLayoutBaseAction[] = useMemo(
     () =>
       [
         ACTION_HOME,
@@ -19,7 +19,7 @@ export const useLayoutAppNavigationActions = () => {
         ACTION_DIVIDER,
 
         ACTION_SPACE,
-      ] as IAction[],
+      ] as IExplorerLayoutBaseAction[],
     [sigla],
   );
 

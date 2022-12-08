@@ -1,20 +1,17 @@
 import HomeIcon from '@mui/icons-material/Home';
-import {
-  ActionDisplay,
-  ActionType,
-  IAction,
-} from '../../ExplorerLayoutBase/interfaces/IAction';
+import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
+import { IExplorerLayoutBaseActionDisplay } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
+import { IExplorerLayoutBaseActionType } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionType';
 
-export const ACTION_HOME: IAction = {
-  type: ActionType.ITEM,
-  display: ActionDisplay.BOTH,
+export const ACTION_HOME: IExplorerLayoutBaseAction = {
+  type: IExplorerLayoutBaseActionType.ITEM,
+  display: IExplorerLayoutBaseActionDisplay.BOTH,
 
   label: 'Início',
   icon: HomeIcon,
 
   route: {
-    target: '/',
-    exact: true,
+    target: '/(h/:sigla_ins)',
   },
 
   tabOptions: {

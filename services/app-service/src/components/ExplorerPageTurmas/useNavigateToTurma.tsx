@@ -1,23 +1,19 @@
 import { useRouter } from 'next/router';
-import { useCallback, useContext } from 'react';
-import { ExplorerRoutingContext } from '../ExplorerRoutingContext/ExplorerRoutingContext';
+import { useCallback } from 'react';
+import { useRouteSigla } from '../../hooks/useRouteSigla';
 
 export const useNavigateToTurma = () => {
   const router = useRouter();
 
-  const { query } = useContext(ExplorerRoutingContext);
+  const sigla = useRouteSigla();
 
   const navigateToTurma = useCallback(
     (turma: string | number) => {
       router.push({
-        pathname: `/h/turmas/turma`,
-        query: {
-          ue: query.ue,
-          turma: turma,
-        },
+        pathname: `/h/${sigla}/turmas/${turma}`,
       });
     },
-    [router, query],
+    [router, sigla],
   );
 
   return navigateToTurma;

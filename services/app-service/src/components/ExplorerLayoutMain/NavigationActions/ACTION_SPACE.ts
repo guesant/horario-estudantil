@@ -1,10 +1,8 @@
-import {
-  ActionDisplay,
-  ActionType,
-  IAction,
-} from '../../ExplorerLayoutBase/interfaces/IAction';
+import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
+import { IExplorerLayoutBaseActionDisplay } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
+import { IExplorerLayoutBaseActionType } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionType';
 
-export const ACTION_SPACE: IAction = {
-  type: ActionType.SPACE,
-  display: ActionDisplay.DRAWER,
+export const ACTION_SPACE: IExplorerLayoutBaseAction = {
+  type: IExplorerLayoutBaseActionType.SPACE,
+  display: IExplorerLayoutBaseActionDisplay.DRAWER,
 };

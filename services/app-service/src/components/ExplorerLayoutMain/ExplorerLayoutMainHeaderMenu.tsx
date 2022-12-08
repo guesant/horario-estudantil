@@ -35,6 +35,8 @@ const ExplorerLayoutMainHeaderMenu = () => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
           style: {
             maxHeight: EXPLORER_LAYOUT_MAIN_ITEM_HEIGHT * 4.5,

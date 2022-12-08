@@ -27,7 +27,7 @@ const ExplorerSelectInstituicaoSearchField = () => {
             autoFocus: true,
             autoComplete: 'off',
           },
-          placeholder: 'Refinar os resultados…',
+          placeholder: 'Buscar…',
         }}
       />
     </>

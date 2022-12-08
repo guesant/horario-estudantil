@@ -6,14 +6,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ExplorerUILink from '../ExplorerUILink';
+import UILink from '../UILink';
 import { createElement, useMemo } from 'react';
-import { IAction } from './interfaces/IAction';
-import { useActionRouter } from './interfaces/useActionRouter';
+import { IExplorerLayoutBaseAction } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
+import { useRouteMatch } from '../../hooks/useRouteMatch';
 import ExplorerSelectInstituicaoButton from '../ExplorerSelectInstituicaoButton/ExplorerSelectInstituicaoButton';
 
 export type IExplorerLayoutBaseNavigationDrawer = {
-  actions?: IAction[];
+  actions?: IExplorerLayoutBaseAction[];
 };
 
 const drawerWidth = {
@@ -25,7 +25,7 @@ const drawerWidth = {
 const ExplorerLayoutBaseNavigationDrawer = (
   props: IExplorerLayoutBaseNavigationDrawer,
 ) => {
-  const { match } = useActionRouter();
+  const { match } = useRouteMatch();
 
   const { actions = [] } = props;
 
@@ -80,12 +80,18 @@ const ExplorerLayoutBaseNavigationDrawer = (
 
           {navActions.map((action, idx) => {
             if (action.type === 'item') {
-              const { isMatch, realTarget } = match(action);
+              const { isMatched, realTarget } = match(
+                action?.route?.target ?? null,
+              );
+
+              if (!realTarget) {
+                return null;
+              }
 
               return (
                 <ListItem sx={{ px: 2 }} key={action.label} disablePadding>
-                  <ExplorerUILink
-                    href={realTarget ?? '#'}
+                  <UILink
+                    href={realTarget}
                     style={{
                       width: '100%',
                       color: 'inherit',
@@ -95,13 +101,13 @@ const ExplorerLayoutBaseNavigationDrawer = (
                   >
                     <ListItemButton
                       disableRipple
-                      selected={isMatch}
+                      selected={isMatched}
                       sx={{ borderRadius: 2 }}
                     >
                       <ListItemIcon>{createElement(action.icon)}</ListItemIcon>
                       <ListItemText primary={action.label} />
                     </ListItemButton>
-                  </ExplorerUILink>
+                  </UILink>
                 </ListItem>
               );
             }

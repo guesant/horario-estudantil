@@ -23,6 +23,7 @@
     "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "route-parser": "^0.0.5",
     "use-debounce": "^8.0.4"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@types/nprogress": "^0.2.0",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
+    "@types/route-parser": "^0.1.4",
     "babel-loader": "^9.0.0",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.0",

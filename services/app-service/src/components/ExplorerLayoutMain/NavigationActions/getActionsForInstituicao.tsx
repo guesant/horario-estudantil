@@ -1,14 +1,14 @@
 import ClassIcon from '@mui/icons-material/Class';
 import GroupsIcon from '@mui/icons-material/Groups';
 import HailIcon from '@mui/icons-material/Hail';
-import {
-  ActionDisplay,
-  ActionType,
-  IAction,
-} from '../../ExplorerLayoutBase/interfaces/IAction';
+import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
 import { ACTION_DIVIDER } from './ACTION_DIVIDER';
+import { IExplorerLayoutBaseActionDisplay } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
+import { IExplorerLayoutBaseActionType } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionType';
 
-export const getActionsForInstituicao = (sigla: string | null): IAction[] => {
+export const getActionsForInstituicao = (
+  sigla: string | null,
+): IExplorerLayoutBaseAction[] => {
   if (!sigla) {
     return [];
   }
@@ -17,38 +17,38 @@ export const getActionsForInstituicao = (sigla: string | null): IAction[] => {
     ACTION_DIVIDER,
 
     {
-      type: ActionType.ITEM,
-      display: ActionDisplay.BOTH,
+      type: IExplorerLayoutBaseActionType.ITEM,
+      display: IExplorerLayoutBaseActionDisplay.BOTH,
 
       label: 'Turmas',
       icon: GroupsIcon,
 
       route: {
-        target: '/h/turmas',
+        target: '/h/:sigla_ins/turmas(/*rest)',
       },
     },
 
     {
-      type: ActionType.ITEM,
-      display: ActionDisplay.BOTH,
+      type: IExplorerLayoutBaseActionType.ITEM,
+      display: IExplorerLayoutBaseActionDisplay.BOTH,
 
       label: 'Matérias',
       icon: ClassIcon,
 
       route: {
-        target: '/h/materias',
+        target: '/h/:sigla_ins/materias(/*rest)',
       },
     },
 
     {
-      type: ActionType.ITEM,
-      display: ActionDisplay.BOTH,
+      type: IExplorerLayoutBaseActionType.ITEM,
+      display: IExplorerLayoutBaseActionDisplay.BOTH,
 
       label: 'Professores',
       icon: HailIcon,
 
       route: {
-        target: '/h/professores',
+        target: '/h/:sigla_ins/professores(/*rest)',
       },
     },
   ];

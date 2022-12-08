@@ -32,7 +32,7 @@ const ExplorerSelectInstituicaoResultsList = () => {
               LinkComponent={Link}
               alignItems="flex-start"
               title={instituicao.nome}
-              href={`/?ue=${instituicao.sigla}`}
+              href={`/h/${instituicao.sigla}`}
             >
               <ListItemAvatar>
                 <Avatar alt={instituicao.apelido}>

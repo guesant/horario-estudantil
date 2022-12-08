@@ -1,18 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, FC, useCallback, useEffect, useMemo } from 'react';
 import { QUERY_INSTITUICAO_INFO } from '../../etc/app/queries/InstituicaoQueries';
 import UILoading from '../UILoading/UILoading';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
-import { useRouteSigla } from './useRouteSigla';
-import { useRouteRequiresSigla } from './useRouteRequiresSigla';
+import { useRouteSigla } from '../../hooks/useRouteSigla';
 import { ExplorerDialogSelectInstituicaoContextProvider } from '../ExplorerDialogSelectInstituicaoContext/ExplorerDialogSelectInstituicaoContext';
 
 export type IExplorerContext = {
@@ -29,28 +21,20 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   children,
 }) => {
   const router = useRouter();
-  const routeUE = useRouteSigla();
-  const isSiglaRequired = useRouteRequiresSigla();
 
-  const [selectedSigla, setSelectedSigla] = useState<string | null>(routeUE);
+  const sigla = useRouteSigla();
 
-  const hasSigla = typeof selectedSigla === 'string';
+  const hasSigla = typeof sigla === 'string';
 
   const instituicaoQuery = useQuery(QUERY_INSTITUICAO_INFO, {
     skip: !hasSigla,
-    variables: { sigla: selectedSigla },
+    variables: { sigla: sigla },
   });
 
-  useEffect(() => void setSelectedSigla(routeUE), [routeUE]);
+  const selectedInstituicaoInfo = useMemo(() => {
+    const { loading, called, error, data } = instituicaoQuery;
 
-  const selectedUEInfo = useMemo(() => {
-    const { loading, called, error } = instituicaoQuery;
-
-    if (isSiglaRequired && !hasSigla) {
-      return { isValid: false, reason: 'required' };
-    }
-
-    if (loading || ((isSiglaRequired || hasSigla) && !called)) {
+    if (!data && (loading || (hasSigla && !called))) {
       return { isValid: false, reason: 'loading' };
     }
 
@@ -68,17 +52,20 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
     }
 
     return { isValid: true };
-  }, [instituicaoQuery, isSiglaRequired, hasSigla]);
+  }, [instituicaoQuery, hasSigla]);
 
-  const { isValid, reason } = selectedUEInfo;
+  const { isValid, reason } = selectedInstituicaoInfo;
 
-  const handleInvalidUE = useCallback(() => void router.push('/'), [router]);
+  const handleInvalidInstituicao = useCallback(
+    () => void router.push('/'),
+    [router],
+  );
 
   useEffect(() => {
     if (!isValid && reason !== 'loading') {
-      handleInvalidUE();
+      handleInvalidInstituicao();
     }
-  }, [isValid, reason, handleInvalidUE]);
+  }, [isValid, reason, handleInvalidInstituicao]);
 
   if (!isValid) {
     return (
@@ -91,7 +78,7 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   }
 
   return (
-    <ExplorerContext.Provider value={{ sigla: selectedSigla }}>
+    <ExplorerContext.Provider value={{ sigla: sigla }}>
       <ExplorerDialogSelectInstituicaoContextProvider>
         {children}
       </ExplorerDialogSelectInstituicaoContextProvider>

@@ -7,7 +7,7 @@ import ExplorerLayoutBaseHeader, {
 import UIPage from '../UIPage/UIPage';
 import UIPageContent from '../UIPageContent/UIPageContent';
 import { getActionsForDisplay } from './interfaces/getActionsForDisplay';
-import { ActionDisplay, IAction } from './interfaces/IAction';
+import { IExplorerLayoutBaseAction } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
 import ExplorerLayoutBaseNavigationDrawer, {
   IExplorerLayoutBaseNavigationDrawer,
 } from './ExplorerLayoutBaseNavigationDrawer';
@@ -17,6 +17,7 @@ import ExplorerLayoutBaseNavigationTabs, {
 import ExplorerLayoutBaseSubHeader, {
   IExplorerLayoutBaseSubHeaderProps,
 } from './ExplorerLayoutBaseSubHeader';
+import { IExplorerLayoutBaseActionDisplay } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
 
 export type IExplorerLayoutBaseProps = {
   children?: React.ReactNode;
@@ -29,7 +30,7 @@ export type IExplorerLayoutBaseProps = {
 
   NavigationTabsProps?: IExplorerLayoutBaseNavigationTabsProps;
 
-  navigationActions?: IAction[];
+  navigationActions?: IExplorerLayoutBaseAction[];
 };
 
 const ExplorerLayoutBase = (props: IExplorerLayoutBaseProps) => {
@@ -45,14 +46,20 @@ const ExplorerLayoutBase = (props: IExplorerLayoutBaseProps) => {
   const navigationDrawerActions = useMemo(
     () =>
       NavigationDrawerProps?.actions ??
-      getActionsForDisplay(navigationActions, ActionDisplay.DRAWER),
+      getActionsForDisplay(
+        navigationActions,
+        IExplorerLayoutBaseActionDisplay.DRAWER,
+      ),
     [NavigationDrawerProps, navigationActions],
   );
 
   const navigationTabsActions = useMemo(
     () =>
       NavigationTabsProps?.actions ??
-      getActionsForDisplay(navigationActions, ActionDisplay.TABS),
+      getActionsForDisplay(
+        navigationActions,
+        IExplorerLayoutBaseActionDisplay.TABS,
+      ),
     [NavigationTabsProps, navigationActions],
   );
 

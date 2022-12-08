@@ -13,7 +13,6 @@ export type ICategoria = any;
 
 export type IPageTurmasContext = {
   categorias: ICategoria[];
-
   categoriasQuery: QueryResult<any, any>;
 };
 

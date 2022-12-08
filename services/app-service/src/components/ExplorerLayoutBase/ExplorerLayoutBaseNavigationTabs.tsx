@@ -1,29 +1,32 @@
 import { createElement, useMemo } from 'react';
 import AppLayoutTab from '../UILayoutTab/AppLayoutTab';
 import AppLayoutTabs from '../UILayoutTabs/AppLayoutTabs';
-import Link from '../ExplorerUILink';
-import { IAction } from './interfaces/IAction';
-import { IActionItem } from './interfaces/IActionItem';
-import { useActionRouter } from './interfaces/useActionRouter';
+import Link from '../UILink';
+import { IExplorerLayoutBaseAction } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
+import { IExplorerLayoutBaseActionItem } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionItem';
+import { useRouteMatch } from '../../hooks/useRouteMatch';
 
 export type IExplorerLayoutBaseNavigationTabsProps = {
-  actions?: IAction[];
+  actions?: IExplorerLayoutBaseAction[];
 };
 
 const ExplorerLayoutBaseNavigationTabs = (
   props: IExplorerLayoutBaseNavigationTabsProps,
 ) => {
-  const { match } = useActionRouter();
+  const { match } = useRouteMatch();
 
   const { actions = [] } = props;
 
   const tabActions = useMemo(
     () => actions.filter((i) => i.type === 'item'),
     [actions],
-  ) as IActionItem[];
+  ) as IExplorerLayoutBaseActionItem[];
 
   const activeTabIndex = useMemo(
-    () => tabActions.findIndex((action) => match(action).isMatch),
+    () =>
+      tabActions.findIndex(
+        (action) => match(action?.route?.target ?? null).isMatched,
+      ),
     [match, tabActions],
   );
 
@@ -45,14 +48,14 @@ const ExplorerLayoutBaseNavigationTabs = (
       <AppLayoutTabs variant="fullWidth" value={activeTabIndex}>
         {tabActions.map((action) => {
           if (action.type === 'item') {
-            const { realTarget } = match(action);
+            const { realTarget } = match(action?.route?.target);
 
             return (
               <AppLayoutTab
                 key={action.label}
-                icon={createElement(action.icon)}
                 label={action.label}
                 LinkComponent={Link}
+                icon={createElement(action.icon)}
                 {...{ href: realTarget ?? '#' }}
               />
             );

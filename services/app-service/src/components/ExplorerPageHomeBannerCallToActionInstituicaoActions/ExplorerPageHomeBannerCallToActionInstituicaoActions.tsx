@@ -2,12 +2,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { createElement, Fragment, useContext, useMemo } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import ExplorerUILink from '../ExplorerUILink';
+import UILink from '../UILink';
 import ExplorerSelectInstituicaoButton from '../ExplorerSelectInstituicaoButton/ExplorerSelectInstituicaoButton';
 import { getActionsForInstituicao } from '../ExplorerLayoutMain/NavigationActions/getActionsForInstituicao';
-import { ActionType } from '../ExplorerLayoutBase/interfaces/IAction';
-import { IActionItem } from '../ExplorerLayoutBase/interfaces/IActionItem';
+import { IExplorerLayoutBaseActionItem } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionItem';
 import Divider from '@mui/material/Divider';
+import { IExplorerLayoutBaseActionType } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionType';
 
 const useCoreActions = () => {
   const { sigla } = useContext(ExplorerContext);
@@ -15,8 +15,8 @@ const useCoreActions = () => {
   const actions = useMemo(
     () =>
       getActionsForInstituicao(sigla).filter(
-        (i) => i.type === ActionType.ITEM,
-      ) as IActionItem[],
+        (i) => i.type === IExplorerLayoutBaseActionType.ITEM,
+      ) as IExplorerLayoutBaseActionItem[],
     [sigla],
   );
 
@@ -36,7 +36,7 @@ const ExplorerPageHomeBannerCallToActionInstituicaoActions = () => {
             sx: {
               // py: 0.95, px: 1.5,
               py: 1.75,
-              px: 2.15,
+              px: 2.5,
 
               fontSize: '1rem',
             },
@@ -105,7 +105,7 @@ const ExplorerPageHomeBannerCallToActionInstituicaoActions = () => {
                   {...(route
                     ? {
                         href: route.target,
-                        LinkComponent: ExplorerUILink,
+                        LinkComponent: UILink,
                       }
                     : {})}
                 >

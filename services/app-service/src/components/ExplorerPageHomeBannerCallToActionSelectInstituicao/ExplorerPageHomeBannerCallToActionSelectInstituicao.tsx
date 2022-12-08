@@ -27,7 +27,12 @@ const ExplorerPageHomeBannerCallToActionSelectInstituicao = () => {
               color: 'success',
               variant: 'contained',
               disableElevation: true,
-              sx: { py: 1.5, px: 2, fontSize: '1.25rem', borderRadius: '8px' },
+              sx: {
+                py: 1.5,
+                px: 3,
+                fontSize: '1.25rem',
+                borderRadius: '8px',
+              },
             }}
           />
         </Box>

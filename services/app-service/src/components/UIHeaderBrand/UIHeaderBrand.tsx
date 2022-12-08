@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import ExplorerUILink from '../ExplorerUILink';
+import UILink from '../UILink';
 import LogoIcon from '@mui/icons-material/CalendarMonth';
 import Typography from '@mui/material/Typography';
 
@@ -9,7 +9,7 @@ export type IUIHeaderBrandProps = {
 };
 
 const UIHeaderBrand = (props: IUIHeaderBrandProps) => {
-  const { href = '/', component = ExplorerUILink } = props;
+  const { href = '/', component = UILink } = props;
 
   return (
     <>

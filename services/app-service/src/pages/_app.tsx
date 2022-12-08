@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client';
-import Backdrop from '@mui/material/Backdrop';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -7,22 +6,21 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { useEffect, useState } from 'react';
 import { ExplorerContextProvider } from '../components/ExplorerContext/ExplorerContext';
-import { ExplorerRoutingContextProvider } from '../components/ExplorerRoutingContext/ExplorerRoutingContext';
 import { useApollo } from '../etc/apollo/useApollo';
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import AuthGuard from '../components/AuthGuard/AuthGuard';
 import { IAppPage } from '../etc/app/pages/IAppPage';
+import dynamic from 'next/dynamic';
+
+const Backdrop = dynamic(() => import('@mui/material/Backdrop'), {
+  ssr: false,
+});
 
 type IAppProps = AppProps & { Component: IAppPage };
 
 export default function App({ Component, pageProps }: IAppProps) {
-  const {
-    session,
-    initialQuery = {},
-    initialApolloState,
-    ...restPageProps
-  } = pageProps;
+  const { session, initialApolloState, ...restPageProps } = pageProps;
 
   const router = useRouter();
 
@@ -71,13 +69,11 @@ export default function App({ Component, pageProps }: IAppProps) {
               }}
             />
 
-            <ExplorerRoutingContextProvider initialQuery={initialQuery}>
-              <ExplorerContextProvider>
-                <AuthGuard strict={Component.auth === true}>
-                  <Component {...restPageProps} />
-                </AuthGuard>
-              </ExplorerContextProvider>
-            </ExplorerRoutingContextProvider>
+            <ExplorerContextProvider>
+              <AuthGuard strict={Component.auth === true}>
+                <Component {...restPageProps} />
+              </AuthGuard>
+            </ExplorerContextProvider>
           </ApolloProvider>
         </SessionProvider>
       </CssBaseline>
