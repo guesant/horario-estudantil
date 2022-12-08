@@ -2,11 +2,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { createElement, Fragment, useContext, useMemo } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import UIExplorerLink from '../UIExplorerLink';
+import ExplorerUILink from '../ExplorerUILink';
 import ExplorerSelectInstituicaoButton from '../ExplorerSelectInstituicaoButton/ExplorerSelectInstituicaoButton';
-import { getActionsForInstituicao } from '../ExplorerMainLayout/NavigationActions/getActionsForInstituicao';
-import { ActionType } from '../ExplorerBaseLayout/interfaces/IAction';
-import { IActionItem } from '../ExplorerBaseLayout/interfaces/IActionItem';
+import { getActionsForInstituicao } from '../ExplorerLayoutMain/NavigationActions/getActionsForInstituicao';
+import { ActionType } from '../ExplorerLayoutBase/interfaces/IAction';
+import { IActionItem } from '../ExplorerLayoutBase/interfaces/IActionItem';
 import Divider from '@mui/material/Divider';
 
 const useCoreActions = () => {
@@ -105,7 +105,7 @@ const ExplorerPageHomeBannerCallToActionInstituicaoActions = () => {
                   {...(route
                     ? {
                         href: route.target,
-                        LinkComponent: UIExplorerLink,
+                        LinkComponent: ExplorerUILink,
                       }
                     : {})}
                 >

@@ -1,0 +1,1 @@
+export const EXPLORER_LAYOUT_MAIN_ITEM_HEIGHT = 48;

@@ -7,7 +7,7 @@ import {
   useMemo,
 } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import { PAGE_TURMAS_DATA_CATEGORIAS } from '../../graphql/fragments/PAGE_TURMAS_DATA_CATEGORIAS';
+import { PAGE_TURMAS_DATA_CATEGORIAS } from '../../etc/graphql/fragments/PAGE_TURMAS_DATA_CATEGORIAS';
 
 export type ICategoria = any;
 

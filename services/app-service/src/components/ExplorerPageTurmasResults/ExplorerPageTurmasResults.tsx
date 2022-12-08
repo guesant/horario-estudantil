@@ -1,15 +1,15 @@
 import dynamic from 'next/dynamic';
 import { useContext } from 'react';
-import AppLoading from '../UIExplorerLoading/AppLoading';
+import UILoading from '../UILoading/UILoading';
 import { ExplorerPageTurmasContext } from '../ExplorerPageTurmas/ExplorerPageTurmasContext';
-import ExplorerUIPageContent from '../ExplorerUIPageContent';
+import ExplorerUIPageMainContent from '../ExplorerUIPageMainContent/ExplorerUIPageMainContent';
 import ExplorerPageTurmasResultsFeedbackError from '../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsFeedbackError';
 
 const PageTurmasResultsView = dynamic(
   () =>
     import('../ExplorerPageTurmasResultsView/ExplorerPageTurmasResultsView'),
   {
-    loading: () => <AppLoading />,
+    loading: () => <UILoading />,
   },
 );
 
@@ -21,9 +21,9 @@ const ExplorerPageTurmasResults = () => {
   if (isLoading) {
     return (
       <>
-        <ExplorerUIPageContent title={'Turmas'}>
-          <AppLoading />
-        </ExplorerUIPageContent>
+        <ExplorerUIPageMainContent title={'Turmas'}>
+          <UILoading />
+        </ExplorerUIPageMainContent>
       </>
     );
   }
@@ -31,18 +31,18 @@ const ExplorerPageTurmasResults = () => {
   if (Boolean(error)) {
     return (
       <>
-        <ExplorerUIPageContent title={'Turmas'}>
+        <ExplorerUIPageMainContent title={'Turmas'}>
           <ExplorerPageTurmasResultsFeedbackError />
-        </ExplorerUIPageContent>
+        </ExplorerUIPageMainContent>
       </>
     );
   }
 
   return (
     <>
-      <ExplorerUIPageContent title={'Turmas'}>
+      <ExplorerUIPageMainContent title={'Turmas'}>
         <PageTurmasResultsView />
-      </ExplorerUIPageContent>
+      </ExplorerUIPageMainContent>
     </>
   );
 };

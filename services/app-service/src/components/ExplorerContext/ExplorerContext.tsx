@@ -8,11 +8,12 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { QUERY_INSTITUICAO_INFO } from '../../etc/domain/app/queries/InstituicaoQueries';
-import AppLoading from '../UIExplorerLoading/AppLoading';
-import ExplorerMainLayout from '../ExplorerMainLayout/ExplorerMainLayout';
+import { QUERY_INSTITUICAO_INFO } from '../../etc/app/queries/InstituicaoQueries';
+import UILoading from '../UILoading/UILoading';
+import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import { useRouteSigla } from './useRouteSigla';
 import { useRouteRequiresSigla } from './useRouteRequiresSigla';
+import { ExplorerDialogSelectInstituicaoContextProvider } from '../ExplorerDialogSelectInstituicaoContext/ExplorerDialogSelectInstituicaoContext';
 
 export type IExplorerContext = {
   sigla: string | null;
@@ -82,16 +83,18 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   if (!isValid) {
     return (
       <>
-        <ExplorerMainLayout>
-          <AppLoading />
-        </ExplorerMainLayout>
+        <ExplorerLayoutMain>
+          <UILoading />
+        </ExplorerLayoutMain>
       </>
     );
   }
 
   return (
     <ExplorerContext.Provider value={{ sigla: selectedSigla }}>
-      {children}
+      <ExplorerDialogSelectInstituicaoContextProvider>
+        {children}
+      </ExplorerDialogSelectInstituicaoContextProvider>
     </ExplorerContext.Provider>
   );
 };

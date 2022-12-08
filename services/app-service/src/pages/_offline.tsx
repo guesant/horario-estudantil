@@ -2,24 +2,24 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Head from 'next/head';
 import React from 'react';
-import AppContainer from '../components/UIExplorerContainer';
-import UIHeader from '../components/UIExplorerHeader';
-import AppPage from '../components/UIExplorerPage/AppPage';
-import { buildPageTitle } from '../etc/domain/app/skeleton/buildPageTitle';
+import ExplorerUIContainer from '../components/ExplorerUIContainer';
+import ExplorerLayoutBaseHeader from '../components/ExplorerLayoutBaseHeader';
+import UIPage from '../components/UIPage/UIPage';
+import { buildPageTitle } from '../etc/app/skeleton/buildPageTitle';
 
 type Props = {};
 
 const PageOffline = (props: Props) => {
   return (
     <>
-      <AppPage>
+      <UIPage>
         <Head>
           <title>{buildPageTitle('Sem Conexão à Internet')}</title>
         </Head>
 
-        <UIHeader />
+        <ExplorerLayoutBaseHeader />
 
-        <AppContainer>
+        <ExplorerUIContainer>
           <Box sx={{ my: 2 }}>
             <Typography variant="h2" sx={{ my: 2 }}>
               Sem Conexão à Internet
@@ -29,8 +29,8 @@ const PageOffline = (props: Props) => {
               conectado à Internet.
             </Typography>
           </Box>
-        </AppContainer>
-      </AppPage>
+        </ExplorerUIContainer>
+      </UIPage>
     </>
   );
 };

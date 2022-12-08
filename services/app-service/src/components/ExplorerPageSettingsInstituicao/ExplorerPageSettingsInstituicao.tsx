@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { IAppPage } from '../../etc/domain/app/pages/IAppPage';
-import { buildPageTitle } from '../../etc/domain/app/skeleton/buildPageTitle';
-import ExplorerMainLayout from '../ExplorerMainLayout/ExplorerMainLayout';
+import { IAppPage } from '../../etc/app/pages/IAppPage';
+import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import ExplorerSelectInstituicao from '../ExplorerSelectInstituicao/ExplorerSelectInstituicao';
 
 const ExplorerPageSettingsInstituicao: IAppPage = () => {
@@ -13,9 +13,9 @@ const ExplorerPageSettingsInstituicao: IAppPage = () => {
         </title>
       </Head>
 
-      <ExplorerMainLayout>
+      <ExplorerLayoutMain>
         <ExplorerSelectInstituicao />
-      </ExplorerMainLayout>
+      </ExplorerLayoutMain>
     </>
   );
 };

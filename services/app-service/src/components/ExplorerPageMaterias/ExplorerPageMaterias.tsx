@@ -1,11 +1,11 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { IAppPage } from '../../etc/domain/app/pages/IAppPage';
-import { getSharedServerSideProps } from '../../etc/domain/app/pages/shared/getSharedServerSideProps';
-import { buildPageTitle } from '../../etc/domain/app/skeleton/buildPageTitle';
-import AppPage from '../UIExplorerPage/AppPage';
-import ExplorerMainLayout from '../ExplorerMainLayout/ExplorerMainLayout';
-import ExplorerUIPageContent from '../ExplorerUIPageContent';
+import { IAppPage } from '../../etc/app/pages/IAppPage';
+import { getSharedServerSideProps } from '../../etc/app/pages/shared/getSharedServerSideProps';
+import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import UIPage from '../UIPage/UIPage';
+import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
+import ExplorerUIPageMainContent from '../ExplorerUIPageMainContent/ExplorerUIPageMainContent';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -16,15 +16,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ExplorerPageMaterias: IAppPage = () => {
   return (
     <>
-      <AppPage>
+      <UIPage>
         <Head>
           <title>{buildPageTitle('Matérias')}</title>
         </Head>
 
-        <ExplorerMainLayout>
-          <ExplorerUIPageContent title={'Matérias'}>TBI.</ExplorerUIPageContent>
-        </ExplorerMainLayout>
-      </AppPage>
+        <ExplorerLayoutMain>
+          <ExplorerUIPageMainContent title={'Matérias'}>
+            TBI.
+          </ExplorerUIPageMainContent>
+        </ExplorerLayoutMain>
+      </UIPage>
     </>
   );
 };

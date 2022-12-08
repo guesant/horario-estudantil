@@ -8,11 +8,11 @@ import 'nprogress/nprogress.css';
 import { useEffect, useState } from 'react';
 import { ExplorerContextProvider } from '../components/ExplorerContext/ExplorerContext';
 import { ExplorerRoutingContextProvider } from '../components/ExplorerRoutingContext/ExplorerRoutingContext';
-import { useApollo } from '../etc/infraestructure/apollo/useApollo';
+import { useApollo } from '../etc/apollo/useApollo';
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import AuthGuard from '../components/AuthGuard/AuthGuard';
-import { IAppPage } from '../etc/domain/app/pages/IAppPage';
+import { IAppPage } from '../etc/app/pages/IAppPage';
 
 type IAppProps = AppProps & { Component: IAppPage };
 

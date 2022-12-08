@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Fragment, useContext } from 'react';
 import { ExplorerSelectInstituicaoContext } from '../ExplorerSelectInstituicao/ExplorerSelectInstituicaoContext';
-import UIExplorerLink from '../UIExplorerLink';
+import Link from 'next/link';
 
 const ExplorerSelectInstituicaoResultsList = () => {
   const { instituicoes } = useContext(ExplorerSelectInstituicaoContext);
@@ -29,8 +29,8 @@ const ExplorerSelectInstituicaoResultsList = () => {
         {instituicoes.map((instituicao) => (
           <Fragment key={instituicao.id}>
             <ListItemButton
+              LinkComponent={Link}
               alignItems="flex-start"
-              LinkComponent={UIExplorerLink}
               title={instituicao.nome}
               href={`/?ue=${instituicao.sigla}`}
             >

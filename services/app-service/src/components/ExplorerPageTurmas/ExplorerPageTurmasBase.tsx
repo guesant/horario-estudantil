@@ -1,29 +1,29 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { buildPageTitle } from '../../etc/domain/app/skeleton/buildPageTitle';
-import AppLoading from '../UIExplorerLoading/AppLoading';
-import AppPage from '../UIExplorerPage/AppPage';
-import ExplorerMainLayout from '../ExplorerMainLayout/ExplorerMainLayout';
+import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import UILoading from '../UILoading/UILoading';
+import UIPage from '../UIPage/UIPage';
+import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 
 const PageTurmasResults = dynamic(
   () => import('../ExplorerPageTurmasResults/ExplorerPageTurmasResults'),
   {
-    loading: () => <AppLoading />,
+    loading: () => <UILoading />,
   },
 );
 
 const ExplorerPageTurmasBase = () => {
   return (
     <>
-      <AppPage>
+      <UIPage>
         <Head>
           <title>{buildPageTitle('Turmas')}</title>
         </Head>
 
-        <ExplorerMainLayout>
+        <ExplorerLayoutMain>
           <PageTurmasResults />
-        </ExplorerMainLayout>
-      </AppPage>
+        </ExplorerLayoutMain>
+      </UIPage>
     </>
   );
 };

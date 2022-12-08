@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
 import { useQuery } from '@apollo/client';
-import { QUERY_INSTITUICAO_INFO } from '../../etc/domain/app/queries/InstituicaoQueries';
+import { QUERY_INSTITUICAO_INFO } from '../../etc/app/queries/InstituicaoQueries';
 
 export const ExplorerSelectInstituicaoButtonSelectedInfos = () => {
   const { sigla } = useContext(ExplorerContext);

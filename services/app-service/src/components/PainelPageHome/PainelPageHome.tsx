@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import { IAppPage } from '../../etc/domain/app/pages/IAppPage';
-import { buildPageTitle } from '../../etc/domain/app/skeleton/buildPageTitle';
-
-// export const getServerSideProps: GetServerSideProps = getSharedServerSideProps;
+import { IAppPage } from '../../etc/app/pages/IAppPage';
+import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import PainelLayoutMain from '../PainelLayoutMain/PainelLayoutMain';
 
 const PainelPageHome: IAppPage = () => {
   return (
@@ -11,7 +10,7 @@ const PainelPageHome: IAppPage = () => {
         <title>{buildPageTitle(['Painel de Administração'])}</title>
       </Head>
 
-      <main>pph</main>
+      <PainelLayoutMain>TBI.</PainelLayoutMain>
     </>
   );
 };

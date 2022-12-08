@@ -8,11 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
-import AppLoading from '../UIExplorerLoading/AppLoading';
+import UILoading from '../UILoading/UILoading';
 
 const ExplorerPortalSelecionarInstituicao = dynamic(
   () => import('../ExplorerSelectInstituicao'),
-  { loading: () => <AppLoading /> },
+  { loading: () => <UILoading /> },
 );
 
 type IExplorerSelectInstituicaoDialogProps = {

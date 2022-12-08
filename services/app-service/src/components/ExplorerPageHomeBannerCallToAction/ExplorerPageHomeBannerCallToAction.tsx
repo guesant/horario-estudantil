@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic';
 import { useContext } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import AppLoading from '../UIExplorerLoading/AppLoading';
+import UILoading from '../UILoading/UILoading';
 
 const HomeCallToActionSelectInstituicao = dynamic(
   () =>
     import(
       '../ExplorerPageHomeBannerCallToActionSelectInstituicao/ExplorerPageHomeBannerCallToActionSelectInstituicao'
     ),
-  { loading: () => <AppLoading /> },
+  { loading: () => <UILoading /> },
 );
 
 const HomeCallToActionSelectedInstituicaoActions = dynamic(
@@ -16,7 +16,7 @@ const HomeCallToActionSelectedInstituicaoActions = dynamic(
     import(
       '../ExplorerPageHomeBannerCallToActionInstituicaoActions/ExplorerPageHomeBannerCallToActionInstituicaoActions'
     ),
-  { loading: () => <AppLoading /> },
+  { loading: () => <UILoading /> },
 );
 
 const ExplorerPageHomeBannerCallToAction = () => {
