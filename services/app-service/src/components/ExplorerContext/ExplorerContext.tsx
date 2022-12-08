@@ -34,7 +34,7 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   const selectedInstituicaoInfo = useMemo(() => {
     const { loading, called, error, data } = instituicaoQuery;
 
-    if (!data && (loading || (hasSigla && !called))) {
+    if (!data && hasSigla && (loading || !called)) {
       return { isValid: false, reason: 'loading' };
     }
 

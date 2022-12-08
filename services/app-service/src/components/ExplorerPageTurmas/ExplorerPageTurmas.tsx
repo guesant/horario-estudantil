@@ -6,6 +6,7 @@ import log from '../../etc/log/log';
 import ExplorerPageTurmasBase from './ExplorerPageTurmasBase';
 import { PageTurmasContextProvider } from './ExplorerPageTurmasContext';
 import { PAGE_TURMAS_DATA_CATEGORIAS } from '../../etc/graphql/fragments/PAGE_TURMAS_DATA_CATEGORIAS';
+import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
@@ -38,9 +39,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ExplorerPageTurmas: IAppPage<any> = () => {
   return (
     <>
-      <PageTurmasContextProvider>
-        <ExplorerPageTurmasBase />
-      </PageTurmasContextProvider>
+      <ExplorerContextProvider>
+        <PageTurmasContextProvider>
+          <ExplorerPageTurmasBase />
+        </PageTurmasContextProvider>
+      </ExplorerContextProvider>
     </>
   );
 };

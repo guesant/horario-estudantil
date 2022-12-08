@@ -1,8 +1,8 @@
-import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PeopleIcon from '@mui/icons-material/People';
 import * as React from 'react';
 import { ISection } from './ISection';
+import DomainIcon from '@mui/icons-material/Domain';
 
 export const getPainelLayoutMainNavigationSections = (): ISection[] => {
   return [
@@ -11,7 +11,7 @@ export const getPainelLayoutMainNavigationSections = (): ISection[] => {
       items: [
         {
           label: 'Instituições',
-          icon: <MapsHomeWorkIcon />,
+          icon: <DomainIcon />,
           href: '/dashboard/instituicoes(/*rest)',
         },
         {

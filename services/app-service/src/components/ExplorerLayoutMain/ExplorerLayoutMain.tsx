@@ -4,6 +4,7 @@ import ExplorerLayoutMainHeaderMenu from './ExplorerLayoutMainHeaderMenu';
 import ExplorerLayoutMainSubHeader from './ExplorerLayoutMainSubHeader';
 import { useLayoutAppNavigationActions } from './NavigationActions/useLayoutAppNavigationActions';
 import Box from '@mui/material/Box';
+import UIPage from '../UIPage/UIPage';
 
 export type LayoutAppProps = {
   children?: React.ReactNode;
@@ -16,30 +17,32 @@ const ExplorerLayoutMain = (props: LayoutAppProps) => {
 
   return (
     <>
-      <ExplorerLayoutBase
-        navigationActions={navigationActions}
-        HeaderProps={{
-          afterBrand: (
-            <>
-              {/*<Box sx={{ display: { xs: 'none', sm: 'block' } }}>*/}
-              {/*  <UIHeaderSearch />*/}
-              {/*</Box>*/}
+      <UIPage>
+        <ExplorerLayoutBase
+          navigationActions={navigationActions}
+          HeaderProps={{
+            afterBrand: (
+              <>
+                {/*<Box sx={{ display: { xs: 'none', sm: 'block' } }}>*/}
+                {/*  <UIHeaderSearch />*/}
+                {/*</Box>*/}
 
-              <Box sx={{ flex: '1 1' }}></Box>
+                <Box sx={{ flex: '1 1' }}></Box>
 
-              <ExplorerLayoutMainHeaderMenu />
-            </>
-          ),
-        }}
-        SubHeaderProps={{
-          children: <ExplorerLayoutMainSubHeader />,
-          WrapperProps: {
-            sx: { display: { xs: 'none', md: 'none' } },
-          },
-        }}
-      >
-        {children}
-      </ExplorerLayoutBase>
+                <ExplorerLayoutMainHeaderMenu />
+              </>
+            ),
+          }}
+          SubHeaderProps={{
+            children: <ExplorerLayoutMainSubHeader />,
+            WrapperProps: {
+              sx: { display: { xs: 'none', md: 'none' } },
+            },
+          }}
+        >
+          {children}
+        </ExplorerLayoutBase>
+      </UIPage>
     </>
   );
 };

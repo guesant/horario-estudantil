@@ -6,21 +6,24 @@ import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
 import ExplorerPageHomeBanner from '../ExplorerPageHomeBanner/ExplorerPageHomeBanner';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import ExplorerUIPageMainContent from '../ExplorerUIPageMainContent/ExplorerUIPageMainContent';
+import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
 
 export const getServerSideProps: GetServerSideProps = getServerSidePropsShared;
 
 const ExplorerPageHome: IAppPage = () => {
   return (
     <>
-      <Head>
-        <title>{buildPageTitle('Início')}</title>
-      </Head>
+      <ExplorerContextProvider>
+        <Head>
+          <title>{buildPageTitle('Início')}</title>
+        </Head>
 
-      <ExplorerLayoutMain>
-        <ExplorerUIPageMainContent title={'Início'}>
-          <ExplorerPageHomeBanner />
-        </ExplorerUIPageMainContent>
-      </ExplorerLayoutMain>
+        <ExplorerLayoutMain>
+          <ExplorerUIPageMainContent title={'Início'}>
+            <ExplorerPageHomeBanner />
+          </ExplorerUIPageMainContent>
+        </ExplorerLayoutMain>
+      </ExplorerContextProvider>
     </>
   );
 };

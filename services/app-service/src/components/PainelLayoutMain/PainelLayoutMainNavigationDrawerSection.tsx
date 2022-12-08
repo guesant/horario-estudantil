@@ -5,11 +5,12 @@ import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import UILink from '../UILink';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { ISection, ISectionItem } from './ISection';
 import { useRouteMatch } from '../../hooks/useRouteMatch';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 type IPainelLayoutMainNavigationDrawerSectionProps = {
   section: ISection;
@@ -26,10 +27,11 @@ const PainelLayoutMainNavigationDrawerSectionItem = (
 
   const { match } = useRouteMatch();
 
-  const { realTarget, isMatched } = useMemo(
-    () => match(item.href),
-    [item, match],
-  );
+  const { href } = item;
+
+  const { push } = useRouter();
+
+  const { realTarget, isMatched } = useMemo(() => match(href), [href, match]);
 
   if (realTarget === null) {
     return null;
@@ -40,8 +42,12 @@ const PainelLayoutMainNavigationDrawerSectionItem = (
       <ListItem disablePadding>
         <ListItemButton
           href={realTarget}
-          LinkComponent={UILink}
           selected={isMatched}
+          onClick={(e) => {
+            e.preventDefault();
+            push(realTarget);
+          }}
+          LinkComponent={Link}
         >
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.label} />

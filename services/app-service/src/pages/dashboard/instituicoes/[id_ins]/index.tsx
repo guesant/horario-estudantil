@@ -1,3 +1,1 @@
-export default function SamplePage() {
-  return <>sample page</>;
-}
+export { default } from '../../../../components/PainelPageInstituicao';

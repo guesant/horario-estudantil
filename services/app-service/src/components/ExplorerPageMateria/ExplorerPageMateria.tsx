@@ -3,8 +3,9 @@ import Head from 'next/head';
 import { IAppPage } from '../../etc/app/pages/IAppPage';
 import { getServerSidePropsShared } from '../../etc/app/pages/shared/getServerSidePropsShared';
 import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
-import UIPage from '../UIPage/UIPage';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
+import ExplorerUIPageMainContent from '../ExplorerUIPageMainContent/ExplorerUIPageMainContent';
+import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -15,13 +16,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ExplorerPageMateria: IAppPage = () => {
   return (
     <>
-      <UIPage>
+      <ExplorerContextProvider>
         <Head>
           <title>{buildPageTitle('Matéria')}</title>
         </Head>
 
-        <ExplorerLayoutMain>Matéria</ExplorerLayoutMain>
-      </UIPage>
+        <ExplorerLayoutMain>
+          <ExplorerUIPageMainContent title={'Matéria'}>
+            TBI.
+          </ExplorerUIPageMainContent>
+        </ExplorerLayoutMain>
+      </ExplorerContextProvider>
     </>
   );
 };

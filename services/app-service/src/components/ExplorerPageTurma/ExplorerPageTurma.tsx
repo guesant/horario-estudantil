@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { IAppPage } from '../../etc/app/pages/IAppPage';
 import { getServerSidePropsShared } from '../../etc/app/pages/shared/getServerSidePropsShared';
 import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
-import UIPage from '../UIPage/UIPage';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
+import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -15,13 +15,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ExplorerPageTurma: IAppPage = () => {
   return (
     <>
-      <UIPage>
+      <ExplorerContextProvider>
         <Head>
           <title>{buildPageTitle('Turma')}</title>
         </Head>
 
         <ExplorerLayoutMain>Turma.</ExplorerLayoutMain>
-      </UIPage>
+      </ExplorerContextProvider>
     </>
   );
 };

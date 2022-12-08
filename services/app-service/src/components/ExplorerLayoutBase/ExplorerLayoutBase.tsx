@@ -18,6 +18,7 @@ import ExplorerLayoutBaseSubHeader, {
   IExplorerLayoutBaseSubHeaderProps,
 } from './ExplorerLayoutBaseSubHeader';
 import { IExplorerLayoutBaseActionDisplay } from '../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
+import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
 
 export type IExplorerLayoutBaseProps = {
   children?: React.ReactNode;
@@ -65,70 +66,72 @@ const ExplorerLayoutBase = (props: IExplorerLayoutBaseProps) => {
 
   return (
     <>
-      <UIPage>
-        <ExplorerLayoutBaseHeader {...HeaderProps} />
+      <ExplorerContextProvider>
+        <UIPage>
+          <ExplorerLayoutBaseHeader {...HeaderProps} />
 
-        <UIPageContent>
-          <Box
-            sx={{
-              height: '100%',
-              display: 'flex',
-              overflow: 'hidden',
-              flexDirection: 'column',
-            }}
-          >
-            <ExplorerLayoutBaseSubHeader {...SubHeaderProps} />
-
-            <ExplorerUIContainer
-              disableGutters
-              sx={{ height: '100%', overflow: 'hidden' }}
+          <UIPageContent>
+            <Box
+              sx={{
+                height: '100%',
+                display: 'flex',
+                overflow: 'hidden',
+                flexDirection: 'column',
+              }}
             >
-              <Box
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  overflow: 'hidden',
-                  flexDirection: { xs: 'column', md: 'row' },
-                }}
+              <ExplorerLayoutBaseSubHeader {...SubHeaderProps} />
+
+              <ExplorerUIContainer
+                disableGutters
+                sx={{ height: '100%', overflow: 'hidden' }}
               >
                 <Box
                   sx={{
-                    display: { xs: 'none', md: 'block' },
-                  }}
-                >
-                  <ExplorerLayoutBaseNavigationDrawer
-                    {...NavigationDrawerProps}
-                    actions={navigationDrawerActions}
-                  />
-                </Box>
-
-                <Box
-                  sx={{
-                    flex: '1 1',
+                    height: '100%',
                     display: 'flex',
-                    overflow: 'auto',
-                    flexDirection: 'column',
+                    overflow: 'hidden',
+                    flexDirection: { xs: 'column', md: 'row' },
                   }}
                 >
-                  {children}
-                </Box>
+                  <Box
+                    sx={{
+                      display: { xs: 'none', md: 'block' },
+                    }}
+                  >
+                    <ExplorerLayoutBaseNavigationDrawer
+                      {...NavigationDrawerProps}
+                      actions={navigationDrawerActions}
+                    />
+                  </Box>
 
-                <Box
-                  sx={{
-                    flexShrink: 0,
-                    display: { xs: 'block', md: 'none' },
-                  }}
-                >
-                  <ExplorerLayoutBaseNavigationTabs
-                    {...NavigationTabsProps}
-                    actions={navigationTabsActions}
-                  />
+                  <Box
+                    sx={{
+                      flex: '1 1',
+                      display: 'flex',
+                      overflow: 'auto',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {children}
+                  </Box>
+
+                  <Box
+                    sx={{
+                      flexShrink: 0,
+                      display: { xs: 'block', md: 'none' },
+                    }}
+                  >
+                    <ExplorerLayoutBaseNavigationTabs
+                      {...NavigationTabsProps}
+                      actions={navigationTabsActions}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            </ExplorerUIContainer>
-          </Box>
-        </UIPageContent>
-      </UIPage>
+              </ExplorerUIContainer>
+            </Box>
+          </UIPageContent>
+        </UIPage>
+      </ExplorerContextProvider>
     </>
   );
 };

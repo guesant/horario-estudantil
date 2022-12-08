@@ -18,7 +18,6 @@ const PainelLayoutMain = (props: IPainelLayoutMainProps) => {
   const { children } = props;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const handleDrawerToggle = () => void setMobileOpen(!mobileOpen);
 
   const drawer = <PainelLayoutMainNavigationDrawer />;
@@ -90,12 +89,12 @@ const PainelLayoutMain = (props: IPainelLayoutMainProps) => {
       </Box>
 
       <Box
+        component="main"
         sx={{
           p: 3,
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
-        component="main"
       >
         <Toolbar />
 

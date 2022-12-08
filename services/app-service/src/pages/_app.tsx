@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { useEffect, useState } from 'react';
-import { ExplorerContextProvider } from '../components/ExplorerContext/ExplorerContext';
 import { useApollo } from '../etc/apollo/useApollo';
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
@@ -55,8 +54,8 @@ export default function App({ Component, pageProps }: IAppProps) {
   return (
     <>
       <CssBaseline>
-        <SessionProvider session={session}>
-          <ApolloProvider client={client}>
+        <ApolloProvider client={client}>
+          <SessionProvider session={session}>
             <Backdrop
               open={isLoading}
               onClick={() => void 0}
@@ -69,13 +68,11 @@ export default function App({ Component, pageProps }: IAppProps) {
               }}
             />
 
-            <ExplorerContextProvider>
-              <AuthGuard strict={Component.auth === true}>
-                <Component {...restPageProps} />
-              </AuthGuard>
-            </ExplorerContextProvider>
-          </ApolloProvider>
-        </SessionProvider>
+            <AuthGuard strict={Component.auth === true}>
+              <Component {...restPageProps} />
+            </AuthGuard>
+          </SessionProvider>
+        </ApolloProvider>
       </CssBaseline>
     </>
   );
