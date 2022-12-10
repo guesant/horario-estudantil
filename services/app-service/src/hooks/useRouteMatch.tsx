@@ -19,7 +19,7 @@ export const useRouteMatch = () => {
         const isMatched = matchedParams !== false;
 
         const realTarget =
-          route.reverse({ ...query, ...matchedParams }) || null;
+          route.reverse({ ...query, ...matchedParams, rest: '' }) || null;
 
         return { isMatched, realTarget };
       }

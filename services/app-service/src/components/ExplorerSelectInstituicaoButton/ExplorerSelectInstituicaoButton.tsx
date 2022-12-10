@@ -1,5 +1,5 @@
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDownRounded';
+import LocationOnIcon from '@mui/icons-material/LocationOnRounded';
 import Button, { ButtonProps } from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useContext } from 'react';

@@ -7,7 +7,7 @@ import {
   useMemo,
 } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import { PAGE_TURMAS_DATA_CATEGORIAS } from '../../etc/graphql/fragments/PAGE_TURMAS_DATA_CATEGORIAS';
+import { INSTITUICAO_TURMAS } from '../../graphql/fragments/INSTITUICAO_TURMAS';
 
 export type ICategoria = any;
 
@@ -25,7 +25,7 @@ export const PageTurmasContextProvider: FC<PropsWithChildren<{}>> = ({
 }) => {
   const { sigla } = useContext(ExplorerContext);
 
-  const categoriasQuery = useQuery(PAGE_TURMAS_DATA_CATEGORIAS, {
+  const categoriasQuery = useQuery(INSTITUICAO_TURMAS, {
     variables: { sigla: sigla },
   });
 

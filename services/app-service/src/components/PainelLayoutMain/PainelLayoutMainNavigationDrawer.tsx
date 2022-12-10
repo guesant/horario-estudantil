@@ -3,7 +3,7 @@ import Divider from '@mui/material/Divider';
 import * as React from 'react';
 import { useMemo } from 'react';
 import Button from '@mui/material/Button';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBackRounded';
 import Link from 'next/link';
 import PainelLayoutMainNavigationDrawerSection from './PainelLayoutMainNavigationDrawerSection';
 import { getPainelLayoutMainNavigationSections } from './getPainelLayoutMainNavigationSections';
@@ -17,6 +17,8 @@ const PainelLayoutMainNavigationDrawer = () => {
         <Button
           fullWidth
           href={'/'}
+          color={'secondary'}
+          variant={'outlined'}
           LinkComponent={Link}
           startIcon={<ArrowBackIcon />}
           sx={{ justifyContent: 'flex-start', px: 2 }}

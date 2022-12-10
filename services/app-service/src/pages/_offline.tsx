@@ -5,7 +5,7 @@ import React from 'react';
 import ExplorerUIContainer from '../components/ExplorerUIContainer';
 import ExplorerLayoutBaseHeader from '../components/ExplorerLayoutBaseHeader';
 import UIPage from '../components/UIPage/UIPage';
-import { buildPageTitle } from '../etc/app/skeleton/buildPageTitle';
+import { buildPageTitle } from '../etc/skeleton/buildPageTitle';
 
 type Props = {};
 

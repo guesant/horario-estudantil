@@ -1,8 +1,8 @@
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PeopleIcon from '@mui/icons-material/People';
+import AccountCircleIcon from '@mui/icons-material/AccountCircleRounded';
+import PeopleIcon from '@mui/icons-material/PeopleRounded';
 import * as React from 'react';
 import { ISection } from './ISection';
-import DomainIcon from '@mui/icons-material/Domain';
+import DomainIcon from '@mui/icons-material/DomainRounded';
 
 export const getPainelLayoutMainNavigationSections = (): ISection[] => {
   return [

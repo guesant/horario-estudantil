@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import { buildPageTitle } from '../../etc/skeleton/buildPageTitle';
 import UILoading from '../UILoading/UILoading';
 import UIPage from '../UIPage/UIPage';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';

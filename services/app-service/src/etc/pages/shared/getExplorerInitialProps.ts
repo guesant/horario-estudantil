@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext } from 'next';
-import { initializeApollo } from '../../../apollo/initializeApollo';
-import log from '../../../log/log';
-import { QUERY_INSTITUICAO_INFO } from '../../queries/InstituicaoQueries';
+import { initializeApollo } from '../../../api/apollo/initializeApollo';
+import log from '../../log/log';
+import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
 
-export const getServerSidePropsShared = async (
+export const getExplorerInitialProps = async (
   context: GetServerSidePropsContext,
   apolloClient = initializeApollo(),
 ) => {
@@ -13,7 +13,7 @@ export const getServerSidePropsShared = async (
     await apolloClient
       .query({
         variables: { sigla: sigla },
-        query: QUERY_INSTITUICAO_INFO,
+        query: INSTITUICAO_GENERAL_INFO,
       })
       .catch(() => {
         log.error("Can't fetch Instituição info", {
@@ -23,8 +23,8 @@ export const getServerSidePropsShared = async (
   }
 
   return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
+    // props: {
+    initialApolloState: apolloClient.cache.extract(),
+    // },
   };
 };

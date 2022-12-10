@@ -1,12 +1,12 @@
 import { useContext, useMemo } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
 import { useQuery } from '@apollo/client';
-import { QUERY_INSTITUICAO_INFO } from '../../etc/app/queries/InstituicaoQueries';
+import { INSTITUICAO_GENERAL_INFO } from '../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
 
 export const ExplorerSelectInstituicaoButtonSelectedInfos = () => {
   const { sigla } = useContext(ExplorerContext);
 
-  const { data, loading, error } = useQuery(QUERY_INSTITUICAO_INFO, {
+  const { data, loading, error } = useQuery(INSTITUICAO_GENERAL_INFO, {
     variables: { sigla: sigla },
   });
 

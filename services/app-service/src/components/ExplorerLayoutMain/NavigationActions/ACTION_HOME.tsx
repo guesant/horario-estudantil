@@ -1,4 +1,4 @@
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from '@mui/icons-material/HomeRounded';
 import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
 import { IExplorerLayoutBaseActionDisplay } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';
 import { IExplorerLayoutBaseActionType } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionType';

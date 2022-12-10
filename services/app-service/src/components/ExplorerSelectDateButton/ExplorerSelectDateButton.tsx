@@ -1,5 +1,5 @@
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDownRounded';
+import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeekRounded';
 import Button from '@mui/material/Button';
 
 type IExplorerSelectDateButtonProps = {};

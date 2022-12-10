@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const PAGE_TURMAS_DATA_CATEGORIAS = gql`
+export const INSTITUICAO_TURMAS = gql`
   query PageTurmasData($sigla: String!) {
     instituicao(sigla: $sigla) {
       turmaCategorias {

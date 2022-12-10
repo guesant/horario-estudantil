@@ -1,17 +1,10 @@
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { IAppPage } from '../../etc/app/pages/IAppPage';
-import { getServerSidePropsShared } from '../../etc/app/pages/shared/getServerSidePropsShared';
-import { buildPageTitle } from '../../etc/app/skeleton/buildPageTitle';
+import { IAppPage } from '../../etc/pages/IAppPage';
+import { getExplorerInitialProps } from '../../etc/pages/shared/getExplorerInitialProps';
+import { buildPageTitle } from '../../etc/skeleton/buildPageTitle';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import ExplorerUIPageMainContent from '../ExplorerUIPageMainContent/ExplorerUIPageMainContent';
 import { ExplorerContextProvider } from '../ExplorerContext/ExplorerContext';
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    ...(await getServerSidePropsShared(context)),
-  };
-};
 
 const ExplorerPageMateria: IAppPage = () => {
   return (
@@ -31,4 +24,5 @@ const ExplorerPageMateria: IAppPage = () => {
   );
 };
 
+ExplorerPageMateria.getInitialProps = getExplorerInitialProps;
 export default ExplorerPageMateria;

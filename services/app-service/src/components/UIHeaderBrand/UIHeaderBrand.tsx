@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import UILink from '../UILink';
-import LogoIcon from '@mui/icons-material/CalendarMonth';
+import LogoIcon from '@mui/icons-material/CalendarMonthRounded';
 import Typography from '@mui/material/Typography';
 
 export type IUIHeaderBrandProps = {

@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from '@mui/icons-material/CloseRounded';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';

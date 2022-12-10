@@ -1,4 +1,1 @@
-export {
-  default,
-  getServerSideProps,
-} from '../../../../components/ExplorerPageTurmas';
+export { default } from '../../../../components/ExplorerPageTurmas';

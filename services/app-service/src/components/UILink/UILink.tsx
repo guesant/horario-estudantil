@@ -20,7 +20,7 @@ const UILink = forwardRef((props: IUILinkProps, ref) => {
   const route = useMemo(() => new Route(href), [href]);
 
   const targetHref = useMemo(
-    () => route.reverse({ rest: '', ...query }) || href,
+    () => route.reverse({ ...query, rest: '' }) || href,
     [route, query, href],
   );
 

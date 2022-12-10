@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   createContext,
   Dispatch,
@@ -8,22 +8,7 @@ import {
 } from 'react';
 import { useDebounce } from 'use-debounce';
 import { SEARCH_DELAY } from './SEARCH_DELAY';
-
-const SEARCH_INSTITUICOES = gql`
-  query SearchInstituicoes($query: String!) {
-    searchInstituicoes(query: $query, limit: 15) {
-      hits {
-        id
-        nome
-        sigla
-        apelido
-      }
-      limit
-      offset
-      estimatedTotalHits
-    }
-  }
-`;
+import { SEARCH_INSTITUICOES } from '../../graphql/fragments/SEARCH_INSTITUICOES';
 
 export type IPortalSelecionarInstituicaoContext = {
   // searchQuery: QueryResult<any>;

@@ -1,4 +1,4 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVertRounded';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';

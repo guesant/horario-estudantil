@@ -1,6 +1,6 @@
-import ClassIcon from '@mui/icons-material/Class';
-import GroupsIcon from '@mui/icons-material/Groups';
-import HailIcon from '@mui/icons-material/Hail';
+import ClassIcon from '@mui/icons-material/ClassRounded';
+import GroupsIcon from '@mui/icons-material/GroupsRounded';
+import HailIcon from '@mui/icons-material/HailRounded';
 import { IExplorerLayoutBaseAction } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseAction';
 import { ACTION_DIVIDER } from './ACTION_DIVIDER';
 import { IExplorerLayoutBaseActionDisplay } from '../../ExplorerLayoutBaseAction/IExplorerLayoutBaseActionDisplay';

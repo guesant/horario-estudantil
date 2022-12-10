@@ -1,4 +1,1 @@
-export {
-  default,
-  getServerSideProps,
-} from '../../../../../components/ExplorerPageMateria';
+export { default } from '../../../../../components/ExplorerPageMateria';
