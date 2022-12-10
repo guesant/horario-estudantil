@@ -1,49 +1,65 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
-import { Provider } from 'next-auth/providers';
-
-const ISSUER = process.env.OAUTH2_ISSUER;
-const CLIENT_ID = process.env.OAUTH2_CLIENT_ID;
-const CLIENT_SECRET = process.env.OAUTH2_CLIENT_SECRET;
-
-const getProviders = () => {
-  const providers: Provider[] = [];
-
-  if (
-    CLIENT_ID !== undefined &&
-    CLIENT_SECRET !== undefined &&
-    ISSUER !== undefined
-  ) {
-    providers.push(
-      KeycloakProvider({
-        issuer: ISSUER,
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        name: 'Conta Horário Estudantil',
-      }),
-    );
-  } else {
-    console.warn('[WARN] OAuth2 credentials not provided correctly.');
-  }
-
-  return providers;
-};
+import { refreshAccessToken } from '../../../api/oidc/refreshAccessToken';
+import { CLIENT_ID, CLIENT_SECRET, ISSUER } from './consts/OIDC_CONFIG';
 
 export const authOptions: NextAuthOptions = {
   theme: {
     colorScheme: 'light',
   },
-  providers: [...getProviders()],
+
+  session: {},
+
+  providers: [
+    KeycloakProvider({
+      issuer: ISSUER,
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      name: 'Conta Horário Estudantil',
+    }),
+  ],
 
   callbacks: {
-    async jwt({ token, account }) {
-      if (account) {
-        token.accessToken = account.access_token as string;
+    async jwt({ token, user, account }) {
+      console.log(1);
+
+      // Initial sign in
+      if (account && user) {
+        console.log(1.1);
+
+        console.log(1.2);
+
+        return {
+          accessToken: account.access_token,
+
+          refreshToken: account.refresh_token,
+
+          accessTokenExpires: Date.now() + <number>account.expires_in * 1000,
+
+          user: {
+            ...user,
+          },
+        };
       }
-      return token;
+
+      console.log(1.3);
+
+      // Return previous token if the access token has not expired yet
+      if (Date.now() < <number>token.accessTokenExpires) {
+        return token;
+      }
+
+      console.log(1.4);
+
+      // Access token has expired, try to update it
+      return refreshAccessToken(token);
     },
-    async session({ session, token, user }) {
+
+    async session({ session, token }) {
+      session.user = token.user;
+      session.error = token.error;
       session.accessToken = token.accessToken;
+
       return session;
     },
   },

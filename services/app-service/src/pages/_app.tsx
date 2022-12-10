@@ -51,7 +51,11 @@ export default function App({ Component, pageProps }: IAppProps) {
     <>
       <CssBaseline>
         <ApolloProvider client={client}>
-          <SessionProvider session={session}>
+          <SessionProvider
+            session={session}
+            refetchWhenOffline={false}
+            refetchOnWindowFocus={true}
+          >
             <AuthGuard strict={Component.auth === true}>
               <Component {...restPageProps} />
             </AuthGuard>

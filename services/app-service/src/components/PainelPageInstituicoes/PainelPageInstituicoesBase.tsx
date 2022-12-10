@@ -6,9 +6,11 @@ import PainelPageInstituicoesViewHeader from './PainelPageInstituicoesViewHeader
 
 import PainelLayoutBaseContainer from '../PainelLayoutBaseContainer/PainelLayoutBaseContainer';
 import dynamic from 'next/dynamic';
+import UILoading from '../UILoading/UILoading';
 
 const PainelPageInstituicoesViewResultsTable = dynamic(
   () => import('./PainelPageInstituicoesViewResultsTable'),
+  { loading: () => <UILoading color={'secondary'} /> },
 );
 const PainelPageInstituicoesBase = () => {
   return (

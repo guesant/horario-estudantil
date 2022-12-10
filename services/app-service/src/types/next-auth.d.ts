@@ -1,6 +1,15 @@
+/* eslint-disable */
+import { JWT } from 'next-auth/jwt';
+import { Session } from 'next-auth';
+/* eslint-enable */
+
 declare module 'next-auth' {
   interface Session {
-    accessToken: string;
+    error?: any;
+
+    user?: any;
+
+    accessToken?: any;
   }
 }
 

@@ -1,9 +1,15 @@
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress, {
+  CircularProgressProps,
+} from '@mui/material/CircularProgress';
 
-type Props = {};
+type Props = {
+  color?: CircularProgressProps['color'];
+};
 
 const UILoading = (props: Props) => {
+  const { color } = props;
+
   return (
     <Box
       sx={{
@@ -13,7 +19,7 @@ const UILoading = (props: Props) => {
         justifyContent: 'center',
       }}
     >
-      <CircularProgress color="success" />
+      <CircularProgress color={color ?? 'success'} />
     </Box>
   );
 };
