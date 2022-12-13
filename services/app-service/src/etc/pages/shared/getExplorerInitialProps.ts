@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../../api/apollo/initializeApollo';
 import logger from '../../log/logger';
 import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { InstituicaoGeneralInfoQuery } from '../../../graphql/__generated__/graphql';
 
 export const getExplorerInitialProps = async (
   context: GetServerSidePropsContext,
@@ -11,7 +12,7 @@ export const getExplorerInitialProps = async (
 
   if (typeof sigla === 'string' && sigla.length > 0) {
     await apolloClient
-      .query({
+      .query<InstituicaoGeneralInfoQuery>({
         variables: { sigla: sigla },
         query: INSTITUICAO_GENERAL_INFO,
       })
@@ -23,8 +24,6 @@ export const getExplorerInitialProps = async (
   }
 
   return {
-    // props: {
     initialApolloState: apolloClient.cache.extract(),
-    // },
   };
 };

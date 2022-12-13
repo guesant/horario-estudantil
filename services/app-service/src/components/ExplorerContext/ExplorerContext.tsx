@@ -6,6 +6,7 @@ import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import { useRouteSigla } from '../../hooks/useRouteSigla';
 import { ExplorerDialogSelectInstituicaoContextProvider } from '../ExplorerDialogSelectInstituicaoContext/ExplorerDialogSelectInstituicaoContext';
 import { INSTITUICAO_GENERAL_INFO } from '../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
 
 export type IExplorerContext = {
   sigla: string | null;
@@ -20,16 +21,19 @@ export type IExplorerContextProviderProps = {
 export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   children,
 }) => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   const sigla = useRouteSigla();
 
   const hasSigla = typeof sigla === 'string';
 
-  const instituicaoQuery = useQuery(INSTITUICAO_GENERAL_INFO, {
-    skip: !hasSigla,
-    variables: { sigla: sigla },
-  });
+  const instituicaoQuery = useQuery<InstituicaoGeneralInfoQuery>(
+    INSTITUICAO_GENERAL_INFO,
+    {
+      skip: !hasSigla,
+      variables: { sigla: sigla },
+    },
+  );
 
   const selectedInstituicaoInfo = useMemo(() => {
     const { loading, called, error, data } = instituicaoQuery;
@@ -52,14 +56,11 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
     }
 
     return { isValid: true };
-  }, [instituicaoQuery, hasSigla]);
+  }, [hasSigla, instituicaoQuery]);
 
   const { isValid, reason } = selectedInstituicaoInfo;
 
-  const handleInvalidInstituicao = useCallback(
-    () => void router.push('/'),
-    [router],
-  );
+  const handleInvalidInstituicao = useCallback(() => void push('/'), [push]);
 
   useEffect(() => {
     if (!isValid && reason !== 'loading') {

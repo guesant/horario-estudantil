@@ -2,9 +2,9 @@ import * as React from 'react';
 import ExplorerLayoutBase from '../ExplorerLayoutBase/ExplorerLayoutBase';
 import ExplorerLayoutMainHeaderMenu from './ExplorerLayoutMainHeaderMenu';
 import ExplorerLayoutMainSubHeader from './ExplorerLayoutMainSubHeader';
-import { useLayoutAppNavigationActions } from './NavigationActions/useLayoutAppNavigationActions';
 import Box from '@mui/material/Box';
 import UIPage from '../UIPage/UIPage';
+import { useLayoutAppNavigationActions } from './NavigationActions/useLayoutAppNavigationActions';
 
 export type LayoutAppProps = {
   children?: React.ReactNode;
