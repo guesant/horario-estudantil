@@ -1,4 +1,5 @@
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 type IAuthGuardProps = {
   children?: any;
@@ -14,10 +15,17 @@ const AuthGuard = (props: IAuthGuardProps) => {
     }
   };
 
-  const { status } = useSession({
+  const { status, data: session } = useSession({
     required: strict,
     onUnauthenticated: handleUnauthenticated,
   });
+
+  useEffect(() => {
+    if (session?.error === 'RefreshAccessTokenError') {
+      signOut();
+      // signIn('keycloak'); // Force sign in to hopefully resolve error
+    }
+  }, [session]);
 
   if (strict && status === 'loading') {
     return <></>;

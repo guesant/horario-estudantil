@@ -1,10 +1,13 @@
 import { IAppPage } from '../../etc/pages/IAppPage';
 import PainelPageInstituicoesBase from './PainelPageInstituicoesBase';
+import { PainelPageInstituicoesContextProvider } from './PainelPageInstituicoesContext';
 
 const PainelPageInstituicoes: IAppPage = () => {
   return (
     <>
-      <PainelPageInstituicoesBase />
+      <PainelPageInstituicoesContextProvider>
+        <PainelPageInstituicoesBase />
+      </PainelPageInstituicoesContextProvider>
     </>
   );
 };

@@ -2,17 +2,23 @@ import Head from 'next/head';
 import { IAppPage } from '../../etc/pages/IAppPage';
 import { buildPageTitle } from '../../etc/skeleton/buildPageTitle';
 import PainelLayoutMain from '../PainelLayoutMain/PainelLayoutMain';
+import PainelPageInstituicaoTabs from '../PainelPageInstituicaoTabs/PainelPageInstituicaoTabs';
+import { PainelPageInstituicaoContextProvider } from './PainelPageInstituicaoContext';
 
 const PainelPageInstituicao: IAppPage = () => {
   return (
     <>
-      <Head>
-        <title>
-          {buildPageTitle(['Instituição', 'Painel de Administração'])}
-        </title>
-      </Head>
+      <PainelPageInstituicaoContextProvider>
+        <Head>
+          <title>
+            {buildPageTitle(['Instituição', 'Painel de Administração'])}
+          </title>
+        </Head>
 
-      <PainelLayoutMain>TBI.</PainelLayoutMain>
+        <PainelLayoutMain>
+          <PainelPageInstituicaoTabs />
+        </PainelLayoutMain>
+      </PainelPageInstituicaoContextProvider>
     </>
   );
 };

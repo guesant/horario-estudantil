@@ -3,6 +3,8 @@ import { InstituicaoMembershipService } from '../services/instituicao-membership
 import { InstituicaoMembershipEntity } from '../../../entities/instituicao-membership.entity';
 import { UserEntity } from '../../../entities/user.entity';
 import { InstituicaoEntity } from '../../../entities/instituicao.entity';
+import { ResourceAuth } from '../../../../auth/ResourceAuth';
+import { AuthMode } from '../../../../auth/AuthMode';
 
 @Resolver(() => InstituicaoMembershipEntity)
 export class InstituicaoMembershipResolver {
@@ -10,7 +12,7 @@ export class InstituicaoMembershipResolver {
     private instituicaoMembershipService: InstituicaoMembershipService,
   ) {}
 
-  // @SkipAuth()
+  @ResourceAuth(AuthMode.STRICT)
   @ResolveField('usuario', () => UserEntity)
   async usuario(@Parent() instituicaoMembership: InstituicaoMembershipEntity) {
     const { id } = instituicaoMembership;
@@ -20,7 +22,7 @@ export class InstituicaoMembershipResolver {
     });
   }
 
-  // @SkipAuth()
+  @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('instituicao', () => InstituicaoEntity)
   async instituicao(
     @Parent() instituicaoMembership: InstituicaoMembershipEntity,

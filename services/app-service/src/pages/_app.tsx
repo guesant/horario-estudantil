@@ -11,6 +11,8 @@ import { SessionProvider } from 'next-auth/react';
 import AuthGuard from '../components/AuthGuard/AuthGuard';
 import { IAppPage } from '../etc/pages/IAppPage';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { buildPageTitle } from '../etc/skeleton/buildPageTitle';
 
 const Backdrop = dynamic(() => import('@mui/material/Backdrop'), {
   ssr: false,
@@ -49,6 +51,10 @@ export default function App({ Component, pageProps }: IAppProps) {
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle([])}</title>
+      </Head>
+
       <CssBaseline>
         <ApolloProvider client={client}>
           <SessionProvider

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import * as types from './graphql';
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import {TypedDocumentNode as DocumentNode} from '@graphql-typed-document-node/core';
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,28 +13,48 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n": types.CreateInstituicaoDocument,
-    "\n  query InstituicaoGeneralInfo($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n": types.InstituicaoGeneralInfoDocument,
-    "\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n": types.PageTurmasDataDocument,
-    "\n  query SearchInstituicoes($query: String!) {\n    searchInstituicoes(query: $query, limit: 15) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n": types.SearchInstituicoesDocument,
+  '\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n':
+    types.CreateInstituicaoDocument,
+  '\n  query InstituicaoGeneralInfo($sigla: String, $id: Int) {\n    instituicao(sigla: $sigla, id: $id) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n':
+    types.InstituicaoGeneralInfoDocument,
+  '\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n':
+    types.PageTurmasDataDocument,
+  '\n  query SearchInstituicoes(\n    $query: String!\n    $limit: Int = 15\n    $onlyMemberships: Boolean = false\n  ) {\n    searchInstituicoes(\n      query: $query\n      limit: $limit\n      onlyMemberships: $onlyMemberships\n    ) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n':
+    types.SearchInstituicoesDocument,
+  '\n  mutation UpdateInstituicao(\n    $id: Int!\n    $nome: String\n    $apelido: String\n    $sigla: String\n  ) {\n    updateInstituicao(\n      id: $id\n      data: { nome: $nome, apelido: $apelido, sigla: $sigla }\n    ) {\n      id\n    }\n  }\n':
+    types.UpdateInstituicaoDocument,
 };
 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n"];
+export function gql(
+  source: '\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n',
+): typeof documents['\n  mutation CreateInstituicao(\n    $nome: String!\n    $apelido: String!\n    $sigla: String!\n  ) {\n    createInstituicao(data: { nome: $nome, apelido: $apelido, sigla: $sigla }) {\n      id\n    }\n  }\n'];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query InstituicaoGeneralInfo($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n"): (typeof documents)["\n  query InstituicaoGeneralInfo($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n"];
+export function gql(
+  source: '\n  query InstituicaoGeneralInfo($sigla: String, $id: Int) {\n    instituicao(sigla: $sigla, id: $id) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n',
+): typeof documents['\n  query InstituicaoGeneralInfo($sigla: String, $id: Int) {\n    instituicao(sigla: $sigla, id: $id) {\n      id\n      nome\n      sigla\n      apelido\n    }\n  }\n'];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n"];
+export function gql(
+  source: '\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n',
+): typeof documents['\n  query PageTurmasData($sigla: String!) {\n    instituicao(sigla: $sigla) {\n      turmaCategorias {\n        id\n        titulo\n        tituloFilhos\n\n        turmaCategoriaPai {\n          id\n        }\n\n        turmas {\n          id\n          nome\n        }\n      }\n    }\n  }\n'];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query SearchInstituicoes($query: String!) {\n    searchInstituicoes(query: $query, limit: 15) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n"): (typeof documents)["\n  query SearchInstituicoes($query: String!) {\n    searchInstituicoes(query: $query, limit: 15) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n"];
+export function gql(
+  source: '\n  query SearchInstituicoes(\n    $query: String!\n    $limit: Int = 15\n    $onlyMemberships: Boolean = false\n  ) {\n    searchInstituicoes(\n      query: $query\n      limit: $limit\n      onlyMemberships: $onlyMemberships\n    ) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n',
+): typeof documents['\n  query SearchInstituicoes(\n    $query: String!\n    $limit: Int = 15\n    $onlyMemberships: Boolean = false\n  ) {\n    searchInstituicoes(\n      query: $query\n      limit: $limit\n      onlyMemberships: $onlyMemberships\n    ) {\n      hits {\n        id\n        nome\n        sigla\n        apelido\n      }\n      limit\n      offset\n      estimatedTotalHits\n    }\n  }\n'];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: '\n  mutation UpdateInstituicao(\n    $id: Int!\n    $nome: String\n    $apelido: String\n    $sigla: String\n  ) {\n    updateInstituicao(\n      id: $id\n      data: { nome: $nome, apelido: $apelido, sigla: $sigla }\n    ) {\n      id\n    }\n  }\n',
+): typeof documents['\n  mutation UpdateInstituicao(\n    $id: Int!\n    $nome: String\n    $apelido: String\n    $sigla: String\n  ) {\n    updateInstituicao(\n      id: $id\n      data: { nome: $nome, apelido: $apelido, sigla: $sigla }\n    ) {\n      id\n    }\n  }\n'];
 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -47,11 +67,12 @@ export function gql(source: "\n  query SearchInstituicoes($query: String!) {\n  
  *
  * The query argument is unknown!
  * Please regenerate the types.
-**/
+ **/
 export function gql(source: string): unknown;
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
+  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

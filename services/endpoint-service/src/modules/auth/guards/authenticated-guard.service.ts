@@ -2,7 +2,8 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
-import { IS_PUBLIC_KEY } from '../constants/IS_PUBLIC_KEY.const';
+import { AuthMode } from '../AuthMode';
+import { AUTH_MODE } from '../constants/IS_PUBLIC_KEY.const';
 
 @Injectable()
 export class AuthenticatedGuard extends AuthGuard(['access-token']) {
@@ -15,16 +16,32 @@ export class AuthenticatedGuard extends AuthGuard(['access-token']) {
     return ctx.getContext().req;
   }
 
-  async canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+  async canActivate(context: ExecutionContext): Promise<any> {
+    const authMode = this.reflector.getAllAndOverride<AuthMode>(AUTH_MODE, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (isPublic) {
-      return true;
-    }
+    switch (authMode) {
+      case AuthMode.ANONYMOUS: {
+        return true;
+      }
 
-    return (await super.canActivate(context)) as any;
+      case AuthMode.OPTIONAL: {
+        const req = this.getRequest(context);
+
+        const hasAuthorizationToken = req.headers.authorization !== undefined;
+
+        if (hasAuthorizationToken) {
+          return await Promise.resolve(super.canActivate(context));
+        }
+
+        return true;
+      }
+
+      case AuthMode.STRICT: {
+        return await Promise.resolve(super.canActivate(context));
+      }
+    }
   }
 }

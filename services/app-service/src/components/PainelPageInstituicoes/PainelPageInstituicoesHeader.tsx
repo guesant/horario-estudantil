@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Link from 'next/link';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-const PainelPageInstituicoesViewHeader = () => {
+const PainelPageInstituicoesHeader = () => {
   return (
     <>
       <Box
@@ -36,4 +36,4 @@ const PainelPageInstituicoesViewHeader = () => {
   );
 };
 
-export default PainelPageInstituicoesViewHeader;
+export default PainelPageInstituicoesHeader;

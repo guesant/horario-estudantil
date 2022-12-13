@@ -5,7 +5,7 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import MeiliSearch from 'meilisearch';
+import MeiliSearch, { SearchParams } from 'meilisearch';
 import { InstituicaoEntity } from '../../../entities/instituicao.entity';
 import { ITurmaCategoriaRepository } from '../../../repositories/turma-categoria.repository';
 import { IPeriodoLetivoRepository } from '../../../repositories/periodo-letivo.repository';
@@ -29,11 +29,24 @@ import { UpdateInstituicaoInput } from '../dtos/UpdateInstituicaoInput';
 import { FindOneOptions } from 'typeorm';
 import { parseLimit } from '../../../../utils/parseLimit';
 import { parseOffset } from '../../../../utils/parseOffset';
+import { AppError } from '../../../AppError';
 
 export type IFindInstituicaoQuery = {
   id?: number;
   sigla?: string;
   options?: FindOneOptions<InstituicaoEntity>;
+
+  shouldThrowIfNotFound?: boolean;
+};
+
+export type ISearchInstituicoesOptions = {
+  query: string;
+
+  limit?: number;
+
+  offset?: number;
+
+  user?: IRequestActor;
 };
 
 @Injectable()
@@ -51,8 +64,10 @@ export class InstituicaoService {
     private meilisearchClient: MeiliSearch,
   ) {}
 
-  async findInstituicao(query: IFindInstituicaoQuery) {
-    const { id, sigla, options } = query;
+  async findInstituicao(
+    query: IFindInstituicaoQuery,
+  ): Promise<InstituicaoEntity> {
+    const { id, sigla, options, shouldThrowIfNotFound = true } = query;
 
     if (id === undefined && sigla === undefined) {
       throw new UnprocessableEntityException();
@@ -64,11 +79,17 @@ export class InstituicaoService {
     });
 
     if (!targetInstituicao) {
-      throw new NotFoundException({
-        message: 'Instituicao was not found.',
-        resource: 'instituicao',
-        code: 'not-found',
-      });
+      if (shouldThrowIfNotFound) {
+        throw new NotFoundException(
+          new AppError(
+            'not-found',
+            'Instituição não foi encontrada',
+            'instituicao',
+          ),
+        );
+      } else {
+        return null as any;
+      }
     }
 
     const instituicao = (await this.instituicaoRepository.findOne({
@@ -97,18 +118,34 @@ export class InstituicaoService {
     return instituicao[field];
   }
 
-  async searchInstituicoes(
-    reqQuery: string,
-    reqLimit?: number,
-    reqOffset?: number,
-  ) {
-    const limit = parseLimit(reqLimit);
-    const offset = parseOffset(reqOffset);
-    const query = reqQuery.trim().slice(0, 100);
+  async searchInstituicoes(options: ISearchInstituicoesOptions) {
+    const limit = parseLimit(options.limit);
+    const offset = parseOffset(options.offset);
+    const query = options.query.trim().slice(0, 100);
+
+    const user = options.user;
+
+    const searchParams: SearchParams = {
+      limit,
+      offset,
+      sort: ['apelido:asc'],
+    };
+
+    if (user) {
+      const instituicoes = await this.instituicaoMembershipRepository.find({
+        where: { usuario: { id: user.id } },
+      });
+
+      searchParams.filter = [
+        `id IN ${JSON.stringify(
+          instituicoes.map((instituicao) => instituicao.id),
+        )}`,
+      ];
+    }
 
     const results = await this.meilisearchClient
       .index(INDEX_INSTITUICAO)
-      .search(query, { limit, offset });
+      .search(query, searchParams);
 
     return results;
   }
@@ -151,7 +188,9 @@ export class InstituicaoService {
       (await this.instituicaoRepository.count({ where: { sigla } })) > 0;
 
     if (siglaAlreadyTaken) {
-      throw new ForbiddenException('The provided sigla was already taken');
+      throw new UnprocessableEntityException(
+        'The provided sigla was already taken',
+      );
     }
 
     const instituicao = this.instituicaoRepository.create();
@@ -174,6 +213,16 @@ export class InstituicaoService {
         return instituicao;
       },
     );
+  }
+
+  async checkSiglaAvailability(sigla: string, id?: number) {
+    const instituicao = (await this.findInstituicao({
+      sigla,
+      options: { select: ['id', 'sigla'] },
+      shouldThrowIfNotFound: false,
+    })) as InstituicaoEntity | null;
+
+    return !instituicao || instituicao.id === id;
   }
 
   async updateInstituicao(
@@ -202,6 +251,19 @@ export class InstituicaoService {
     const { sigla } = data;
 
     if (sigla) {
+      const isSiglaAvailable = await this.checkSiglaAvailability(sigla, id);
+
+      if (!isSiglaAvailable) {
+        throw new UnprocessableEntityException(
+          new AppError(
+            'unprocessable-entity',
+            'A sigla já está em uso',
+            'instituicao',
+            'sigla',
+          ),
+        );
+      }
+
       instituicao.sigla = sigla;
     }
 

@@ -3,9 +3,9 @@ const CLIENT_ID = process.env.OAUTH2_CLIENT_ID as string;
 const CLIENT_SECRET = process.env.OAUTH2_CLIENT_SECRET as string;
 
 if (
+  ISSUER === undefined ||
   CLIENT_ID === undefined ||
-  CLIENT_SECRET === undefined ||
-  ISSUER === undefined
+  CLIENT_SECRET === undefined
 ) {
   throw new Error('[ERROR] OAuth2 credentials not provided correctly.');
 }

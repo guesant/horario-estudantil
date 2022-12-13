@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { SkipAuth } from '../../../../auth/skip-auth';
+import { ResourceAuth } from '../../../../auth/ResourceAuth';
 import { InstituicaoService } from '../services/instituicao.service';
 import { InstituicaoEntity } from '../../../entities/instituicao.entity';
 import { SearchInstituicoesResult } from '../dtos/SearchInstituicoesResult';
@@ -19,28 +19,49 @@ import { RequestActor } from '../../../../auth/request-user/request-actor';
 import { IRequestActor } from '../../../../auth/request-user/IRequestActor';
 import { DeleteInstituicaoInput } from '../dtos/DeleteInstituicaoInput';
 import { UpdateInstituicaoInput } from '../dtos/UpdateInstituicaoInput';
+import { AuthMode } from 'src/modules/auth/AuthMode';
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 
 @Resolver(() => InstituicaoEntity)
 export class InstituicaoResolver {
   constructor(private instituicaoService: InstituicaoService) {}
 
-  @SkipAuth()
+  @ResourceAuth(AuthMode.OPTIONAL)
   @Query(() => SearchInstituicoesResult)
   async searchInstituicoes(
+    @RequestActor() actor: IRequestActor,
     @Args('query', { type: () => String, nullable: true }) query = '',
     @Args('limit', { type: () => Int, nullable: true }) limit = 20,
     @Args('offset', { type: () => Int, nullable: true }) offset = 0,
+    @Args('onlyMemberships', { type: () => Boolean, nullable: true })
+    onlyMemberships = false,
   ) {
-    return this.instituicaoService.searchInstituicoes(query, limit, offset);
+    if (onlyMemberships && !actor) {
+      throw new ForbiddenException();
+    }
+
+    return this.instituicaoService.searchInstituicoes({
+      query,
+      limit,
+      offset,
+      user: onlyMemberships ? actor : undefined,
+    });
   }
 
-  @SkipAuth()
+  @ResourceAuth(AuthMode.ANONYMOUS)
   @Query(() => InstituicaoEntity)
-  async instituicao(@Args('sigla') sigla: string) {
-    return this.instituicaoService.findInstituicao({ sigla });
+  async instituicao(
+    @Args('id', { type: () => Int, nullable: true }) id?: number,
+    @Args('sigla', { type: () => String, nullable: true }) sigla?: string,
+  ) {
+    if ((!id && !sigla) || (id && sigla)) {
+      throw new BadRequestException('Please provide id OR sigla.');
+    }
+
+    return this.instituicaoService.findInstituicao({ id, sigla });
   }
 
-  @SkipAuth()
+  @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('turmaCategorias', () => [TurmaCategoriaEntity])
   async turmaCategorias(@Parent() instituicao: InstituicaoEntity) {
     const { id } = instituicao;
@@ -50,7 +71,7 @@ export class InstituicaoResolver {
     });
   }
 
-  @SkipAuth()
+  @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('memberships', () => [InstituicaoMembershipEntity])
   async memberships(@Parent() instituicao: InstituicaoEntity) {
     const { id } = instituicao;
@@ -59,13 +80,14 @@ export class InstituicaoResolver {
     });
   }
 
-  @SkipAuth()
+  @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('periodosLetivos', () => [PeriodoLetivoEntity])
   async periodosLetivos(@Parent() instituicao: InstituicaoEntity) {
     const { id } = instituicao;
     return this.instituicaoService.findInstituicaoPeriodos({ id });
   }
 
+  @ResourceAuth(AuthMode.STRICT)
   @Mutation(() => InstituicaoEntity)
   async createInstituicao(
     @RequestActor() actor: IRequestActor,
@@ -74,6 +96,7 @@ export class InstituicaoResolver {
     return this.instituicaoService.createInstituicao(actor, data);
   }
 
+  @ResourceAuth(AuthMode.STRICT)
   @Mutation(() => InstituicaoEntity)
   async updateInstituicao(
     @RequestActor() actor: IRequestActor,
@@ -83,6 +106,7 @@ export class InstituicaoResolver {
     return this.instituicaoService.updateInstituicao(actor, id, data);
   }
 
+  @ResourceAuth(AuthMode.STRICT)
   @Mutation(() => Boolean)
   async deleteInstituicao(
     @RequestActor() actor: IRequestActor,
