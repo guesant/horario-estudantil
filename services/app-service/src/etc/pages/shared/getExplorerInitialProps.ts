@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../../api/apollo/initializeApollo';
-import log from '../../log/log';
+import logger from '../../log/logger';
 import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
 
 export const getExplorerInitialProps = async (
@@ -16,7 +16,7 @@ export const getExplorerInitialProps = async (
         query: INSTITUICAO_GENERAL_INFO,
       })
       .catch(() => {
-        log.error("Can't fetch Instituição info", {
+        logger.error("Can't fetch Instituição info", {
           params: { sigla: sigla },
         });
       });

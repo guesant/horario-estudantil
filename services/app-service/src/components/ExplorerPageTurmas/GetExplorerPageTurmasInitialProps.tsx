@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../api/apollo/initializeApollo';
 import { getExplorerInitialProps } from '../../etc/pages/shared/getExplorerInitialProps';
 import { INSTITUICAO_TURMAS } from '../../graphql/fragments/INSTITUICAO_TURMAS';
-import log from '../../etc/log/log';
+import logger from '../../etc/log/logger';
 
 export const getExplorerPageTurmasInitialProps = async (
   context: GetServerSidePropsContext,
@@ -20,7 +20,7 @@ export const getExplorerPageTurmasInitialProps = async (
         query: INSTITUICAO_TURMAS,
       })
       .catch((err) => {
-        log.error('Can not fetch turmas', { params: { sigla: sigla } });
+        logger.error('Can not fetch turmas', { params: { sigla: sigla } });
         console.error({ err });
       });
   }

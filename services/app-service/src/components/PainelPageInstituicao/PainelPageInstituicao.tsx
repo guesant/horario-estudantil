@@ -4,6 +4,7 @@ import { buildPageTitle } from '../../etc/skeleton/buildPageTitle';
 import PainelLayoutMain from '../PainelLayoutMain/PainelLayoutMain';
 import PainelPageInstituicaoTabs from '../PainelPageInstituicaoTabs/PainelPageInstituicaoTabs';
 import { PainelPageInstituicaoContextProvider } from './PainelPageInstituicaoContext';
+import { PAINEL_PAGE_INSTITUICAO_BREADCRUMB_ITEMS } from './PAINEL_PAGE_INSTITUICAO_BREADCRUMB_ITEMS';
 
 const PainelPageInstituicao: IAppPage = () => {
   return (
@@ -15,7 +16,9 @@ const PainelPageInstituicao: IAppPage = () => {
           </title>
         </Head>
 
-        <PainelLayoutMain>
+        <PainelLayoutMain
+          breadcrumbItems={PAINEL_PAGE_INSTITUICAO_BREADCRUMB_ITEMS}
+        >
           <PainelPageInstituicaoTabs />
         </PainelLayoutMain>
       </PainelPageInstituicaoContextProvider>

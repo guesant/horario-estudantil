@@ -132,14 +132,17 @@ export class InstituicaoService {
     };
 
     if (user) {
-      const instituicoes = await this.instituicaoMembershipRepository.find({
-        where: { usuario: { id: user.id } },
-      });
+      const memberships = await this.instituicaoMembershipRepository
+        .createQueryBuilder('membership')
+        .leftJoin('membership.instituicao', 'instituicao')
+        .select(['membership.id', 'instituicao.id'])
+        .where('membership.usuario.id = :id_usu', { id_usu: user.id })
+        .getMany();
 
       searchParams.filter = [
-        `id IN ${JSON.stringify(
-          instituicoes.map((instituicao) => instituicao.id),
-        )}`,
+        `id IN [${memberships
+          .map((mebership) => mebership.instituicao.id)
+          .join(',')}]`,
       ];
     }
 

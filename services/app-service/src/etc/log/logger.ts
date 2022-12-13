@@ -1,7 +1,7 @@
 const error = console.error.bind(console, '[ERROR]');
 
-const log = {
+const logger = {
   error,
 };
 
-export default log;
+export default logger;

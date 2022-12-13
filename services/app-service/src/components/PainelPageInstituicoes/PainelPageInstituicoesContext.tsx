@@ -22,9 +22,13 @@ export const PainelPageInstituicoesContextProvider: FC<
 > = (props) => {
   const { children } = props;
 
-  const instituicoesQuery = useQuery(SEARCH_INSTITUICOES, {
-    variables: { query: '', onlyMemberships: true },
-  });
+  const instituicoesQuery = useQuery<SearchInstituicoesQuery>(
+    SEARCH_INSTITUICOES,
+    {
+      variables: { query: '', onlyMemberships: true },
+      fetchPolicy: 'cache-and-network',
+    },
+  );
 
   const isLoading = instituicoesQuery.loading;
 
