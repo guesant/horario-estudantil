@@ -6,7 +6,6 @@ let clientCache: MeiliSearch | null = null;
 const MEILISEARCH_INDEXES = [
   {
     index: INDEX_INSTITUICAO,
-
     searchable: ['nome', 'sigla', 'apelido'],
     filterable: ['id'],
     sortable: ['apelido'],

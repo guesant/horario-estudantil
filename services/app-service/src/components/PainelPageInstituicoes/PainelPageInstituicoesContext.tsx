@@ -1,6 +1,6 @@
 import { QueryResult, useQuery } from '@apollo/client';
 import { createContext, FC, PropsWithChildren, useMemo } from 'react';
-import { SEARCH_INSTITUICOES } from '../../graphql/fragments/SEARCH_INSTITUICOES';
+import { SEARCH_INSTITUICOES } from '../../graphql/queries/SEARCH_INSTITUICOES';
 import { SearchInstituicoesQuery } from '../../graphql/__generated__/graphql';
 
 type IPainelPageInstituicoesContext = {

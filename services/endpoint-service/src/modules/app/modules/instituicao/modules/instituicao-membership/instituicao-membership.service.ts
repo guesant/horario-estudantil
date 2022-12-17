@@ -1,0 +1,60 @@
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { FindOneOptions } from 'typeorm';
+import { InstituicaoMembershipDbEntity } from '../../../../entities/instituicao-membership.db.entity';
+import { IInstituicaoMembershipRepository } from '../../../../repositories/instituicao-membership.repository';
+import { REPOSITORY_INSTITUICAO_MEMBERSHIP } from '../../../../../database/constants/REPOSITORIES';
+
+export type IFindInstituicaoMembershipQuery = Partial<
+  Pick<InstituicaoMembershipDbEntity, 'id'>
+>;
+
+@Injectable()
+export class InstituicaoMembershipService {
+  constructor(
+    @Inject(REPOSITORY_INSTITUICAO_MEMBERSHIP)
+    private instituicaoMembershipRepository: IInstituicaoMembershipRepository,
+  ) {}
+
+  async findInstituicaoMembership(
+    query: IFindInstituicaoMembershipQuery,
+    options?: FindOneOptions<InstituicaoMembershipDbEntity>,
+  ) {
+    const { id } = query;
+
+    const instituicaoMembership =
+      await this.instituicaoMembershipRepository.findOne({
+        where: { id },
+        ...options,
+      });
+
+    if (!instituicaoMembership) {
+      throw new NotFoundException();
+    }
+
+    return instituicaoMembership;
+  }
+
+  async findInstituicaoMembershipUsuario(
+    query: IFindInstituicaoMembershipQuery,
+  ) {
+    const instituicaoMembership = await this.findInstituicaoMembership(query, {
+      relations: ['usuario'],
+    });
+
+    const { usuario } = instituicaoMembership;
+
+    return usuario;
+  }
+
+  async findInstituicaoMembershipInstituicao(
+    query: IFindInstituicaoMembershipQuery,
+  ) {
+    const instituicaoMembership = await this.findInstituicaoMembership(query, {
+      relations: ['instituicao'],
+    });
+
+    const { instituicao } = instituicaoMembership;
+
+    return instituicao;
+  }
+}

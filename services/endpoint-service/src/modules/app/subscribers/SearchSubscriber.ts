@@ -5,28 +5,33 @@ import {
   RemoveEvent,
   UpdateEvent,
 } from 'typeorm';
-import { InstituicaoEntity } from '../entities/instituicao.entity';
+import { InstituicaoDbEntity } from '../entities/instituicao.db.entity';
 import { getMeilisearchClient } from '../../search/infrastructure/getMeilisearchClient';
 import { INDEX_INSTITUICAO } from '../../search/infrastructure/SEARCH_INDEXES';
+import { Instituicao } from '@horario-estudantil/schemas';
+import pick from 'lodash/pick';
 
 const PRIMARY_KEY = 'id';
 
+const getExportedInstituicao = <T extends Instituicao>(instituicao: T) =>
+  pick(instituicao, ['id', 'nome', 'sigla', 'apelido']);
+
 @EventSubscriber()
 export class SearchSubscriber
-  implements EntitySubscriberInterface<InstituicaoEntity>
+  implements EntitySubscriberInterface<InstituicaoDbEntity>
 {
   listenTo() {
-    return InstituicaoEntity;
+    return InstituicaoDbEntity;
   }
 
-  async beforeInsert(event: InsertEvent<InstituicaoEntity>) {
+  async beforeInsert(event: InsertEvent<InstituicaoDbEntity>) {
     const entity = event.entity;
     entity.lastUpdate = new Date();
     entity.lastSearchSync = new Date();
   }
 
-  async beforeUpdate(event: UpdateEvent<InstituicaoEntity>) {
-    const entity = event.entity;
+  async beforeUpdate(event: UpdateEvent<InstituicaoDbEntity>) {
+    const entity = <InstituicaoDbEntity>event.entity;
 
     if (entity) {
       entity.lastUpdate = new Date();
@@ -34,29 +39,33 @@ export class SearchSubscriber
     }
   }
 
-  async afterInsert(event: InsertEvent<InstituicaoEntity>) {
+  async afterInsert(event: InsertEvent<InstituicaoDbEntity>) {
     const client = await getMeilisearchClient();
 
     const entity = event.entity;
 
     await client
       .index(INDEX_INSTITUICAO)
-      .updateDocuments([entity], { primaryKey: PRIMARY_KEY });
+      .updateDocuments([getExportedInstituicao(entity)], {
+        primaryKey: PRIMARY_KEY,
+      });
   }
 
-  async afterUpdate(event: UpdateEvent<InstituicaoEntity>) {
+  async afterUpdate(event: UpdateEvent<InstituicaoDbEntity>) {
     const client = await getMeilisearchClient();
 
-    const entity = event.entity;
+    const entity = <InstituicaoDbEntity>event.entity;
 
     if (entity) {
       await client
         .index(INDEX_INSTITUICAO)
-        .updateDocuments([entity], { primaryKey: PRIMARY_KEY });
+        .updateDocuments([getExportedInstituicao(entity)], {
+          primaryKey: PRIMARY_KEY,
+        });
     }
   }
 
-  async afterRemove(event: RemoveEvent<InstituicaoEntity>) {
+  async afterRemove(event: RemoveEvent<InstituicaoDbEntity>) {
     const client = await getMeilisearchClient();
 
     const id = event.entityId ?? event.entity?.id;

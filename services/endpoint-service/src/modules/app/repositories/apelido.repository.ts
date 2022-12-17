@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
-import { ApelidoEntity } from '../entities/apelido.entity';
+import { ApelidoDbEntity } from '../entities/apelido.db.entity';
 
 export type IApelidoRepository = ReturnType<typeof getApelidoRepository>;
 
 export const getApelidoRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(ApelidoEntity).extend({});
+  return dataSource.getRepository(ApelidoDbEntity).extend({});
 };

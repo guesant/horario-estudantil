@@ -7,7 +7,7 @@ import {
   useMemo,
 } from 'react';
 import { ExplorerContext } from '../ExplorerContext/ExplorerContext';
-import { INSTITUICAO_TURMAS } from '../../graphql/fragments/INSTITUICAO_TURMAS';
+import { INSTITUICAO_TURMAS } from '../../graphql/queries/INSTITUICAO_TURMAS';
 
 export type ICategoria = any;
 

@@ -5,7 +5,7 @@ import UILoading from '../UILoading/UILoading';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import { useRouteSigla } from '../../hooks/useRouteSigla';
 import { ExplorerDialogSelectInstituicaoContextProvider } from '../ExplorerDialogSelectInstituicaoContext/ExplorerDialogSelectInstituicaoContext';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
 import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
 
 export type IExplorerContext = {

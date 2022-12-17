@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Client } from 'openid-client';
-import { UserService } from '../user/user.service';
-import { IS_PRODUCTION_MODE, OPENID_CLIENT } from '../constants';
+import { UserService } from '../app/modules/user/user.service';
+import {OPENID_CLIENT} from "../consts/OPENID_CLIENT.const";
+import {IS_PRODUCTION_MODE} from "../consts/IS_PRODUCTION_MODE.const";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 
       const userinfo = await this.openIDClient.userinfo(access_token);
 
-      const user = await this.userService.ensureIncomingUserFromKeycloak(
+      const user = await this.userService.ensureIncomingUserExistsFromKeycloak(
         userinfo.sub,
       );
 

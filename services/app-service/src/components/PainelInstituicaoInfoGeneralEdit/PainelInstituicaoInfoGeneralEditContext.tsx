@@ -9,10 +9,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { instituicaoSchema } from '../../etc/zod/instituicaoSchema';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_INSTITUICAO } from '../../graphql/fragments/CREATE_INSTITUICAO';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { CREATE_INSTITUICAO } from '../../graphql/mutations/CREATE_INSTITUICAO';
+import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
 import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
-import { UPDATE_INSTITUICAO } from '../../graphql/fragments/UPDATE_INSTITUICAO';
+import { UPDATE_INSTITUICAO } from '../../graphql/mutations/UPDATE_INSTITUICAO';
 
 export type IPainelInstituicaoInfoGeneralEditContext = {
   canSubmit: boolean;

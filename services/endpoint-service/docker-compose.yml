@@ -5,13 +5,14 @@ services:
     command: sh -c "tail -f /dev/null"
     container_name: he-endpoint
     restart: always
-    working_dir: /code
+    working_dir: /code/services/endpoint-service
     env_file:
       - .env
     ports:
       - 3001:3001
     volumes:
-      - .:/code
+      - .:/code/services/endpoint-service
+      - ../../packages:/code/packages
     networks:
       - he-net
 

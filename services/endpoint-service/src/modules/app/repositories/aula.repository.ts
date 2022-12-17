@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
-import { AulaEntity } from '../entities/aula.entity';
+import { AulaDbEntity } from '../entities/aula.db.entity';
 
 export type IAulaRepository = ReturnType<typeof getAulaRepository>;
 
 export const getAulaRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(AulaEntity).extend({});
+  return dataSource.getRepository(AulaDbEntity).extend({});
 };

@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
-import { InstituicaoMembershipEntity } from '../entities/instituicao-membership.entity';
+import { InstituicaoMembershipDbEntity } from '../entities/instituicao-membership.db.entity';
 
 export type IInstituicaoMembershipRepository = ReturnType<
   typeof getInstituicaoMembershipRepository
 >;
 
 export const getInstituicaoMembershipRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(InstituicaoMembershipEntity).extend({});
+  return dataSource.getRepository(InstituicaoMembershipDbEntity).extend({});
 };

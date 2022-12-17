@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { useDebounce } from 'use-debounce';
 import { SEARCH_DELAY } from './SEARCH_DELAY';
-import { SEARCH_INSTITUICOES } from '../../graphql/fragments/SEARCH_INSTITUICOES';
+import { SEARCH_INSTITUICOES } from '../../graphql/queries/SEARCH_INSTITUICOES';
 
 export type IPortalSelecionarInstituicaoContext = {
   // searchQuery: QueryResult<any>;

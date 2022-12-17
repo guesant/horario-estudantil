@@ -4,9 +4,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 const PainelInstituicaoInfoGeneralView = () => {
-  const { instituicaoData, handleEdit } = useContext(
+  const { instituicaoData, handleEdit, handleDelete } = useContext(
     PainelInstituicaoInfoGeneralViewContext,
   );
 
@@ -61,8 +62,21 @@ const PainelInstituicaoInfoGeneralView = () => {
           </Fragment>
         ))}
 
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <Box sx={{ flex: 1 }}></Box>
+
+          {handleDelete && (
+            <Button
+              type={'button'}
+              disableElevation
+              color={'error'}
+              variant={'outlined'}
+              onClick={handleDelete}
+              startIcon={<DeleteRoundedIcon />}
+            >
+              Deletar
+            </Button>
+          )}
 
           {handleEdit && (
             <Button

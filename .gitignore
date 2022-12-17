@@ -1,6 +1,10 @@
+dist
+node_modules
+.next/
 *.env
 volumes
 .idea
+
 temp
 
 */*-bundle.tar
@@ -8,19 +12,17 @@ temp
 .pnpm-store
 
 # dependencies
-/node_modules
-/.pnp
+.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # next.js
-/.next/
-/out/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store

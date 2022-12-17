@@ -2,8 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "module": "commonjs",
+    "lib": [
+      "esnext"
+    ],
+    "resolveJsonModule": true,
     "declaration": true,
     "removeComments": true,
+    "strictNullChecks": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,

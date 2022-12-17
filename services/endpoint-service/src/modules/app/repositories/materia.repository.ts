@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
-import { MateriaEntity } from '../entities/materia.entity';
+import { MateriaDbEntity } from '../entities/materia.db.entity';
 
 export type IMateriaRepository = ReturnType<typeof getMateriaRepository>;
 
 export const getMateriaRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(MateriaEntity).extend({});
+  return dataSource.getRepository(MateriaDbEntity).extend({});
 };

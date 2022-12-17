@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../../api/apollo/initializeApollo';
 import logger from '../../log/logger';
-import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/queries/INSTITUICAO_GENERAL_INFO';
 import { InstituicaoGeneralInfoQuery } from '../../../graphql/__generated__/graphql';
 
 export const getExplorerInitialProps = async (

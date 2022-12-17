@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../api/apollo/initializeApollo';
 import { getExplorerInitialProps } from '../../etc/pages/shared/getExplorerInitialProps';
-import { INSTITUICAO_TURMAS } from '../../graphql/fragments/INSTITUICAO_TURMAS';
+import { INSTITUICAO_TURMAS } from '../../graphql/queries/INSTITUICAO_TURMAS';
 import logger from '../../etc/log/logger';
 
 export const getExplorerPageTurmasInitialProps = async (

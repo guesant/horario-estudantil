@@ -18,19 +18,23 @@ type Aula {
   turmas: [Turma!]!
 }
 
-input CreateInstituicaoInput {
+type Aula_Turma {
+  aula: Aula!
+  id: Int!
+  turma: Turma!
+}
+
+input CreateInstituicaoInputType {
   apelido: String!
   nome: String!
   sigla: String!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+"""Date custom scalar type"""
+scalar Date
 
-input DeleteInstituicaoInput {
-  id: Float!
+input DeleteInstituicaoInputType {
+  id: Int!
 }
 
 type Etapa {
@@ -40,16 +44,21 @@ type Etapa {
 
 type Evento {
   aula: Aula
-  dataFim: DateTime
-  dataInicio: DateTime
+  dataFim: Date
+  dataInicio: Date
   id: Int!
+}
+
+input FindInstituicaoInputType {
+  id: Int
+  sigla: String
 }
 
 type Instituicao {
   apelido: String!
+  categoriasTurma: [TurmaCategoria!]!
   id: Int!
-  lastSearchSync: DateTime
-  lastUpdate: DateTime
+  lastUpdate: Date
   memberships: [Instituicao_Membership!]!
   nome: String!
   periodosLetivos: [PeriodoLetivo!]!
@@ -60,7 +69,7 @@ type Instituicao {
 type Instituicao_Membership {
   id: Int!
   instituicao: Instituicao!
-  usuario: User!
+  usuario: Usuario!
 }
 
 type Materia {
@@ -71,9 +80,9 @@ type Materia {
 }
 
 type Mutation {
-  createInstituicao(data: CreateInstituicaoInput!): Instituicao!
-  deleteInstituicao(data: DeleteInstituicaoInput!): Boolean!
-  updateInstituicao(data: UpdateInstituicaoInput!, id: Int!): Instituicao!
+  createInstituicao(data: CreateInstituicaoInputType!): Instituicao!
+  deleteInstituicao(data: DeleteInstituicaoInputType!): Boolean!
+  updateInstituicao(data: UpdateInstituicaoInputType!, id: Int!): Instituicao!
 }
 
 type PeriodoLetivo {
@@ -87,12 +96,18 @@ type Professor {
   aulas: [Aula!]!
   id: Int!
   nome: String!
-  professores: [Professor!]!
 }
 
 type Query {
-  instituicao(id: Int, sigla: String): Instituicao!
-  searchInstituicoes(limit: Int, offset: Int, onlyMemberships: Boolean, query: String): SearchInstituicoesResult!
+  instituicao(options: FindInstituicaoInputType!): Instituicao!
+  searchInstituicoes(options: SearchInstituicoesInput!): SearchInstituicoesResult!
+}
+
+input SearchInstituicoesInput {
+  limit: Int
+  offset: Int
+  onlyMemberships: Boolean
+  query: String
 }
 
 type SearchInstituicoesResult {
@@ -104,11 +119,12 @@ type SearchInstituicoesResult {
 
 type Turma {
   apelidos: [Apelido!]!
+  aulaTurmaRelations: [Aula_Turma!]!
   aulas: [Aula!]!
+  categoriaTurma: TurmaCategoria
   id: Int!
   nome: String
-  turmaCategoria: [TurmaCategoria!]!
-  turmas: [Turma!]!
+  turmaCategoria: TurmaCategoria!
 }
 
 type TurmaCategoria {
@@ -120,14 +136,15 @@ type TurmaCategoria {
   turmas: [Turma!]!
 }
 
-input UpdateInstituicaoInput {
+input UpdateInstituicaoInputType {
   apelido: String
   nome: String
   sigla: String
 }
 
-type User {
+type Usuario {
   id: Int!
+  keycloakId: String!
   memberships: [Instituicao_Membership!]!
   nome: String!
 }

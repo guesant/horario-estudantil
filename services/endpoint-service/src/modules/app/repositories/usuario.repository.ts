@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
+import { UserDbEntity } from '../entities/user.db.entity';
 
 export type IUsuarioRepository = ReturnType<typeof getUsuarioRepository>;
 
 export const getUsuarioRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(UserEntity).extend({});
+  return dataSource.getRepository(UserDbEntity).extend({});
 };

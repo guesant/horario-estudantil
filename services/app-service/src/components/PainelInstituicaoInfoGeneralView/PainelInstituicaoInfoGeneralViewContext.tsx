@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren } from 'react';
 import { QueryResult, useQuery } from '@apollo/client';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/fragments/INSTITUICAO_GENERAL_INFO';
+import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
 import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
 
 export type IPainelInstituicaoInfoGeneralEditContext = {
@@ -9,6 +9,8 @@ export type IPainelInstituicaoInfoGeneralEditContext = {
   instituicaoData: InstituicaoGeneralInfoQuery['instituicao'] | null;
 
   handleEdit: (() => void) | null;
+
+  handleDelete: (() => void) | null;
 };
 
 export const PainelInstituicaoInfoGeneralViewContext = createContext(
@@ -19,12 +21,14 @@ type IPainelInstituicaoInfoGeneralViewProviderProps = {
   id_ins: number;
 
   handleEdit?: () => void;
+
+  handleDelete?: () => void;
 };
 
 export const PainelInstituicaoInfoGeneralViewContextProvider: FC<
   PropsWithChildren<IPainelInstituicaoInfoGeneralViewProviderProps>
 > = (props) => {
-  const { children, id_ins, handleEdit = null } = props;
+  const { children, id_ins, handleEdit = null, handleDelete = null } = props;
 
   const instituicaoQuery = useQuery<InstituicaoGeneralInfoQuery>(
     INSTITUICAO_GENERAL_INFO,
@@ -38,7 +42,7 @@ export const PainelInstituicaoInfoGeneralViewContextProvider: FC<
 
   return (
     <PainelInstituicaoInfoGeneralViewContext.Provider
-      value={{ instituicaoQuery, instituicaoData, handleEdit }}
+      value={{ instituicaoQuery, instituicaoData, handleEdit, handleDelete }}
     >
       {children}
     </PainelInstituicaoInfoGeneralViewContext.Provider>

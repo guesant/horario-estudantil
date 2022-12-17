@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
-import { ProfessorEntity } from '../entities/professor.entity';
+import { ProfessorDbEntity } from '../entities/professor.db.entity';
 
 export type IProfessorRepository = ReturnType<typeof getProfessorRepository>;
 
 export const getProfessorRepository = (dataSource: DataSource) => {
-  return dataSource.getRepository(ProfessorEntity).extend({});
+  return dataSource.getRepository(ProfessorDbEntity).extend({});
 };

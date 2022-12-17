@@ -4,12 +4,14 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { HttpExceptionFilter } from './exception-filters/HttpExceptionFilter';
-import { IS_PRODUCTION_MODE } from '../constants';
-import { InstituicaoModule } from './modules/instituicao.module';
+import { HttpExceptionFilter } from '../graphql/HttpExceptionFilter';
+import { InstituicaoModule } from './modules/instituicao/instituicao.module';
 import { SearchModule } from '../search/search.module';
 import { DatabaseModule } from '../database/database.module';
 import { AuthModule } from '../auth/auth.module';
+import { IS_PRODUCTION_MODE } from '../consts/IS_PRODUCTION_MODE.const';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { DateScalar } from '../graphql/DateScalar';
 
 @Module({
   imports: [
@@ -25,6 +27,11 @@ import { AuthModule } from '../auth/auth.module';
       sortSchema: true,
     }),
 
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
+
     SearchModule,
     InstituicaoModule,
     DatabaseModule,
@@ -38,6 +45,8 @@ import { AuthModule } from '../auth/auth.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+
+    DateScalar,
   ],
 })
 export class AppModule {}
