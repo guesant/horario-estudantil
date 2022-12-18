@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
 import { initializeApollo } from '../../../api/apollo/initializeApollo';
 import logger from '../../log/logger';
-import { INSTITUICAO_GENERAL_INFO } from '../../../graphql/queries/INSTITUICAO_GENERAL_INFO';
-import { InstituicaoGeneralInfoQuery } from '../../../graphql/__generated__/graphql';
+import { InstituicaoGeneralInfoBySiglaQuery } from '../../../graphql/__generated__/graphql';
+import { INSTITUICAO_GENERAL_INFO_BY_SIGLA } from '../../../graphql/queries/INSTITUICAO_GENERAL_INFO_BY_SIGLA';
 
 export const getExplorerInitialProps = async (
   context: GetServerSidePropsContext,
@@ -12,9 +12,9 @@ export const getExplorerInitialProps = async (
 
   if (typeof sigla === 'string' && sigla.length > 0) {
     await apolloClient
-      .query<InstituicaoGeneralInfoQuery>({
+      .query<InstituicaoGeneralInfoBySiglaQuery>({
         variables: { sigla: sigla },
-        query: INSTITUICAO_GENERAL_INFO,
+        query: INSTITUICAO_GENERAL_INFO_BY_SIGLA,
       })
       .catch(() => {
         logger.error("Can't fetch Instituição info", {

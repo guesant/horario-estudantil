@@ -1,5 +1,4 @@
 import {
-  Info,
   Int,
   Mutation,
   Parent,
@@ -10,29 +9,31 @@ import {
 import { ResourceAuth } from '../../../auth/ResourceAuth.decorator';
 import { InstituicaoService } from './instituicao.service';
 import { PeriodoLetivoDbEntity } from '../../entities/periodo-letivo.db.entity';
-import { CreateInstituicaoInputType } from './dtos/CreateInstituicao.input.type';
+import { CreateInstituicaoInputType } from './schemas/dtos/CreateInstituicao.input.type';
 import { RequestActor } from '../../../auth/request-user/request-actor';
 import { IRequestActor } from '../../../auth/request-user/IRequestActor';
-import { DeleteInstituicaoInputType } from './dtos/DeleteInstituicao.input.type';
-import { UpdateInstituicaoInputType } from './dtos/UpdateInstituicao.input.type';
+import { DeleteInstituicaoInputType } from './schemas/dtos/DeleteInstituicao.input.type';
+import { UpdateInstituicaoInputType } from './schemas/dtos/UpdateInstituicao.input.type';
 import { AuthMode } from 'src/modules/auth/AuthMode';
 import { ForbiddenException } from '@nestjs/common';
-import { SearchInstituicoesResultType } from './dtos/SearchInstituicoesResult.type';
+import { SearchInstituicoesResultType } from './schemas/dtos/SearchInstituicoesResult.type';
 import { InstituicaoType } from './schemas/instituicao.type';
 import { CategoriaTurmaType } from './modules/categoria-turma/schemas/CategoriaTurma.type';
 import { InstituicaoMembershipType } from './modules/instituicao-membership/schemas/instituicao-membership.type';
-import { SearchInstituicoesInputType } from './dtos/SearchInstituicoes.input.type';
+import { SearchInstituicoesInputType } from './schemas/dtos/SearchInstituicoes.input.type';
 import {
   CreateInstituicaoInputZod,
   DeleteInstituicaoInputZod,
-  FindInstituicaoInputZod,
+  FindInstituicaoByIdInputZod,
+  FindInstituicaoBySiglaInputZod,
   IdZod,
   SearchInstituicoesInputZod,
   UpdateInstituicaoInputZod,
 } from '@horario-estudantil/schemas';
 import { ValidatedArgs } from '../../../graphql/ValidatedArgs.decorator';
-import { FindInstituicaoInputType } from './dtos/FindInstituicao.input.type';
-import { GraphQLResolveInfo } from 'graphql/type/definition';
+import { FindInstituicaoByIdInputType } from './schemas/dtos/FindInstituicaoById.input.type';
+import { FindInstituicaoBySiglaInputType } from './schemas/dtos/FindInstituicaoBySigla.input.type';
+import { InstituicaoDbEntity } from '../../entities/instituicao.db.entity';
 
 @Resolver(() => InstituicaoType)
 export class InstituicaoResolver {
@@ -44,7 +45,10 @@ export class InstituicaoResolver {
   @Query(() => SearchInstituicoesResultType)
   async searchInstituicoes(
     @RequestActor() actor: IRequestActor,
-    @ValidatedArgs('options', SearchInstituicoesInputZod)
+    @ValidatedArgs('options', SearchInstituicoesInputZod, {
+      nullable: true,
+      defaultValue: {},
+    })
     options: SearchInstituicoesInputType,
   ) {
     if (options.onlyMemberships && !actor) {
@@ -59,17 +63,29 @@ export class InstituicaoResolver {
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @Query(() => InstituicaoType)
-  async instituicao(
-    @ValidatedArgs('options', FindInstituicaoInputZod)
-    options: FindInstituicaoInputType,
-    @Info() info: GraphQLResolveInfo,
+  async instituicaoById(
+    @ValidatedArgs('options', FindInstituicaoByIdInputZod)
+    options: FindInstituicaoByIdInputType,
   ) {
-    const { id, sigla } = options;
+    const { id } = options;
 
-    return this.instituicaoService.findInstituicao({
+    return this.instituicaoService.findInstituicaoOrFail({
       id,
+      options: { select: ['id'] },
+    });
+  }
+
+  @ResourceAuth(AuthMode.ANONYMOUS)
+  @Query(() => InstituicaoType)
+  async instituicaoBySigla(
+    @ValidatedArgs('options', FindInstituicaoBySiglaInputZod)
+    options: FindInstituicaoBySiglaInputType,
+  ) {
+    const { sigla } = options;
+
+    return this.instituicaoService.findInstituicaoOrFail({
       sigla,
-      options: { select: ['id', 'sigla'] },
+      options: { select: ['id'] },
     });
   }
 
@@ -137,13 +153,17 @@ export class InstituicaoResolver {
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
-  @ResolveField('turmaCategorias', () => [CategoriaTurmaType])
-  async turmaCategorias(@Parent() instituicao: InstituicaoType) {
+  @ResolveField('turmas', () => [CategoriaTurmaType])
+  async turmas(@Parent() instituicao: InstituicaoType) {
     const { id } = instituicao;
+    return this.instituicaoService.findInstituicaoTurmas(id);
+  }
 
-    return this.instituicaoService.findInstituicaoCategoriasTurma({
-      id,
-    });
+  @ResourceAuth(AuthMode.ANONYMOUS)
+  @ResolveField('categoriasTurma', () => [CategoriaTurmaType])
+  async categoriasTurma(@Parent() instituicao: InstituicaoType) {
+    const { id } = instituicao;
+    return this.instituicaoService.findInstituicaoCategoriasTurma(id);
   }
 
   @ResourceAuth(AuthMode.STRICT)
@@ -151,32 +171,28 @@ export class InstituicaoResolver {
   async memberships(@Parent() instituicao: InstituicaoType) {
     const { id } = instituicao;
 
-    return this.instituicaoService.findInstituicaoMemberships({
-      id,
-    });
+    return this.instituicaoService.findInstituicaoMemberships(id);
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('periodosLetivos', () => [PeriodoLetivoDbEntity])
   async periodosLetivos(@Parent() instituicao: InstituicaoType) {
     const { id } = instituicao;
-    return this.instituicaoService.findInstituicaoPeriodos({ id });
+    return this.instituicaoService.findInstituicaoPeriodos(id);
   }
 
-  private async resolveGenericField<K extends keyof InstituicaoType>(
+  private async resolveGenericField<K extends keyof InstituicaoDbEntity>(
     instituicao: InstituicaoType,
     field: K,
     useCache = true,
-  ): Promise<InstituicaoType[K]> {
+  ): Promise<InstituicaoDbEntity[K]> {
     const { id } = instituicao;
 
     if (useCache && Object.hasOwn(instituicao, field)) {
-      return instituicao[field];
+      return (<any>instituicao)[field];
     }
 
-    return <Promise<InstituicaoType[K]>>(
-      this.instituicaoService.findInstituicaoField({ id }, field)
-    );
+    return this.instituicaoService.findInstituicaoField({ id }, field);
   }
 
   // end RESOLVE_FIELD

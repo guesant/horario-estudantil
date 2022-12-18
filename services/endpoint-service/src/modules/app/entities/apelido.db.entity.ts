@@ -15,8 +15,11 @@ export class ApelidoDbEntity implements Apelido {
   @PrimaryGeneratedColumn({ name: 'id_ape' })
   id!: number;
 
-  @Column({ name: 'apelido_ape' })
-  apelido!: string;
+  @Column({ name: 'tipo_ape' })
+  tipo!: 'turma' | 'professor' | 'materia';
+
+  @Column({ name: 'texto_ape' })
+  texto!: string;
 
   @ManyToOne(() => TurmaDbEntity, (turma) => turma.apelidos)
   @JoinColumn({ name: 'id_tur_fk', referencedColumnName: 'id' })

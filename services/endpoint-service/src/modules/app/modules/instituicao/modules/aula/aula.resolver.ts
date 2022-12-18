@@ -16,27 +16,27 @@ export class AulaResolver {
   @ResolveField('evento', () => EventoType)
   async evento(@Parent() aula: AulaType) {
     const { id } = aula;
-    return this.aulaService.findAulaEvento({ id });
+    return this.aulaService.findAulaEvento(id);
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('materia', () => MateriaType)
   async materia(@Parent() aula: AulaType) {
     const { id } = aula;
-    return this.aulaService.findAulaMateria({ id });
+    return this.aulaService.findAulaMateria(id);
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('turmas', () => [TurmaType])
   async turmas(@Parent() aula: AulaType) {
     const { id } = aula;
-    return this.aulaService.findAulaTurmas({ id });
+    return this.aulaService.findAulaTurmas(id);
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('professores', () => [ProfessorType])
   async professores(@Parent() aula: AulaType) {
     const { id } = aula;
-    return this.aulaService.findAulaProfessores({ id });
+    return this.aulaService.findAulaProfessores(id);
   }
 }

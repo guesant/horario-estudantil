@@ -3,10 +3,11 @@
 # ------------------------------------------------------
 
 type Apelido {
-  apelido: String!
   id: Int!
   materia: Materia
   professor: Professor
+  texto: String!
+  tipo: String!
   turma: Turma
 }
 
@@ -24,16 +25,34 @@ type Aula_Turma {
   turma: Turma!
 }
 
+type CategoriaTurma {
+  categoriaTurmaPai: CategoriaTurma
+  id: Int!
+  instituicao: Instituicao!
+  titulo: String
+  tituloFilhos: String!
+  turmas: [Turma!]!
+}
+
 input CreateInstituicaoInputType {
   apelido: String!
   nome: String!
   sigla: String!
 }
 
+input CreateTurmaInputType {
+  instituicaoId: Int!
+  nome: String!
+}
+
 """Date custom scalar type"""
 scalar Date
 
 input DeleteInstituicaoInputType {
+  id: Int!
+}
+
+input DeleteTurmaInputType {
   id: Int!
 }
 
@@ -49,21 +68,32 @@ type Evento {
   id: Int!
 }
 
-input FindInstituicaoInputType {
-  id: Int
-  sigla: String
+input FindInstituicaoByIdInputType {
+  id: Int!
+}
+
+input FindInstituicaoBySiglaInputType {
+  sigla: String!
+}
+
+input FindTurmaByApelidoInputType {
+  apelido: String!
+}
+
+input FindTurmaByIdInputType {
+  id: Int!
 }
 
 type Instituicao {
   apelido: String!
-  categoriasTurma: [TurmaCategoria!]!
+  categoriasTurma: [CategoriaTurma!]!
   id: Int!
   lastUpdate: Date
   memberships: [Instituicao_Membership!]!
   nome: String!
   periodosLetivos: [PeriodoLetivo!]!
   sigla: String!
-  turmaCategorias: [TurmaCategoria!]!
+  turmas: [Turma!]!
 }
 
 type Instituicao_Membership {
@@ -73,15 +103,17 @@ type Instituicao_Membership {
 }
 
 type Materia {
+  apelidoPrincipal: Apelido!
   apelidos: [Apelido!]!
   aulas: [Aula!]!
   id: Int!
-  nome: String!
 }
 
 type Mutation {
   createInstituicao(data: CreateInstituicaoInputType!): Instituicao!
+  createTurma(data: CreateTurmaInputType!): Turma!
   deleteInstituicao(data: DeleteInstituicaoInputType!): Boolean!
+  deleteTurma(data: DeleteTurmaInputType!): Boolean!
   updateInstituicao(data: UpdateInstituicaoInputType!, id: Int!): Instituicao!
 }
 
@@ -92,15 +124,17 @@ type PeriodoLetivo {
 }
 
 type Professor {
+  apelidoPrincipal: Apelido!
   apelidos: [Apelido!]!
-  aulas: [Aula!]!
   id: Int!
-  nome: String!
 }
 
 type Query {
-  instituicao(options: FindInstituicaoInputType!): Instituicao!
-  searchInstituicoes(options: SearchInstituicoesInput!): SearchInstituicoesResult!
+  instituicaoById(options: FindInstituicaoByIdInputType!): Instituicao!
+  instituicaoBySigla(options: FindInstituicaoBySiglaInputType!): Instituicao!
+  searchInstituicoes(options: SearchInstituicoesInput = {}): SearchInstituicoesResult!
+  turmaByApelido(data: FindTurmaByApelidoInputType!): Turma!
+  turmaById(data: FindTurmaByIdInputType!): Turma!
 }
 
 input SearchInstituicoesInput {
@@ -118,22 +152,12 @@ type SearchInstituicoesResult {
 }
 
 type Turma {
+  apelidoPrincipal: Apelido!
   apelidos: [Apelido!]!
   aulaTurmaRelations: [Aula_Turma!]!
-  aulas: [Aula!]!
-  categoriaTurma: TurmaCategoria
-  id: Int!
-  nome: String
-  turmaCategoria: TurmaCategoria!
-}
-
-type TurmaCategoria {
+  categoriaTurma: CategoriaTurma
   id: Int!
   instituicao: Instituicao!
-  titulo: String
-  tituloFilhos: String!
-  turmaCategoriaPai: TurmaCategoria
-  turmas: [Turma!]!
 }
 
 input UpdateInstituicaoInputType {

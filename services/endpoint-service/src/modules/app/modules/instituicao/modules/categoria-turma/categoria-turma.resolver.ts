@@ -12,28 +12,28 @@ export class CategoriaTurmaResolver {
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('turmas', () => [TurmaType])
-  async turmas(@Parent() turmaCategoria: CategoriaTurmaType) {
-    const { id } = turmaCategoria;
+  async turmas(@Parent() categoriaTurma: CategoriaTurmaType) {
+    const { id } = categoriaTurma;
     return this.categoriaTurmaService.findCategoriaTurmaTurmas({ id });
   }
 
   @ResourceAuth(AuthMode.ANONYMOUS)
   @ResolveField('instituicao', () => InstituicaoType)
-  async instituicao(@Parent() turmaCategoria: CategoriaTurmaType) {
-    const { id } = turmaCategoria;
+  async instituicao(@Parent() categoriaTurma: CategoriaTurmaType) {
+    const { id } = categoriaTurma;
 
     return this.categoriaTurmaService.findCategoriaTurmaInstituicao({
       id,
     });
   }
 
-  // @ResourceAuth(AuthMode.ANONYMOUS)
-  // @ResolveField('turmaCategoriaPai')
-  // async turmaCategoriaPai(@Parent() turmaCategoria: CategoriaTurmaType) {
-  //   const { id } = turmaCategoria;
-  //
-  //   return this.categoriaTurmaService.findCategoriaTurmaCategoriaTurmaPai({
-  //     id,
-  //   });
-  // }
+  @ResourceAuth(AuthMode.ANONYMOUS)
+  @ResolveField('categoriaTurmaPai')
+  async categoriaTurmaPai(@Parent() categoriaTurma: CategoriaTurmaType) {
+    const { id } = categoriaTurma;
+
+    return this.categoriaTurmaService.findCategoriaTurmaPai({
+      id,
+    });
+  }
 }

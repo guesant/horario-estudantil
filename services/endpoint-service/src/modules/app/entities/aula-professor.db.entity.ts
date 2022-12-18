@@ -8,14 +8,11 @@ export class AulaProfessorDbEntity implements AulaProfessor {
   @PrimaryGeneratedColumn({ name: 'id_aul_prof' })
   id!: number;
 
-  @ManyToOne(() => AulaDbEntity, (aula) => aula.aulaTurmaRelations)
+  @ManyToOne(() => AulaDbEntity)
   @JoinColumn({ name: 'id_aul_fk', referencedColumnName: 'id' })
   aula!: AulaDbEntity;
 
-  @ManyToOne(
-    () => ProfessorDbEntity,
-    (professor) => professor.aulaProfessorRelations,
-  )
+  @ManyToOne(() => ProfessorDbEntity)
   @JoinColumn({ name: 'id_prof_fk', referencedColumnName: 'id' })
   professor!: ProfessorDbEntity;
 }

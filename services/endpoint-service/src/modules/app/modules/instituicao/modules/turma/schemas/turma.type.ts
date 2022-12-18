@@ -5,17 +5,22 @@ import {
   Apelido,
   AulaTurma,
   CategoriaTurma,
+  Instituicao,
   Turma,
 } from '@horario-estudantil/schemas';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { InstituicaoType } from '../../../schemas/instituicao.type';
 
 @ObjectType('Turma')
 export class TurmaType implements Turma {
   @Field(() => Int)
   id!: number;
 
-  @Field(() => String, { nullable: true })
-  nome!: string | null;
+  @Field(() => InstituicaoType)
+  instituicao!: Instituicao;
+
+  @Field(() => ApelidoType)
+  apelidoPrincipal!: Apelido;
 
   @Field(() => [ApelidoType])
   apelidos!: Apelido[];

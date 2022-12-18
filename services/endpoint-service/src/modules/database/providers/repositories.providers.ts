@@ -1,7 +1,7 @@
 import { getApelidoRepository } from 'src/modules/app/repositories/apelido.repository';
 import { getAulaTurmaRepository } from 'src/modules/app/repositories/aula-turma.repository';
 import { getAulaRepository } from 'src/modules/app/repositories/aula.repository';
-import { getTurmaCategoriaRepository } from 'src/modules/app/repositories/turma-categoria.repository';
+import { getCategoriaTurmaRepository } from 'src/modules/app/repositories/turma-categoria.repository';
 import { getEtapaRepository } from 'src/modules/app/repositories/etapa.repository';
 import { getEventoRepository } from 'src/modules/app/repositories/evento.repository';
 import { getMateriaRepository } from 'src/modules/app/repositories/materia.repository';
@@ -17,6 +17,7 @@ import {
   REPOSITORY_AULA,
   REPOSITORY_AULA_PROFESSOR,
   REPOSITORY_AULA_TURMA,
+  REPOSITORY_CATEGORIA_TURMA,
   REPOSITORY_ETAPA,
   REPOSITORY_EVENTO,
   REPOSITORY_INSTITUICAO,
@@ -25,7 +26,6 @@ import {
   REPOSITORY_PERIODO_LETIVO,
   REPOSITORY_PROFESSOR,
   REPOSITORY_TURMA,
-  REPOSITORY_TURMA_CATEGORIA,
   REPOSITORY_USUARIO,
 } from '../constants/REPOSITORIES';
 import { DATA_SOURCE } from '../constants/DATA_SOURCE';
@@ -109,9 +109,9 @@ export const databaseRepositoriesProviders = [
     inject: [DATA_SOURCE],
   },
   {
-    provide: REPOSITORY_TURMA_CATEGORIA,
+    provide: REPOSITORY_CATEGORIA_TURMA,
     useFactory: (dataSource: DataSource) => {
-      return getTurmaCategoriaRepository(dataSource);
+      return getCategoriaTurmaRepository(dataSource);
     },
     inject: [DATA_SOURCE],
   },

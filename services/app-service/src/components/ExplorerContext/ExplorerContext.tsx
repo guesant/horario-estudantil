@@ -5,8 +5,8 @@ import UILoading from '../UILoading/UILoading';
 import ExplorerLayoutMain from '../ExplorerLayoutMain/ExplorerLayoutMain';
 import { useRouteSigla } from '../../hooks/useRouteSigla';
 import { ExplorerDialogSelectInstituicaoContextProvider } from '../ExplorerDialogSelectInstituicaoContext/ExplorerDialogSelectInstituicaoContext';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
 import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
+import { INSTITUICAO_GENERAL_INFO_BY_SIGLA } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO_BY_SIGLA';
 
 export type IExplorerContext = {
   sigla: string | null;
@@ -28,7 +28,7 @@ export const ExplorerContextProvider: FC<IExplorerContextProviderProps> = ({
   const hasSigla = typeof sigla === 'string';
 
   const instituicaoQuery = useQuery<InstituicaoGeneralInfoQuery>(
-    INSTITUICAO_GENERAL_INFO,
+    INSTITUICAO_GENERAL_INFO_BY_SIGLA,
     {
       skip: !hasSigla,
       variables: { sigla: sigla },

@@ -7,7 +7,7 @@ import {
 } from '@horario-estudantil/schemas';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('TurmaCategoria')
+@ObjectType('CategoriaTurma')
 export class CategoriaTurmaType implements CategoriaTurma {
   @Field(() => Int)
   id!: number;
@@ -25,5 +25,5 @@ export class CategoriaTurmaType implements CategoriaTurma {
   instituicao!: Instituicao;
 
   @Field(() => CategoriaTurmaType, { nullable: true })
-  turmaCategoriaPai!: CategoriaTurma | null;
+  categoriaTurmaPai!: CategoriaTurma | null;
 }

@@ -2,55 +2,76 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { FindOneOptions } from 'typeorm';
 import { ProfessorDbEntity } from '../../../../entities/professor.db.entity';
 import { IProfessorRepository } from '../../../../repositories/professor.repository';
-import { REPOSITORY_PROFESSOR } from '../../../../../database/constants/REPOSITORIES';
+import {
+  REPOSITORY_APELIDO,
+  REPOSITORY_PROFESSOR,
+} from '../../../../../database/constants/REPOSITORIES';
+import { IApelidoRepository } from '../../../../repositories/apelido.repository';
+import { AppError } from '../../../../AppError';
 
 export type IFindProfessorQuery = Partial<Pick<ProfessorDbEntity, 'id'>>;
+
+type IFindProfessorQueryGeneric = {
+  options?: FindOneOptions<ProfessorDbEntity>;
+  shouldThrowIfNotFound?: boolean;
+};
+
+export type IFindProfessorByIdQuery = IFindProfessorQueryGeneric & {
+  id: number;
+};
 
 @Injectable()
 export class ProfessorService {
   constructor(
+    @Inject(REPOSITORY_APELIDO)
+    private apelidoRepository: IApelidoRepository,
     @Inject(REPOSITORY_PROFESSOR)
     private professorRepository: IProfessorRepository,
   ) {}
 
-  async findProfessor(
-    query: IFindProfessorQuery,
-    options?: FindOneOptions<ProfessorDbEntity>,
-  ) {
-    const { id } = query;
+  async findProfessorById(
+    query: IFindProfessorByIdQuery,
+  ): Promise<ProfessorDbEntity> {
+    const { id, shouldThrowIfNotFound, options } = query;
 
-    const professor = await this.professorRepository.findOne({
+    const targetProfessor = await this.professorRepository.findOne({
       where: { id },
-      ...options,
+      select: ['id'],
     });
 
-    if (!professor) {
-      throw new NotFoundException();
+    if (!targetProfessor) {
+      if (shouldThrowIfNotFound) {
+        throw new NotFoundException(
+          new AppError(
+            'not-found',
+            'Professor não foi encontrado',
+            'professor',
+          ),
+        );
+      } else {
+        return null as any;
+      }
     }
+
+    const professor = <ProfessorDbEntity>await this.professorRepository.findOne(
+      {
+        where: { id: targetProfessor.id },
+        ...options,
+      },
+    );
 
     return professor;
   }
 
-  async findProfessorAulas(query: IFindProfessorQuery) {
-    const professor = await this.findProfessor(query, {
-      relations: ['aulaProfessorRelations', 'aulaProfessorRelations.aula'],
+  async findProfessorApelidos(professorId: number) {
+    const professor = await this.findProfessorById({
+      id: professorId,
+      options: { select: ['id'] },
     });
 
-    const { aulaProfessorRelations } = professor;
-
-    const aulas = aulaProfessorRelations.map(
-      (aulaProfessorRelation) => aulaProfessorRelation.aula,
-    );
-
-    return aulas;
-  }
-
-  async findProfessorApelidos(query: IFindProfessorQuery) {
-    const professor = await this.findProfessor(query, {
-      relations: ['apelidos'],
+    const apelidos = await this.apelidoRepository.find({
+      where: { professor: { id: professor.id } },
     });
-
-    const { apelidos } = professor;
 
     return apelidos;
   }

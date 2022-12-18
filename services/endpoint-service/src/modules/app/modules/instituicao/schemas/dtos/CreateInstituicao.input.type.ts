@@ -1,7 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { ICreateInstituicaoInput } from '@horario-estudantil/schemas';
 
 @InputType()
-export class CreateInstituicaoInputType {
+export class CreateInstituicaoInputType implements ICreateInstituicaoInput {
   @Field()
   nome!: string;
 

@@ -1,9 +1,12 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { InstituicaoType } from '../schemas/instituicao.type';
-import { Instituicao } from '@horario-estudantil/schemas';
+import { InstituicaoType } from '../instituicao.type';
+import {
+  Instituicao,
+  ISearchInstituicoesInput,
+} from '@horario-estudantil/schemas';
 
 @ObjectType('SearchInstituicoesResult')
-export class SearchInstituicoesResultType {
+export class SearchInstituicoesResultType implements ISearchInstituicoesInput {
   @Field(() => Int)
   estimatedTotalHits!: number;
 

@@ -7,47 +7,36 @@ import {
 } from '@nestjs/common';
 import MeiliSearch, { SearchParams } from 'meilisearch';
 import { InstituicaoDbEntity } from '../../entities/instituicao.db.entity';
-import { ITurmaCategoriaRepository } from '../../repositories/turma-categoria.repository';
+import { ICategoriaTurmaRepository } from '../../repositories/turma-categoria.repository';
 import { IPeriodoLetivoRepository } from '../../repositories/periodo-letivo.repository';
 import { IInstituicaoMembershipRepository } from '../../repositories/instituicao-membership.repository';
 import { IInstituicaoRepository } from '../../repositories/instituicao.repository';
 import {
+  REPOSITORY_CATEGORIA_TURMA,
   REPOSITORY_INSTITUICAO,
   REPOSITORY_INSTITUICAO_MEMBERSHIP,
   REPOSITORY_PERIODO_LETIVO,
-  REPOSITORY_TURMA_CATEGORIA,
+  REPOSITORY_TURMA,
 } from '../../../database/constants/REPOSITORIES';
 import { MEILISEARCH_CLIENT } from '../../../search/constants/MEILISEARCH_CLIENT';
 import { INDEX_INSTITUICAO } from '../../../search/infrastructure/SEARCH_INDEXES';
 import { IRequestActor } from '../../../auth/request-user/IRequestActor';
-import { CreateInstituicaoInputType } from './dtos/CreateInstituicao.input.type';
-import { getEntityRef } from '../../../utils/getEntityRef';
+import { CreateInstituicaoInputType } from './schemas/dtos/CreateInstituicao.input.type';
 import { UserDbEntity } from '../../entities/user.db.entity';
 import { InstituicaoMembershipDbEntity } from '../../entities/instituicao-membership.db.entity';
-import { DeleteInstituicaoInputType } from './dtos/DeleteInstituicao.input.type';
-import { UpdateInstituicaoInputType } from './dtos/UpdateInstituicao.input.type';
+import { DeleteInstituicaoInputType } from './schemas/dtos/DeleteInstituicao.input.type';
+import { UpdateInstituicaoInputType } from './schemas/dtos/UpdateInstituicao.input.type';
 import { FindOneOptions } from 'typeorm';
 import { parseLimit } from '../../../utils/parseLimit';
 import { parseOffset } from '../../../utils/parseOffset';
 import { AppError } from '../../AppError';
-import { SearchInstituicoesInputType } from './dtos/SearchInstituicoes.input.type';
+import { SearchInstituicoesInputType } from './schemas/dtos/SearchInstituicoes.input.type';
+import { ITurmaRepository } from '../../repositories/turma.repository';
 
 export type IFindInstituicaoQuery = {
   id?: number;
   sigla?: string;
   options?: FindOneOptions<InstituicaoDbEntity>;
-
-  shouldThrowIfNotFound?: boolean;
-};
-
-export type ISearchInstituicoesOptions = {
-  query: string;
-
-  limit?: number;
-
-  offset?: number;
-
-  user?: IRequestActor;
 };
 
 @Injectable()
@@ -57,8 +46,10 @@ export class InstituicaoService {
     private instituicaoRepository: IInstituicaoRepository,
     @Inject(REPOSITORY_PERIODO_LETIVO)
     private periodoLeitivoRepository: IPeriodoLetivoRepository,
-    @Inject(REPOSITORY_TURMA_CATEGORIA)
-    private turmaCategoriaRepository: ITurmaCategoriaRepository,
+    @Inject(REPOSITORY_TURMA)
+    private turmaRepository: ITurmaRepository,
+    @Inject(REPOSITORY_CATEGORIA_TURMA)
+    private categoriaTurmaRepository: ICategoriaTurmaRepository,
     @Inject(REPOSITORY_INSTITUICAO_MEMBERSHIP)
     private instituicaoMembershipRepository: IInstituicaoMembershipRepository,
     @Inject(MEILISEARCH_CLIENT)
@@ -67,8 +58,8 @@ export class InstituicaoService {
 
   async findInstituicao(
     query: IFindInstituicaoQuery,
-  ): Promise<InstituicaoDbEntity> {
-    const { id, sigla, options, shouldThrowIfNotFound = true } = query;
+  ): Promise<InstituicaoDbEntity | null> {
+    const { id, sigla, options } = query;
 
     if (id === undefined && sigla === undefined) {
       throw new UnprocessableEntityException();
@@ -80,23 +71,31 @@ export class InstituicaoService {
     });
 
     if (!targetInstituicao) {
-      if (shouldThrowIfNotFound) {
-        throw new NotFoundException(
-          new AppError(
-            'not-found',
-            'Instituição não foi encontrada',
-            'instituicao',
-          ),
-        );
-      } else {
-        return null as any;
-      }
+      return null;
     }
 
-    const instituicao = (await this.instituicaoRepository.findOne({
+    const instituicao = await this.instituicaoRepository.findOneOrFail({
       where: { id: targetInstituicao.id },
       ...options,
-    })) as InstituicaoDbEntity;
+    });
+
+    return instituicao;
+  }
+
+  async findInstituicaoOrFail(
+    query: IFindInstituicaoQuery,
+  ): Promise<InstituicaoDbEntity> {
+    const instituicao = await this.findInstituicao(query);
+
+    if (!instituicao) {
+      throw new NotFoundException(
+        new AppError(
+          'not-found',
+          'Instituição não foi encontrada',
+          'instituicao',
+        ),
+      );
+    }
 
     return instituicao;
   }
@@ -105,16 +104,16 @@ export class InstituicaoService {
     query: IFindInstituicaoQuery,
     fields: (keyof InstituicaoDbEntity)[],
   ) {
-    return this.findInstituicao({
+    return this.findInstituicaoOrFail({
       ...query,
       options: { ...query.options, select: fields },
     });
   }
 
-  async findInstituicaoField(
+  async findInstituicaoField<K extends keyof InstituicaoDbEntity>(
     query: IFindInstituicaoQuery,
-    field: keyof InstituicaoDbEntity,
-  ) {
+    field: K,
+  ): Promise<InstituicaoDbEntity[K]> {
     const instituicao = await this.findInstituicaoFields(query, [field]);
     return instituicao[field];
   }
@@ -155,35 +154,77 @@ export class InstituicaoService {
     return results;
   }
 
-  async findInstituicaoPeriodos(query: IFindInstituicaoQuery) {
-    const instituicao = await this.findInstituicao(query);
-
-    const periodosLetivos = await this.periodoLeitivoRepository.find({
-      where: { instituicao: { id: instituicao.id } },
+  async findInstituicaoPeriodos(instituicaoId: number) {
+    const instituicao = await this.findInstituicaoOrFail({
+      id: instituicaoId,
+      options: { select: ['id'] },
     });
+
+    const periodosLetivos = await this.periodoLeitivoRepository
+      .createQueryBuilder('periodo')
+      .leftJoin('periodo.instituicao', 'instituicao')
+      .select(['periodo.id', 'instituicao.id'])
+      .where('instituicao.id = :instituicaoId', {
+        instituicaoId: instituicao.id,
+      })
+      .getMany();
 
     return periodosLetivos;
   }
 
-  async findInstituicaoCategoriasTurma(query: IFindInstituicaoQuery) {
-    const instituicao = await this.findInstituicao(query);
-
-    const turmaCategorias = await this.turmaCategoriaRepository.find({
-      where: { instituicao: { id: instituicao.id } },
-      relations: ['turmaCategoriaPai'],
+  async findInstituicaoTurmas(instituicaoId: number) {
+    const instituicao = await this.findInstituicaoOrFail({
+      id: instituicaoId,
+      options: { select: ['id'] },
     });
 
-    return turmaCategorias;
+    const turmas = await this.turmaRepository
+      .createQueryBuilder('turma')
+      .leftJoin('turma.instituicao', 'instituicao')
+      .select(['turma.id', 'instituicao.id'])
+      .where('instituicao.id = :instituicaoId', {
+        instituicaoId: instituicao.id,
+      })
+      .getMany();
+
+    return turmas;
   }
 
-  async findInstituicaoMemberships(query: IFindInstituicaoQuery) {
-    const instituicao = await this.findInstituicao(query);
-
-    const memberships = await this.instituicaoMembershipRepository.find({
-      where: { instituicao: { id: instituicao.id } },
+  async findInstituicaoCategoriasTurma(instituicaoId: number) {
+    const instituicao = await this.findInstituicaoOrFail({
+      id: instituicaoId,
+      options: { select: ['id'] },
     });
 
-    return memberships;
+    const categoriasTurma = await this.categoriaTurmaRepository
+      .createQueryBuilder('categoriaTurma')
+      .leftJoin('categoriaTurma.instituicao', 'instituicao')
+      .leftJoin('categoriaTurma.categoriaTurmaPai', 'categoriaTurmaPai')
+      .where('instituicao.id = :instituicaoId', {
+        instituicaoId: instituicao.id,
+      })
+      .select(['categoriaTurma.id', 'instituicao.id', 'categoriaTurmaPai.id'])
+      .getMany();
+
+    return categoriasTurma;
+  }
+
+  async findInstituicaoMemberships(instituicaoId: number) {
+    const instituicao = await this.findInstituicaoOrFail({
+      id: instituicaoId,
+      options: { select: ['id'] },
+    });
+
+    const categoriasTurma = await this.instituicaoMembershipRepository
+      .createQueryBuilder('membership')
+      .leftJoin('membership.instituicao', 'instituicao')
+      .where('instituicao.id = :instituicaoId', {
+        instituicaoId: instituicao.id,
+      })
+      .select(['membership.id', 'instituicao.id'])
+      .getMany();
+
+    return categoriasTurma;
   }
 
   async createInstituicao(
@@ -201,23 +242,19 @@ export class InstituicaoService {
       );
     }
 
-    const instituicao = this.instituicaoRepository.create();
-
-    instituicao.nome = nome;
-    instituicao.sigla = sigla;
-    instituicao.apelido = apelido;
-
     return await this.instituicaoRepository.manager.transaction(
       async (entityManager) => {
+        const instituicao = this.instituicaoRepository.create();
+
+        instituicao.nome = nome;
+        instituicao.sigla = sigla;
+        instituicao.apelido = apelido;
+
         await entityManager.save(InstituicaoDbEntity, instituicao);
 
         const membership = this.instituicaoMembershipRepository.create();
-
-        membership.usuario = getEntityRef(actor) as UserDbEntity;
-        membership.instituicao = getEntityRef(
-          instituicao,
-        ) as InstituicaoDbEntity;
-
+        membership.usuario = <UserDbEntity>{ id: actor.id };
+        membership.instituicao = <InstituicaoDbEntity>{ id: instituicao.id };
         await entityManager.save(InstituicaoMembershipDbEntity, membership);
 
         return instituicao;
@@ -226,11 +263,10 @@ export class InstituicaoService {
   }
 
   async checkSiglaAvailability(sigla: string, id?: number) {
-    const instituicao = (await this.findInstituicao({
+    const instituicao = await this.findInstituicao({
       sigla,
       options: { select: ['id', 'sigla'] },
-      shouldThrowIfNotFound: false,
-    })) as InstituicaoDbEntity | null;
+    });
 
     return !instituicao || instituicao.id === id;
   }
@@ -244,7 +280,7 @@ export class InstituicaoService {
       throw new ForbiddenException();
     }
 
-    const instituicao = await this.findInstituicao({ id });
+    const instituicao = await this.findInstituicaoOrFail({ id });
 
     const { nome } = data;
 
@@ -292,7 +328,7 @@ export class InstituicaoService {
       throw new ForbiddenException();
     }
 
-    const instituicao = await this.findInstituicao({ id });
+    const instituicao = await this.findInstituicaoOrFail({ id });
     await this.instituicaoRepository.remove(instituicao);
 
     return true;

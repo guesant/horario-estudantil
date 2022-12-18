@@ -7,8 +7,8 @@ export class ProfessorType implements Professor {
   @Field(() => Int)
   id!: number;
 
-  @Field()
-  nome!: string;
+  @Field(() => ApelidoType)
+  apelidoPrincipal!: Apelido;
 
   @Field(() => [ApelidoType])
   apelidos!: Apelido[];

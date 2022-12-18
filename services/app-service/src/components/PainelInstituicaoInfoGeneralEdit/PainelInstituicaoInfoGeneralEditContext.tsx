@@ -10,8 +10,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { instituicaoSchema } from '../../etc/zod/instituicaoSchema';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_INSTITUICAO } from '../../graphql/mutations/CREATE_INSTITUICAO';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
-import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
+import { INSTITUICAO_GENERAL_INFO_BY_ID } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO_BY_ID';
+import {
+  InstituicaoGeneralInfoByIdQuery,
+  InstituicaoGeneralInfoQuery,
+} from '../../graphql/__generated__/graphql';
 import { UPDATE_INSTITUICAO } from '../../graphql/mutations/UPDATE_INSTITUICAO';
 
 export type IPainelInstituicaoInfoGeneralEditContext = {
@@ -49,8 +52,8 @@ export const PainelInstituicaoInfoGeneralEditContextProvider: FC<
     handleSave = null,
   } = props;
 
-  const instituicaoQuery = useQuery<InstituicaoGeneralInfoQuery>(
-    INSTITUICAO_GENERAL_INFO,
+  const instituicaoQuery = useQuery<InstituicaoGeneralInfoByIdQuery>(
+    INSTITUICAO_GENERAL_INFO_BY_ID,
     {
       skip: !id_ins,
       variables: { id: id_ins },

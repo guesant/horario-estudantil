@@ -1,73 +1,81 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoriaTurmaDbEntity } from '../../../../entities/categoria-turma.db.entity';
-import { ITurmaCategoriaRepository } from '../../../../repositories/turma-categoria.repository';
+import { ICategoriaTurmaRepository } from '../../../../repositories/turma-categoria.repository';
 import { IGenericFindOneQuery } from '../../../../IGenericFindOneQuery';
-import { REPOSITORY_TURMA_CATEGORIA } from '../../../../../database/constants/REPOSITORIES';
+import {
+  REPOSITORY_CATEGORIA_TURMA,
+  REPOSITORY_INSTITUICAO,
+} from '../../../../../database/constants/REPOSITORIES';
+import { IInstituicaoRepository } from '../../../../repositories/instituicao.repository';
 
-export type IFindTurmaCategoriaQuery =
+export type IFindCategoriaTurmaQuery =
   IGenericFindOneQuery<CategoriaTurmaDbEntity>;
 
 @Injectable()
 export class CategoriaTurmaService {
   constructor(
-    @Inject(REPOSITORY_TURMA_CATEGORIA)
-    private turmaCategoriaRepository: ITurmaCategoriaRepository,
+    @Inject(REPOSITORY_INSTITUICAO)
+    private instituicaoRepository: IInstituicaoRepository,
+    @Inject(REPOSITORY_CATEGORIA_TURMA)
+    private categoriaTurmaRepository: ICategoriaTurmaRepository,
   ) {}
 
-  async findTurmaCategoria(query: IFindTurmaCategoriaQuery) {
+  async findCategoriaTurma(query: IFindCategoriaTurmaQuery) {
     const { id, options } = query;
 
-    const targetTurmaCategoria = await this.turmaCategoriaRepository.findOne({
+    const targetCategoriaTurma = await this.categoriaTurmaRepository.findOne({
       where: { id },
     });
 
-    if (!targetTurmaCategoria) {
+    if (!targetCategoriaTurma) {
       throw new NotFoundException();
     }
 
-    const turmaCategoria = (await this.turmaCategoriaRepository.findOne({
-      where: { id },
-      ...options,
-    })) as CategoriaTurmaDbEntity;
+    const categoriaTurma = <CategoriaTurmaDbEntity>(
+      await this.categoriaTurmaRepository.findOne({
+        where: { id },
+        ...options,
+      })
+    );
 
-    return turmaCategoria;
+    return categoriaTurma;
   }
 
-  async findCategoriaTurmaInstituicao(query: IFindTurmaCategoriaQuery) {
-    const turmaCategoria = await this.findTurmaCategoria({
+  async findCategoriaTurmaInstituicao(query: IFindCategoriaTurmaQuery) {
+    const categoriaTurma = await this.findCategoriaTurma({
       ...query,
       options: {
         relations: ['instituicao'],
       },
     });
 
-    const { instituicao } = turmaCategoria;
+    const { instituicao } = categoriaTurma;
 
     return instituicao;
   }
 
-  async findCategoriaTurmaCategoriaTurmaPai(query: IFindTurmaCategoriaQuery) {
-    const turmaCategoria = await this.findTurmaCategoria({
+  async findCategoriaTurmaPai(query: IFindCategoriaTurmaQuery) {
+    const categoriaTurma = await this.findCategoriaTurma({
       ...query,
       options: {
-        relations: ['turmaCategoriaPai'],
+        relations: ['categoriaTurma'],
       },
     });
 
-    const { turmaCategoriaPai } = turmaCategoria;
+    const { categoriaTurmaPai } = categoriaTurma;
 
-    return turmaCategoriaPai;
+    return categoriaTurmaPai;
   }
 
-  async findCategoriaTurmaTurmas(query: IFindTurmaCategoriaQuery) {
-    const turmaCategoria = await this.findTurmaCategoria({
+  async findCategoriaTurmaTurmas(query: IFindCategoriaTurmaQuery) {
+    const categoriaTurma = await this.findCategoriaTurma({
       ...query,
       options: {
         relations: ['turmas'],
       },
     });
 
-    const { turmas } = turmaCategoria;
+    const { turmas } = categoriaTurma;
 
     return turmas;
   }

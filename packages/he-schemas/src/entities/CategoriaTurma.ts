@@ -12,5 +12,5 @@ export type CategoriaTurma = {
 
   instituicao: Instituicao;
 
-  turmaCategoriaPai: CategoriaTurma | null;
+  categoriaTurmaPai: CategoriaTurma | null;
 };

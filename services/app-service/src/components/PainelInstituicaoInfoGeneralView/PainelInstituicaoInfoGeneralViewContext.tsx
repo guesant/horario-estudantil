@@ -1,7 +1,10 @@
 import { createContext, FC, PropsWithChildren } from 'react';
 import { QueryResult, useQuery } from '@apollo/client';
-import { INSTITUICAO_GENERAL_INFO } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO';
-import { InstituicaoGeneralInfoQuery } from '../../graphql/__generated__/graphql';
+import { INSTITUICAO_GENERAL_INFO_BY_ID } from '../../graphql/queries/INSTITUICAO_GENERAL_INFO_BY_ID';
+import {
+  InstituicaoGeneralInfoByIdQuery,
+  InstituicaoGeneralInfoQuery,
+} from '../../graphql/__generated__/graphql';
 
 export type IPainelInstituicaoInfoGeneralEditContext = {
   instituicaoQuery: QueryResult<InstituicaoGeneralInfoQuery, any>;
@@ -30,8 +33,8 @@ export const PainelInstituicaoInfoGeneralViewContextProvider: FC<
 > = (props) => {
   const { children, id_ins, handleEdit = null, handleDelete = null } = props;
 
-  const instituicaoQuery = useQuery<InstituicaoGeneralInfoQuery>(
-    INSTITUICAO_GENERAL_INFO,
+  const instituicaoQuery = useQuery<InstituicaoGeneralInfoByIdQuery>(
+    INSTITUICAO_GENERAL_INFO_BY_ID,
     {
       variables: { id: id_ins },
       fetchPolicy: 'cache-and-network',

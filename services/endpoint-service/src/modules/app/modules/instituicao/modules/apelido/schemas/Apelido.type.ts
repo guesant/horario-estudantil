@@ -15,7 +15,10 @@ export class ApelidoType implements Apelido {
   id!: number;
 
   @Field()
-  apelido!: string;
+  texto!: string;
+
+  @Field(() => String)
+  tipo!: 'turma' | 'materia' | 'professor';
 
   @Field(() => TurmaType, { nullable: true })
   turma!: Turma | null;

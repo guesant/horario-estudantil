@@ -8,8 +8,8 @@ export class MateriaType implements Materia {
   @Field(() => Int)
   id!: number;
 
-  @Field(() => String)
-  nome!: string;
+  @Field(() => ApelidoType)
+  apelidoPrincipal!: Apelido;
 
   @Field(() => [AulaType])
   aulas!: Aula[];

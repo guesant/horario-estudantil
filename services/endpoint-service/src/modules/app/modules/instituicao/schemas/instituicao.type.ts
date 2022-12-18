@@ -6,8 +6,10 @@ import {
   Instituicao,
   InstituicaoMembership,
   PeriodoLetivo,
+  Turma,
 } from '@horario-estudantil/schemas';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { TurmaType } from '../modules/turma/schemas/turma.type';
 
 @ObjectType('Instituicao')
 export class InstituicaoType implements Instituicao {
@@ -28,6 +30,9 @@ export class InstituicaoType implements Instituicao {
 
   // @Field(() => Date, { nullable: true })
   lastSearchSync!: Date | null;
+
+  @Field(() => [TurmaType])
+  turmas!: Turma[];
 
   @Field(() => [CategoriaTurmaType])
   categoriasTurma!: CategoriaTurma[];

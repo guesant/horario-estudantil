@@ -1,5 +1,6 @@
 import MeiliSearch from 'meilisearch';
 import { INDEX_INSTITUICAO } from './SEARCH_INDEXES';
+import { ErrorStatusCode } from 'meilisearch/src/types';
 
 let clientCache: MeiliSearch | null = null;
 
@@ -31,6 +32,24 @@ export const getMeilisearchClient = async (
     for (const meilisearchIndex of MEILISEARCH_INDEXES) {
       const { index, filterable, searchable, sortable } = meilisearchIndex;
 
+      console.info(
+        `[INFO] MeilisearchClient: ${index} -> ensuring that it exists...`,
+      );
+
+      await client.getIndex(index).catch((err) => {
+        if (err.code === ErrorStatusCode.INDEX_NOT_FOUND) {
+          console.info(
+            `[INFO] MeilisearchClient: ${index} -> creating index...`,
+          );
+
+          return client
+            .createIndex(index, { primaryKey: 'id' })
+            .then((task) => client.waitForTask(task.taskUid));
+        }
+      });
+
+      console.info('[INFO] done');
+
       const currentSearchable = await client
         .index(index)
         .getSearchableAttributes();
@@ -40,7 +59,10 @@ export const getMeilisearchClient = async (
           `[INFO] MeilisearchClient: ${index} -> updateSearchableAttributes(${searchable})`,
         );
 
-        await client.index(index).updateSearchableAttributes(searchable);
+        await client
+          .index(index)
+          .updateSearchableAttributes(searchable)
+          .then((task) => client.waitForTask(task.taskUid));
 
         console.info('[INFO] done');
       }
@@ -54,7 +76,10 @@ export const getMeilisearchClient = async (
           `[INFO] MeilisearchClient: ${index} -> updateFilterableAttributes(${filterable})`,
         );
 
-        await client.index(index).updateFilterableAttributes(filterable);
+        await client
+          .index(index)
+          .updateFilterableAttributes(filterable)
+          .then((task) => client.waitForTask(task.taskUid));
 
         console.info('[INFO] done');
       }
@@ -66,7 +91,10 @@ export const getMeilisearchClient = async (
           `[INFO] MeilisearchClient: ${index} -> updateSortableAttributes(${sortable})`,
         );
 
-        await client.index(index).updateSortableAttributes(sortable);
+        await client
+          .index(index)
+          .updateSortableAttributes(sortable)
+          .then((task) => client.waitForTask(task.taskUid));
 
         console.info('[INFO] done');
       }

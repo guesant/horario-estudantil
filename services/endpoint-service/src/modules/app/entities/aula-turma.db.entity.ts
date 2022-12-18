@@ -8,11 +8,11 @@ export class AulaTurmaDbEntity implements AulaTurma {
   @PrimaryGeneratedColumn({ name: 'id_aul_tur' })
   id!: number;
 
-  @ManyToOne(() => AulaDbEntity, (aula) => aula.aulaTurmaRelations)
+  @ManyToOne(() => AulaDbEntity)
   @JoinColumn({ name: 'id_aul_fk', referencedColumnName: 'id' })
   aula!: AulaDbEntity;
 
-  @ManyToOne(() => TurmaDbEntity, (turma) => turma.aulaTurmaRelations)
+  @ManyToOne(() => TurmaDbEntity)
   @JoinColumn({ name: 'id_tur_fk', referencedColumnName: 'id' })
   turma!: TurmaDbEntity;
 }

@@ -2,19 +2,22 @@ import { gql } from '@apollo/client';
 
 export const INSTITUICAO_TURMAS = gql`
   query PageTurmasData($sigla: String!) {
-    instituicao(options: { sigla: $sigla }) {
-      turmaCategorias {
+    instituicaoBySigla(options: { sigla: $sigla }) {
+      categoriasTurma {
         id
+
         titulo
         tituloFilhos
 
-        turmaCategoriaPai {
+        categoriaTurmaPai {
           id
         }
 
         turmas {
           id
-          nome
+          apelidoPrincipal {
+            texto
+          }
         }
       }
     }

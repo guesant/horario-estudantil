@@ -9,12 +9,12 @@ import { InstituicaoDbEntity } from '../entities/instituicao.db.entity';
 import { getMeilisearchClient } from '../../search/infrastructure/getMeilisearchClient';
 import { INDEX_INSTITUICAO } from '../../search/infrastructure/SEARCH_INDEXES';
 import { Instituicao } from '@horario-estudantil/schemas';
-import pick from 'lodash/pick';
+import { pick } from 'lodash';
 
 const PRIMARY_KEY = 'id';
 
 const getExportedInstituicao = <T extends Instituicao>(instituicao: T) =>
-  pick(instituicao, ['id', 'nome', 'sigla', 'apelido']);
+  pick(instituicao, ['id', 'nome', 'sigla', 'apelido', 'lastUpdate']);
 
 @EventSubscriber()
 export class SearchSubscriber

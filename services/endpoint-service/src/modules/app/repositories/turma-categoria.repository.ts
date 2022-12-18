@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
 import { CategoriaTurmaDbEntity } from '../entities/categoria-turma.db.entity';
 
-export type ITurmaCategoriaRepository = ReturnType<
-  typeof getTurmaCategoriaRepository
+export type ICategoriaTurmaRepository = ReturnType<
+  typeof getCategoriaTurmaRepository
 >;
 
-export const getTurmaCategoriaRepository = (dataSource: DataSource) => {
+export const getCategoriaTurmaRepository = (dataSource: DataSource) => {
   return dataSource.getRepository(CategoriaTurmaDbEntity).extend({});
 };

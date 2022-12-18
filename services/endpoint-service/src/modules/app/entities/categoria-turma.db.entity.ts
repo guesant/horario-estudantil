@@ -11,15 +11,15 @@ import { TurmaDbEntity } from './turma.db.entity';
 import { InstituicaoDbEntity } from './instituicao.db.entity';
 import { CategoriaTurma } from '@horario-estudantil/schemas';
 
-@Entity('TurmaCategoria')
+@Entity('CategoriaTurma')
 export class CategoriaTurmaDbEntity implements CategoriaTurma {
-  @PrimaryGeneratedColumn({ name: 'id_tur_cat' })
+  @PrimaryGeneratedColumn({ name: 'id_cat_tur' })
   id!: number;
 
-  @Column({ name: 'titulo_tur_cat', type: 'varchar', nullable: true })
+  @Column({ name: 'titulo_cat_tur', type: 'varchar', nullable: true })
   titulo!: string | null;
 
-  @Column({ name: 'titulo_filhos_tur_cat' })
+  @Column({ name: 'titulo_filhos_cat_tur' })
   tituloFilhos!: string;
 
   @OneToMany(() => TurmaDbEntity, (turma) => turma.categoriaTurma)
@@ -33,6 +33,6 @@ export class CategoriaTurmaDbEntity implements CategoriaTurma {
   instituicao!: InstituicaoDbEntity;
 
   @OneToOne(() => CategoriaTurmaDbEntity)
-  @JoinColumn({ name: 'id_tur_cat_pai_fk', referencedColumnName: 'id' })
-  turmaCategoriaPai!: CategoriaTurmaDbEntity | null;
+  @JoinColumn({ name: 'id_cat_tur_pai_fk', referencedColumnName: 'id' })
+  categoriaTurmaPai!: CategoriaTurmaDbEntity | null;
 }

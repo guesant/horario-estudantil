@@ -116,10 +116,10 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
-        name: 'TurmaCategoria',
+        name: 'CategoriaTurma',
         columns: [
           {
-            name: 'id_tur_cat',
+            name: 'id_cat_tur',
             type: 'int',
             isPrimary: true,
             isGenerated: true,
@@ -127,13 +127,13 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'titulo_tur_cat',
+            name: 'titulo_cat_tur',
             type: 'varchar(255)',
             isNullable: true,
           },
 
           {
-            name: 'titulo_filhos_tur_cat',
+            name: 'titulo_filhos_cat_tur',
             type: 'varchar(255)',
             isNullable: true,
           },
@@ -145,7 +145,7 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'id_tur_cat_pai_fk',
+            name: 'id_cat_tur_pai_fk',
             type: 'int',
             isNullable: true,
           },
@@ -159,9 +159,9 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           }),
 
           new TableForeignKey({
-            columnNames: ['id_tur_cat_pai_fk'],
-            referencedColumnNames: ['id_tur_cat'],
-            referencedTableName: 'TurmaCategoria',
+            columnNames: ['id_cat_tur_pai_fk'],
+            referencedColumnNames: ['id_cat_tur'],
+            referencedTableName: 'CategoriaTurma',
           }),
         ],
       }),
@@ -177,12 +177,6 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'identity',
-          },
-
-          {
-            name: 'nome_prof',
-            type: 'varchar(255)',
-            isNullable: true,
           },
         ],
       }),
@@ -228,16 +222,92 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
           },
 
           {
-            name: 'id_tur_cat_fk',
+            name: 'id_ins_fk',
+            type: 'int',
+          },
+
+          {
+            name: 'id_cat_tur_fk',
             type: 'int',
             isNullable: true,
           },
         ],
         foreignKeys: [
           new TableForeignKey({
-            columnNames: ['id_tur_cat_fk'],
-            referencedTableName: 'TurmaCategoria',
-            referencedColumnNames: ['id_tur_cat'],
+            columnNames: ['id_ins_fk'],
+            referencedTableName: 'Instituicao',
+            referencedColumnNames: ['id_ins'],
+          }),
+
+          new TableForeignKey({
+            columnNames: ['id_cat_tur_fk'],
+            referencedTableName: 'CategoriaTurma',
+            referencedColumnNames: ['id_cat_tur'],
+          }),
+        ],
+      }),
+    );
+
+    await queryRunner.createTable(
+      new Table({
+        name: 'Apelido',
+        columns: [
+          {
+            name: 'id_ape',
+            type: 'int',
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'identity',
+          },
+
+          {
+            name: 'texto_ape',
+            type: 'varchar(255)',
+          },
+
+          {
+            name: 'tipo_ape',
+            type: 'enum',
+            enum: ['turma', 'professor', 'materia'],
+          },
+
+          {
+            name: 'id_prof_fk',
+            type: 'int',
+            isNullable: true,
+          },
+
+          {
+            name: 'id_mat_fk',
+            type: 'int',
+            isNullable: true,
+          },
+
+          {
+            name: 'id_tur_fk',
+            type: 'int',
+            isNullable: true,
+          },
+        ],
+
+        foreignKeys: [
+          new TableForeignKey({
+            columnNames: ['id_mat_fk'],
+            referencedColumnNames: ['id_mat'],
+            referencedTableName: 'Materia',
+            onDelete: 'CASCADE',
+          }),
+          new TableForeignKey({
+            columnNames: ['id_prof_fk'],
+            referencedColumnNames: ['id_prof'],
+            referencedTableName: 'Professor',
+            onDelete: 'CASCADE',
+          }),
+          new TableForeignKey({
+            columnNames: ['id_tur_fk'],
+            referencedColumnNames: ['id_tur'],
+            referencedTableName: 'Turma',
+            onDelete: 'CASCADE',
           }),
         ],
       }),
@@ -457,77 +527,29 @@ export class CreateInitialDatabase1667349039872 implements MigrationInterface {
         ],
       }),
     );
-
-    await queryRunner.createTable(
-      new Table({
-        name: 'Apelido',
-        columns: [
-          {
-            name: 'id_ape',
-            type: 'int',
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'identity',
-          },
-
-          {
-            name: 'apelido_ape',
-            type: 'varchar(255)',
-          },
-
-          {
-            name: 'id_tur_fk',
-            type: 'int',
-            isNullable: true,
-          },
-          {
-            name: 'id_prof_fk',
-            type: 'int',
-            isNullable: true,
-          },
-          {
-            name: 'id_mat_fk',
-            type: 'int',
-            isNullable: true,
-          },
-        ],
-
-        foreignKeys: [
-          new TableForeignKey({
-            columnNames: ['id_tur_fk'],
-            referencedColumnNames: ['id_tur'],
-            referencedTableName: 'Turma',
-          }),
-          new TableForeignKey({
-            columnNames: ['id_prof_fk'],
-            referencedColumnNames: ['id_prof'],
-            referencedTableName: 'Professor',
-          }),
-          new TableForeignKey({
-            columnNames: ['id_mat_fk'],
-            referencedColumnNames: ['id_mat'],
-            referencedTableName: 'Materia',
-          }),
-        ],
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('Apelido', true);
     await queryRunner.dropTable('Evento', true);
+
     await queryRunner.dropTable('Aula_Professor', true);
     await queryRunner.dropTable('Aula_Turma', true);
     await queryRunner.dropTable('Aula', true);
+
     await queryRunner.dropTable('Etapa', true);
     await queryRunner.dropTable('PeriodoLetivo', true);
+
+    await queryRunner.dropTable('Apelido', true);
+
     await queryRunner.dropTable('Turma', true);
     await queryRunner.dropTable('Materia', true);
     await queryRunner.dropTable('Professor', true);
-    await queryRunner.dropTable('Grupo', true);
-    await queryRunner.dropTable('TurmaCategoria', true);
+
+    await queryRunner.dropTable('CategoriaTurma', true);
+
     await queryRunner.dropTable('Instituicao_Membership', true);
     await queryRunner.dropTable('Instituicao', true);
+
     await queryRunner.dropTable('Usuario', true);
   }
 }

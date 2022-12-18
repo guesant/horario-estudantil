@@ -7,8 +7,12 @@ import {
   REPOSITORY_AULA,
   REPOSITORY_AULA_PROFESSOR,
   REPOSITORY_AULA_TURMA,
+  REPOSITORY_EVENTO,
+  REPOSITORY_TURMA,
 } from '../../../../../database/constants/REPOSITORIES';
 import { IGenericFindOneQuery } from '../../../../IGenericFindOneQuery';
+import { IEventoRepository } from '../../../../repositories/evento.repository';
+import { ITurmaRepository } from '../../../../repositories/turma.repository';
 
 export type IFindAulaQuery = IGenericFindOneQuery<AulaDbEntity>;
 
@@ -21,6 +25,10 @@ export class AulaService {
     private aulaTurmaRepository: IAulaTurmaRepository,
     @Inject(REPOSITORY_AULA_PROFESSOR)
     private aulaProfessorRepository: IAulaProfessorRepository,
+    @Inject(REPOSITORY_EVENTO)
+    private eventoRepository: IEventoRepository,
+    @Inject(REPOSITORY_TURMA)
+    private turmaRepository: ITurmaRepository,
   ) {}
 
   async findAula(query: IFindAulaQuery) {
@@ -35,62 +43,80 @@ export class AulaService {
       throw new NotFoundException();
     }
 
-    const aula = (await this.aulaRepository.findOne({
+    const aula = await this.aulaRepository.findOneOrFail({
       where: { id: targetAula.id },
       ...options,
-    })) as AulaDbEntity;
+    });
 
     return aula;
   }
 
-  async findAulaEvento(query: IFindAulaQuery) {
+  async findAulaEvento(aulaId: number) {
     const aula = await this.findAula({
-      ...query,
-      options: { relations: ['evento'] },
+      id: aulaId,
+      options: { select: ['id'] },
     });
 
-    const { evento } = aula;
+    const evento = await this.eventoRepository
+      .createQueryBuilder('evento')
+      .leftJoin('evento.aula', 'aula')
+      .select(['evento.id', 'aula.id'])
+      .where('aula.id = :aulaId', { aulaId: aula.id })
+      .getOneOrFail();
 
     return evento;
   }
 
-  async findAulaMateria(query: IFindAulaQuery) {
+  async findAulaMateria(aulaId: number) {
     const aula = await this.findAula({
-      ...query,
-      options: { relations: ['materia'] },
+      id: aulaId,
+      options: { select: ['id'] },
     });
 
-    const { materia } = aula;
+    const { materia } = await this.aulaRepository
+      .createQueryBuilder('aula')
+      .leftJoin('aula.evento', 'evento')
+      .select(['aula.id', 'evento.id'])
+      .where('aula.id = :aulaId', { aulaId: aula.id })
+      .getOneOrFail();
 
     return materia;
   }
 
-  async findAulaTurmas(query: IFindAulaQuery) {
-    const aula = await this.findAula(query);
+  async findAulaTurmas(aulaId: number) {
+    const aula = await this.findAula({ id: aulaId });
 
-    const aulaTurmaRelations = await this.aulaTurmaRepository.find({
-      where: { aula: { id: aula.id } },
-      relations: ['turma'],
-    });
-
-    const turmas = aulaTurmaRelations.map(
-      (aulaTurmaRelation) => aulaTurmaRelation.turma,
-    );
+    const turmas = await this.turmaRepository
+      .createQueryBuilder('turma')
+      .leftJoin(
+        'turma.aulasTurma',
+        'aulaTurma',
+        'turma.id_tur = aulaTurma.id_tur_fk',
+      )
+      .leftJoin('aulaTurma.aula', 'aula', 'aula.id_aul = :aulaId', {
+        aulaId: aula.id,
+      })
+      .select(['turma.id', 'aulaTurma.id', 'aula.id'])
+      .getMany();
 
     return turmas;
   }
 
-  async findAulaProfessores(query: IFindAulaQuery) {
-    const aula = await this.findAula(query);
+  async findAulaProfessores(aulaId: number) {
+    const aula = await this.findAula({ id: aulaId });
 
-    const aulaProfessorRelations = await this.aulaProfessorRepository.find({
-      where: { aula: { id: aula.id } },
-      relations: ['turma'],
-    });
-
-    const professores = aulaProfessorRelations.map(
-      (aulaProfessorRelation) => aulaProfessorRelation.professor,
-    );
+    const professores = await this.turmaRepository
+      .createQueryBuilder('professor')
+      .leftJoin(
+        'professor.aulasProfessor',
+        'aulaProfessor',
+        'professor.id_prof = aulaProfessor.id_prof_fk',
+      )
+      .leftJoin('aulaProfessor.aula', 'aula', 'aula.id_aul = :aulaId', {
+        aulaId: aula.id,
+      })
+      .select(['professor.id', 'aulaProfessor.id', 'aula.id'])
+      .getMany();
 
     return professores;
   }

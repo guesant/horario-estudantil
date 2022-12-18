@@ -4,7 +4,8 @@ import { Turma } from "./Turma";
 
 export type Apelido = {
   id: number;
-  apelido: string;
+  texto: string;
+  tipo: "turma" | "professor" | "materia";
   turma: Turma | null;
   professor: Professor | null;
   materia: Materia | null;
