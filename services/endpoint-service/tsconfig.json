@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "node16",
+    "lib": [
+      "esnext"
+    ],
+    "resolveJsonModule": true,
+    "declaration": true,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true
+  }
+}

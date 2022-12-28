@@ -1,0 +1,20 @@
+services:
+  keycloak:
+    build:
+      context: image
+      args:
+        - KEYCLOAK_EXTRA_ARGS=-Dkeycloak.profile.feature.scripts=enabled
+    entrypoint: /opt/keycloak/bin/kc.sh
+    command: start-dev --import-realm
+    container_name: he-keycloak
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true

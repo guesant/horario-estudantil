@@ -1,0 +1,18 @@
+services:
+  database:
+    image: docker.io/postgres:15-alpine
+    container_name: he-database
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/pgdata:/var/lib/postgresql/data
+      - ./scripts/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true

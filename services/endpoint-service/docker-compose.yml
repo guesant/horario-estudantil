@@ -1,0 +1,21 @@
+services:
+  endpoint:
+    image: node:18
+    user: node
+    command: sh -c "tail -f /dev/null"
+    container_name: he-endpoint
+    restart: always
+    working_dir: /code/services/endpoint-service
+    env_file:
+      - .env
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/code/services/endpoint-service
+      - ../../packages:/code/packages
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true
