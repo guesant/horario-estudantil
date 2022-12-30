@@ -17,6 +17,7 @@ export class InitAuthorization1672076888076 implements MigrationInterface {
           {
             name: 'receita_per',
             type: 'varchar',
+            default: "'[]'",
             length: String(
               CreatePermissaoInputZod.shape.receita.maxLength || 2000,
             ),

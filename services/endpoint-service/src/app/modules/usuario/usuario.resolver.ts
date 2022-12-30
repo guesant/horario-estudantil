@@ -1,4 +1,10 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { UsuarioService } from './usuario.service';
 import { ResourceAuth } from '../../../infrastructure/auth/decorators/ResourceAuth.decorator';
 import { AuthMode } from '../../../infrastructure/auth/consts/AuthMode';
@@ -18,6 +24,8 @@ import {
   UpdateUsuarioInputType,
 } from './dtos';
 import { UsuarioType } from './usuario.type';
+import GraphQLJSON from 'graphql-type-json';
+import { CargoType } from '../cargo/cargo.type';
 
 @Resolver(() => UsuarioType)
 export class UsuarioResolver {
@@ -72,6 +80,35 @@ export class UsuarioResolver {
   // END: mutations
 
   // START: fields resolvers
+
+  @ResourceAuth(AuthMode.STRICT)
+  @ResolveField('cargo', () => CargoType)
+  async cargo(
+    @BindResourceActionRequest() resourceActionRequest: ResourceActionRequest,
+    @Parent() usuario: UsuarioType,
+  ): Promise<UsuarioType['cargo'] | null> {
+    const { id } = usuario;
+
+    const cargo = <UsuarioType['cargo'] | null>(
+      await this.usuarioService.getUsuarioCargo(resourceActionRequest, id)
+    );
+
+    return cargo;
+  }
+
+  @ResourceAuth(AuthMode.STRICT)
+  @ResolveField('autorizacaoRegras', () => GraphQLJSON)
+  async autorizacaoRegras(
+    @BindResourceActionRequest() resourceActionRequest: ResourceActionRequest,
+    @Parent() usuario: UsuarioType,
+  ): Promise<UsuarioType['autorizacaoRegras']> {
+    const { id } = usuario;
+
+    return this.usuarioService.getUsuarioAuthorizationRegras(
+      resourceActionRequest,
+      id,
+    );
+  }
 
   // END: fields resolvers
 }

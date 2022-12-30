@@ -20,8 +20,7 @@ import { REPOSITORY_CARGO_HAS_PERMISSAO } from '../../../infrastructure/database
 import { ICargoHasPermissaoRepository } from '../../repositories/cargo-has-permissao.repository';
 import { PermissaoService } from '../permissao/permissao.service';
 import { omit, pick } from 'lodash';
-
-const pMapModule = import('p-map').then((mod) => mod.default);
+import { getPMap } from '../../../fixtures/modules/pmap/get-pmap';
 
 @Injectable()
 export class CargoService {
@@ -159,7 +158,7 @@ export class CargoService {
       cargo.id,
     );
 
-    const pMap = await pMapModule;
+    const pMap = await getPMap();
 
     const receitas: string[] = await pMap(
       permissoes,

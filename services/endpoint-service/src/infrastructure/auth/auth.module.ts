@@ -7,6 +7,7 @@ import { SessionSerializer } from './serializers/session.serializer';
 import { UsuarioModule } from '../../app/modules/usuario/usuario.module';
 import { AuthService } from './auth.service';
 import { oidcClientProviders } from './providers/oidc-client.providers';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
@@ -14,7 +15,6 @@ import { oidcClientProviders } from './providers/oidc-client.providers';
     PassportModule.register({ defaultStrategy: 'access-token' }),
   ],
   providers: [
-    AuthService,
     {
       provide: APP_GUARD,
       useClass: AuthenticatedGuard,
@@ -22,6 +22,9 @@ import { oidcClientProviders } from './providers/oidc-client.providers';
     SessionSerializer,
     AccessTokenStrategy,
     ...oidcClientProviders,
+
+    AuthService,
+    AuthResolver,
   ],
   exports: [...oidcClientProviders, SessionSerializer, AuthService],
 })

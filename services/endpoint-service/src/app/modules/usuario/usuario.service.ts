@@ -17,6 +17,7 @@ import { ICargoRepository } from '../../repositories/cargo.repository';
 import { CargoService } from '../cargo/cargo.service';
 import { castArray, get, has, omit, pick } from 'lodash';
 import { CargoDbEntity } from '../../entities/cargo.db.entity';
+import { UsuarioType } from './usuario.type';
 
 @Injectable()
 export class UsuarioService {
@@ -106,10 +107,10 @@ export class UsuarioService {
     );
   }
 
-  async getUsuarioAutorizacaoRegras(
+  async getUsuarioAuthorizationRegras(
     resourceActionRequest: ResourceActionRequest,
     usuarioId: number,
-  ) {
+  ): Promise<RegraBruta[]> {
     const usuario = await this.findUsuarioByIdSimple(
       resourceActionRequest,
       usuarioId,

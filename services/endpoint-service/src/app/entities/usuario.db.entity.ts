@@ -13,10 +13,10 @@ export class UsuarioDbEntity implements Usuario {
   @PrimaryGeneratedColumn({ name: 'id_usu' })
   id!: number;
 
-  @Column({ name: 'kc_id_usu' })
-  keycloakId!: string;
+  @Column({ name: 'kc_id_usu', nullable: true, type: 'varchar' })
+  keycloakId!: string | null;
 
   @ManyToOne(() => CargoDbEntity)
   @JoinColumn({ name: 'id_car_fk' })
-  cargo!: CargoDbEntity;
+  cargo!: CargoDbEntity | null;
 }

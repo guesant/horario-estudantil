@@ -5,5 +5,5 @@ export type Usuario = {
 
   keycloakId: string | null;
 
-  cargo: Cargo;
+  cargo: Cargo | null;
 };

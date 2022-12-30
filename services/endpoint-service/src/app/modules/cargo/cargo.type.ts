@@ -7,6 +7,6 @@ export class CargoType implements Cargo {
   @Field(() => Int)
   id!: number;
 
-  @Field(() => [PermissaoType], { nullable: true })
+  @Field(() => [PermissaoType])
   permissoes!: Permissao[];
 }

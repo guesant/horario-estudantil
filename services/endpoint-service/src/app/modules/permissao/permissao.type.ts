@@ -6,6 +6,6 @@ export class PermissaoType implements Permissao {
   @Field(() => Int)
   id!: number;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   receita!: string;
 }

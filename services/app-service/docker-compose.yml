@@ -1,0 +1,21 @@
+services:
+  app:
+    image: node:18
+    user: node
+    command: tail -f /dev/null
+    container_name: he-app
+    restart: always
+    working_dir: /code/services/app-service
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/code/services/app-service
+      - ../../packages:/code/packages
+    networks:
+      - he-net
+
+networks:
+  he-net:
+    external: true

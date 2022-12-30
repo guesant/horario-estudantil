@@ -13,4 +13,6 @@ sudo docker run --rm \
 	  --network he-net \
 	  --env-file .env \
 	  --entrypoint /opt/keycloak/bin/kc.sh \
-	  -it $IMG export --dir /data --users realm_file --realm horario-estudantil
+	  -it "${IMG}" export --dir /data --users realm_file --realm horario-estudantil
+
+sudo docker image rm "${IMG}"

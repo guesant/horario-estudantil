@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Client } from 'openid-client';
 import { UsuarioService } from '../../app/modules/usuario/usuario.service';
 import { OPENID_CLIENT } from '../consts/OPENID_CLIENT.const';
@@ -9,10 +9,23 @@ import { systemResourceActionRequest } from './SystemResourceActionRequest';
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UsuarioService,
+    private usuarioService: UsuarioService,
     @Inject(OPENID_CLIENT)
     private openIDClient: Client,
   ) {}
+
+  async getLoggedUser(resourceActionRequest: ResourceActionRequest) {
+    const { user } = resourceActionRequest;
+
+    if (!user) {
+      throw new BadRequestException();
+    }
+
+    return this.usuarioService.findUsuarioByIdSimple(
+      resourceActionRequest,
+      user.id,
+    );
+  }
 
   async validateAccessToken(accessToken?: string | any) {
     try {
@@ -22,7 +35,7 @@ export class AuthService {
 
       const userinfo = await this.openIDClient.userinfo(accessToken);
 
-      const user = await this.userService.getUsuarioFromKeycloakId(
+      const user = await this.usuarioService.getUsuarioFromKeycloakId(
         systemResourceActionRequest,
         userinfo.sub,
       );
@@ -40,7 +53,7 @@ export class AuthService {
   }
 
   async getUsuarioResourceActionRequest(userId: number) {
-    const regras = await this.userService.getUsuarioAutorizacaoRegras(
+    const regras = await this.usuarioService.getUsuarioAuthorizationRegras(
       systemResourceActionRequest,
       userId,
     );
